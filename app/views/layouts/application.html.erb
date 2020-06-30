@@ -10,6 +10,51 @@
   </head>
 
   <body>
+    <header class="main">
+      <h1><%= @page_title %></h1>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Prashna</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor02">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <%= link_to 'Home', root_path, class: "nav-link" %><span class="sr-only">(current)</span>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Login', login_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Users', users_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Users', users_path, class: "nav-link" %>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search">
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+    </header>
+
+    <section class="content">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">      
+            <ul>
+              <li><%= link_to 'Login', login_path %></li>
+              <% if session[:user_id] %>
+                <li><%= link_to 'Logout', logout_path, method: :delete %></li>
+              <% end %>
+              <li><%# link_to 'Products', products_path %></li>
+            </ul>
+          </nav>
+      </nav>
+    <main class='<%=controller.controller_name%>'>
     <%= yield %>
+    </main>
+    </section>  
   </body>
 </html>

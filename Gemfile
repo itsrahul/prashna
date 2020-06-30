@@ -22,6 +22,15 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+# gem "letter_opener", group: :development
+group :development do
+  gem 'letter_opener_web', '~> 1.0'
+end
+
+gem 'exception_notification'
+gem 'bootstrap', '~> 4.5.0'
+gem "figaro"
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
