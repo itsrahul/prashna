@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   # post 'password_resets/:token', to: "password_resets#update"
 
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
-  
+
   controller :sessions do
     get 'login' => :new
     post 'login' => :create
@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
+      #FIXME_AB: in verify and reset password done expose id. users/verify/token
       get 'verify/:token', action: :verify, as: 'verification'
       get 'password_resets/:token', to: "password_resets#edit", as: 'send_token'
       post 'password_resets/:token', to: "password_resets#update", as: 'change_password'

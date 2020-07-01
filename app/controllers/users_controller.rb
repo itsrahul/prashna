@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
   skip_before_action :authorize
+  #FIXME_AB: remove destroy action
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  # GET /users
-  # GET /users.json
+
+  #FIXME_AB: remove index
   def index
     @users = User.all
   end
@@ -24,10 +25,12 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+    #FIXME_AB: User.user.new
     @user = User.new(user_params)
 
     respond_to do |format|
       if @user.save
+        #FIXME_AB: lets start uisng I18n
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
@@ -62,7 +65,9 @@ class UsersController < ApplicationController
   end
 
   def verify
+    #FIXME_AB: find by token User.unverified.find....
     user = User.find(params[:id])
+    #FIXME_AB: if user && user.activate! ==> will return true or false after checking the validatity of token
     if user
       if user.verifcation_at.nil?
         redirect_to root_path, notice: "Account verified." if user.activate_account(params[:token])
@@ -76,10 +81,12 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+      #FIXME_AB: what if user with id not found
     end
 
     # Only allow a list of trusted parameters through.
     def user_params
+      #FIXME_AB: why allowed role. I can set my self admin. remove role
       params.require(:user).permit(:name, :email, :password, :password_confirmation, :role)
     end
 

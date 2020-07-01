@@ -2,7 +2,9 @@
   <% if flash[:alert] %>
     <aside class="notice"><%= flash[:alert] %></aside>
   <% end %>
-
+  <% if flash[:notice] %>
+    <aside class="notice"><%= flash[:notice] %></aside>
+  <% end %>
   <%= form_tag do %>
     <h2>Please Log In</h2>
     <div class="field">
@@ -20,7 +22,7 @@
       <%= link_to 'Forgot Password?', password_resets_new_path %>
       <%= check_box_tag :remember_me , params[:remember_me], class: 'form-check-input'%>
       <%= label_tag :remember_me, "Remember me"%>
-      <%= submit_tag "Login", class: "btn btn-primary" %>
+      <%= submit_tag t('.login_btn'), class: "btn btn-primary" %>
     </div>
   <% end %>
 </section>

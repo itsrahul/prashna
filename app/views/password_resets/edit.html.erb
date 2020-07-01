@@ -1,4 +1,6 @@
 <%= form_with model: @user, url: send_token_user_url(@user.id, @user.reset_token), method: :post, local: true do |form| %>
+
+<% #FIXME_AB: this logic to show erros will be repeated. Move this to a partial views/shared/_error.html.erb -%>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -25,4 +27,4 @@
   <div class="actions">
     <%=form.submit "Update Password" %>
   </div>
-<% end %> 
+<% end %>
