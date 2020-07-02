@@ -6,7 +6,6 @@ class SessionsController < ApplicationController
   end
 
   def create
-    #FIXME_AB: use email to login User.verified.find_by
     user = User.verified.find_by(email: params[:email])
 
     unless user
@@ -23,7 +22,6 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    #FIXME_AB: use reset_session
     reset_session
     reset_remember_me
     redirect_to users_url, notice: t('.logout')

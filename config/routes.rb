@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'password_resets/new'
   post 'password_resets/create'
 
-  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" #if Rails.env.development?
 
   controller :sessions do
     get 'login' => :new
@@ -18,7 +18,6 @@ Rails.application.routes.draw do
 
   resources :users do
     collection do
-      #FIXME_AB: in verify and reset password done expose id. users/verify/token
       get 'verify/:token', action: :verify, as: 'verification'
       get 'password_resets/:token', to: "password_resets#edit", as: 'send_token'
       post 'password_resets/:token', to: "password_resets#update", as: 'change_password'
