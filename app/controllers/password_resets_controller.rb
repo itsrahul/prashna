@@ -7,25 +7,24 @@ class PasswordResetsController < ApplicationController
   def create
     user = User.find_by_email(params[:email])
     user.send_reset_link if user
-    redirect_to root_path, notice: 'Reset link will be sent to your email!'
+    redirect_to root_path, notice: t('.link_sent')
   end
 
   def edit
     @user = User.find_by_reset_token(params[:token])
     unless @user
-      redirect_to root_path, notice: 'Invalid Link' and return
+      redirect_to root_path, notice: t('.invalid') and return
     end
   end
 
   def update
-    @user = User.find_by(id: params[:id], reset_token: params[:token])
-    debugger
+    @user = User.find_by(reset_token: params[:token])
     if @user.reset_token_expire < Time.current
-      redirect_to password_resets_new_path, notice: "Password reset link has expired." and return
+      redirect_to password_resets_new_path, notice: t('.link_expired') and return
     end
     if @user.update(password_reset_params)
       @user.update_columns(reset_token: nil)
-      redirect_to root_path, notice: "Password has been reset."
+      redirect_to root_path, notice: t('.success')
     else
       render :edit
     end

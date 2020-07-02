@@ -1,0 +1,6 @@
+<h3>Dear <%= @user.name %></h3>
+<p>
+  Click <%= link_to "here",  verification_users_url(@user.verification_token) %> to verify your account.
+  <br><br>
+  This link is valid for till <%= @user.verification_token_expire %>
+</p>

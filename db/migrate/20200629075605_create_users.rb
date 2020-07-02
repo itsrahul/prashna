@@ -6,8 +6,8 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :password_digest
       t.boolean :role, default: false, null: false
       t.integer :credits, default: 0, null: false
-      t.string :verfication_token
-      t.datetime :verfication_token_expire
+      t.string :verification_token
+      t.datetime :verification_token_expire
       t.string :reset_token
       t.datetime :reset_token_expire
       t.datetime :verification_at

@@ -1,6 +1,0 @@
-Dear <%= @user.name %>
-Click here to verify your account.
-
-<%= verification_user_url(@user, @user.verfication_token) %>
-
-This link is valid for till <%= @user.verfication_token_expire %>

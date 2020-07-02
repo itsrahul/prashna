@@ -1,0 +1,10 @@
+en:
+  password_resets:
+    create:
+      link_sent: "Reset link will be sent to your email!"
+
+    edit:
+      invalid: "Invalid Link"
+
+    update:
+      link_expired: "Password reset link has expired."

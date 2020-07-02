@@ -22,9 +22,9 @@ class ApplicationController < ActionController::Base
 
   protected
     def authorize
-      #FIXME_AB:       unless (@current_user = User.find_by(id: session[:user_id]))
-      unless User.find_by(id: session[:user_id])
-        redirect_to login_url, notice: I18n.t('.unauthorized_message')
+      #FIXME_AB unless (@current_user = User.find_by(id: session[:user_id]))
+      unless current_user
+        redirect_to login_url, notice: t('.login_required')
       end
     end
 end

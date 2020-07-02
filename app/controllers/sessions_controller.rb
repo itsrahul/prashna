@@ -7,10 +7,10 @@ class SessionsController < ApplicationController
 
   def create
     #FIXME_AB: use email to login User.verified.find_by
-    user = User.find_by(name: params[:name])
+    user = User.verified.find_by(email: params[:email])
 
-    if user.verification_at.nil?
-      redirect_to login_url, alert: "Please verify your account to login" and return
+    unless user
+      redirect_to login_url, notice: t('.unverified') and return
     end
 
     if user.try(:authenticate, params[:password])
@@ -18,16 +18,15 @@ class SessionsController < ApplicationController
       set_remember_me(user.id) if params[:remember_me]
       redirect_to users_url
     else
-      redirect_to login_url, alert: "Invalid user/password combination"
+      redirect_to login_url, notice: t(".invalid_credentials")
     end
   end
 
   def destroy
     #FIXME_AB: use reset_session
-    session[:user_id] = nil
-    # reset_session
+    reset_session
     reset_remember_me
-    redirect_to users_url, notice: "Logged out"
+    redirect_to users_url, notice: t('.logout')
   end
 
   private

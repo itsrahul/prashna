@@ -1,15 +1,9 @@
 <% #FIXME_AB: lets move all notice, alert etc in layout. so that we don't repeat -%>
-<%if notice %>
-<div class="alert alert-dismissible alert-success">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <%= notice %>
-</div>
-<% end %>
 
 <%= form_tag password_resets_create_path, method: :post do %>
   <div class="field">
     <%= label_tag :email %>
-    <%= text_field_tag :email, params[:email] %>
+    <%= text_field_tag :email, params[:email], placeholder: "Enter email used to register" %>
   </div>
   <% #FIXME_AB: add hint. -%>
   <div class="actions">
