@@ -4,9 +4,9 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
 
   #FIXME_AB: remove index
-  # def index
-    # @users = User.all
-  # end
+  def index
+    @users = User.all
+  end
 
   def show
   end

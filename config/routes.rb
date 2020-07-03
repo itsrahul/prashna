@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  root 'login'
   get 'topics/edit'
   get 'topics/index'
+  root 'users#index'
 
   get 'password_resets/new'
   post 'password_resets/create'
