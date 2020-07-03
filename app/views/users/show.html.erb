@@ -1,3 +1,6 @@
+<% if @user.verification_at %>
+<%= image_tag @user.profile_image, width: 150%>
+<% end %>
 <p>
   <strong>Name:</strong>
   <%= @user.name %>

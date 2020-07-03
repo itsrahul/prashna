@@ -1,7 +1,7 @@
 <%= form_with model: @user, url: send_token_users_url(@user.reset_token), method: :post, local: true do |form| %>
 
 <% #FIXME_AB: send as object so that partial can be reused other places -%>
-  <%= render "shared/error", user: @user %>
+  <%= render "shared/error", object: @user, name: "user" %>
   <div class="field">
     Hello <%= @user.name %>,
   </div>

@@ -14,7 +14,9 @@ class SessionsController < ApplicationController
 
     if user.try(:authenticate, params[:password])
       session[:user_id] = user.id
-      set_remember_me(user.id) if params[:remember_me]
+      if params[:remember_me]
+        set_remember_me(user.id) 
+      end
       redirect_to users_url
     else
       redirect_to login_url, notice: t(".invalid_credentials")
@@ -27,21 +29,22 @@ class SessionsController < ApplicationController
     redirect_to users_url, notice: t('.logout')
   end
 
-  private
-    def set_remember_me(id)
-      cookies.signed.permanent[:user_id] = id
-    end
+  private def set_remember_me(id)
+    cookies.signed.permanent[:user_id] = id
+  end
 
-    def reset_remember_me
-      cookies.delete(:user_id)
-    end
+  private def reset_remember_me
+    cookies.delete(:user_id)
+  end
 
-    def get_user_from_cookie
-      session[:user_id] = cookies.signed[:user_id]
-      redirect_to users_url if session[:user_id]
+  private def get_user_from_cookie
+    session[:user_id] = cookies.signed[:user_id]
+    if session[:user_id]
+      redirect_to users_url
     end
+  end
 
-    def check_verified(user)
-      user.verification_at
-    end
+  private def check_verified(user)
+    user.verification_at
+  end
 end

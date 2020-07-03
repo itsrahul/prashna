@@ -1,27 +1,35 @@
 <%= form_with(model: user, local: true) do |form| %>
-  <%= render "shared/error", user: user %>
+  <%= render "shared/error", object: user, name: "user"  %>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :email %>
-    <%= form.text_field :email %>
+    <%= form.text_field :email, class: "form-control" %>
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :password %>
-    <%= form.password_field :password %>
+    <%= form.password_field :password, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :password_confirmation %>
-    <%= form.password_field :password_confirmation %>
+    <%= form.password_field :password_confirmation, class: "form-control" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <% if user.verification_at %>
+    <div class="form-group">
+      <%= form.label :profile_image %>
+      <%= form.file_field :profile_image, accept: 'image/png,image/gif,image/jpeg' %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>

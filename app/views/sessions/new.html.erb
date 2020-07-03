@@ -2,21 +2,22 @@
 
   <%= form_tag do %>
     <h2><%= t('.salutation') %></h2>
-    <div class="field">
+    <div class="form-group">
       <%= label_tag :email, t('.email') %>
-      <%= text_field_tag :email, params[:email] %>
+      <%= text_field_tag :email, params[:email], class: "form-control"%>
+    <small id="emailHelp" class="form-text text-muted">Don't ever share your login credintials with anyone else.</small>
     </div>
 
-    <div class="field">
+    <div class="form-group">
       <%= label_tag :password, t('.password') %>
-      <%= password_field_tag :password, params[:password] %>
+      <%= password_field_tag :password, params[:password], class: "form-control" %>
     </div>
     <div>
 
-    <div class="actions">
+    <div>
       <%= link_to t('.forgot_password'), password_resets_new_path %>
       <%= check_box_tag :remember_me , params[:remember_me], class: 'form-check-input'%>
-      <%= label_tag :remember_me, t('.remember_me') %>
+      <%= label_tag :remember_me, t('.remember_me') %><br>
       <%= submit_tag t('.login_btn'), class: "btn btn-primary" %>
     </div>
   <% end %>

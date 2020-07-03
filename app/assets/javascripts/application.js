@@ -5,10 +5,9 @@
 
 // FIXME_AB: this is invalid syntax for asset pipeline
 
-require("@rails/ujs").start()
-require("turbolinks").start()
-require("@rails/activestorage").start()
-require("channels")
+//= require rails-ujs
+//= require turbolinks
+//= require_tree .
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference

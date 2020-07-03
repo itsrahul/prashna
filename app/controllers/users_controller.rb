@@ -4,9 +4,9 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
 
   #FIXME_AB: remove index
-  def index
-    @users = User.all
-  end
+  # def index
+    # @users = User.all
+  # end
 
   def show
   end
@@ -56,7 +56,7 @@ class UsersController < ApplicationController
   end
 
   def verify
-    user = User.unverified.find(params[:token])
+    user = User.unverified.find_by_verification_token(params[:token])
 
     if user && user.activate!
       redirect_to root_path, notice: t('.success')
