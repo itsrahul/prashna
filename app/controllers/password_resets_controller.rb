@@ -17,18 +17,14 @@ class PasswordResetsController < ApplicationController
   end
 
   def edit
-    #FIXME_AB: before action find_user_by_reset_token
-    # @user = User.find_by_reset_token(params[:token])
     unless @user
       redirect_to root_path, notice: t('.invalid') and return
     end
   end
 
   def update
-    #FIXME_AB: this condition should be extracted as before_action validate_reset_token and used for edit and update both
     if @user.update(password_reset_params)
       @user.clear_password_reset_fields
-      #FIXME_AB: reset time also. @user.clear_password_reset_fields
       redirect_to root_path, notice: t('.success')
     else
       render :edit
@@ -37,6 +33,7 @@ class PasswordResetsController < ApplicationController
 
   private def find_user_by_reset_token
     @user = User.find_by_reset_token(params[:token])
+    #FIXME_AB: what if user not found
   end
 
   private def validate_reset_token
@@ -47,6 +44,7 @@ class PasswordResetsController < ApplicationController
 
   private def set_user
     @user = User.find(params[:id])
+    #FIXME_AB: what if user not found
   end
 
   private def password_reset_params

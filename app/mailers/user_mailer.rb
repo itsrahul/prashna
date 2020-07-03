@@ -3,8 +3,7 @@ class UserMailer < ApplicationMailer
 
   def verification_mail(id)
     @user = User.unverified.find(id)
-    #FIXME_AB: check that
-    #FIXME_AB: 1. user is found
+
     if @user
       mail to: @user.email, subject: t('.subject')
     end
