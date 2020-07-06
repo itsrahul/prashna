@@ -220,7 +220,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   exception_notification (~> 4.4.1)
-  figaro
+  figaro (~> 1.2.0)
   jbuilder (~> 2.7)
   letter_opener_web (~> 1.0)
   listen (~> 3.2)

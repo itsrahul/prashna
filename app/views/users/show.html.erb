@@ -1,4 +1,4 @@
-<% if @user.verification_at %>
+<% if @user.verification_at && !@user.profile_image.attachment.nil? %>
 <%= image_tag @user.profile_image, width: 150%>
 <% end %>
 <p>
@@ -14,6 +14,11 @@
 <p>
   <strong>Credits:</strong>
   <%= @user.credits %>
+</p>
+
+<p>
+  <strong>Topics:</strong>
+  <%= @user.topics.pluck(:name) %>
 </p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |

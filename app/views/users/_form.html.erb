@@ -1,5 +1,5 @@
 <%= form_with(model: user, local: true) do |form| %>
-  <%= render "shared/error", object: user, name: "user"  %>
+  <%= render "shared/error", object: user %>
 
   <div class="form-group">
     <%= form.label :name %>
@@ -15,6 +15,7 @@
   <div class="form-group">
     <%= form.label :password %>
     <%= form.password_field :password, class: "form-control" %>
+    <small id="passwordHelp" class="form-text text-muted">Length 4-8, must have minimum 1 digit, 1 alphabet</small>
   </div>
 
   <div class="form-group">
@@ -26,6 +27,14 @@
     <div class="form-group">
       <%= form.label :profile_image %>
       <%= form.file_field :profile_image, accept: 'image/png,image/gif,image/jpeg' %>
+    </div>
+
+    <%= javascript_include_tag 'autocomplete_topics', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    
+    <div class="ui-widget">
+      <%= form.label :topic %>
+      <%= form.text_field :topic %>
     </div>
   <% end %>
 

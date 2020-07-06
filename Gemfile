@@ -36,7 +36,7 @@ gem 'letter_opener_web', '~> 1.0'
 
 gem 'exception_notification', '~> 4.4.1'
 gem 'bootstrap', '~> 4.5.0'
-gem "figaro"
+gem "figaro", '~> 1.2.0'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

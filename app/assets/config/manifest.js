@@ -5,3 +5,4 @@
 //= link_directory ../stylesheets .css
 //= link bootstrap.js
 //= link bootstrap.css
+//= link autocomplete_topics.js

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_03_101309) do
+ActiveRecord::Schema.define(version: 2020_07_04_073441) do
 
   create_table "action_mailbox_inbound_emails", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.integer "status", default: 0, null: false
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 2020_07_03_101309) do
     t.text "reason"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "transaction_type", default: 1, null: false
     t.index ["user_id"], name: "index_credit_transactions_on_user_id"
   end
 
@@ -55,6 +56,13 @@ ActiveRecord::Schema.define(version: 2020_07_03_101309) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "topics_users", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.bigint "topic_id"
+    t.bigint "user_id"
+    t.index ["topic_id"], name: "index_topics_users_on_topic_id"
+    t.index ["user_id"], name: "index_topics_users_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|

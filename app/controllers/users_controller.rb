@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   skip_before_action :authorize
 
   before_action :set_user, only: [:show, :edit, :update]
-
+  before_action :set_error, only: [:destroy]
   #FIXME_AB: remove index
   def index
     @users = User.all
@@ -33,6 +33,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    @user.topics = Topic.where(name: params[:user][:topic].split(/,\s*/))
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: t('.success') }
@@ -47,11 +48,14 @@ class UsersController < ApplicationController
   def destroy
     #FIXME_AB: read what does destroy return
     #FIXME_AB: handle a case when user is not destroyed
-    @user.destroy
 
     respond_to do |format|
-      format.html { redirect_to users_url, notice: t('.success') }
-      format.json { head :no_content }
+      if @user.destroy
+        format.html { redirect_to users_url, notice: t('.success') }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to root_path, notice: t('.failure') }
+      end
     end
   end
 
@@ -69,10 +73,16 @@ class UsersController < ApplicationController
       unless (@user = User.find_by(id: params[:id]))
         redirect_to root_path, notice: t('.invalid')
       end
+      unless @user == current_user
+        redirect_to root_path, notice: t('.invalid')
+      end
     end
 
   private def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
+  private def set_error
+    throw(:abort)
+  end
 
 end

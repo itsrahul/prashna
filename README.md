@@ -1,24 +1,21 @@
-# README
+# PRASHNA
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a question-answer site similar to Quora, but with a credit system.
+It works on Ruby on Rails framework.
 
-Things you may want to cover:
+* **Rails version**: 6.0.3.2
 
-* Ruby version
+* **Ruby version**: ruby 2.7.1-p83
 
-* System dependencies
+* **Database**: mysql2
 
-* Configuration
+## Configuration
 
-* Database creation
+After downloading the project, use `bundle install` to install all the dependencies.
+After this is done, configure database.yml.example to database.yml, as per your system parameters.
 
-* Database initialization
+## Rake Task
 
-* How to run the test suite
+### Setting up Admin Account
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Use this to create an admin account, which used for adminstrative purposes. Use `rails admin:new` to run rake task

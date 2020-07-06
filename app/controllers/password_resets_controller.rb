@@ -17,9 +17,6 @@ class PasswordResetsController < ApplicationController
   end
 
   def edit
-    unless @user
-      redirect_to root_path, notice: t('.invalid') and return
-    end
   end
 
   def update
@@ -33,6 +30,9 @@ class PasswordResetsController < ApplicationController
 
   private def find_user_by_reset_token
     @user = User.find_by_reset_token(params[:token])
+    unless @user
+      redirect_to root_path, notice: t('.invalid') and return
+    end
     #FIXME_AB: what if user not found
   end
 
@@ -42,10 +42,6 @@ class PasswordResetsController < ApplicationController
     end
   end
 
-  private def set_user
-    @user = User.find(params[:id])
-    #FIXME_AB: what if user not found
-  end
 
   private def password_reset_params
     params.require(:user).permit(:password, :password_confirmation)

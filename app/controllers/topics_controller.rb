@@ -1,7 +1,7 @@
 class TopicsController < ApplicationController
-  def edit
+  def search
+    topics = Topic.search(params[:q]).map { |t| { id: t.id, label: t.name } }
+    render json: topics
   end
 
-  def index
-  end
 end

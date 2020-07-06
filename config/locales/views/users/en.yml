@@ -11,6 +11,7 @@ en:
 
     destroy:
       success: 'User was successfully destroyed.'
+      failure: "User could not be destroyed."
     
     verify:
       success: "Account verified."

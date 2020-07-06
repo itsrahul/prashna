@@ -23,7 +23,9 @@ Rails.application.routes.draw do
       get 'verify/:token', action: :verify, as: 'verification'
       get 'password_resets/:token', to: "password_resets#edit", as: 'send_token'
       post 'password_resets/:token', to: "password_resets#update", as: 'change_password'
-      get 'topics', to: "topics#edit"
+    end
+    member do
+      get 'topics', to: "topics#search"
     end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
