@@ -1,6 +1,10 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+#FIXME_AB: Read Gemfile vs Gemfile.lock
+#FIXME_AB: Read explain what is the difference between three rails env: development, production, test
+#FIXME_AB: Read about config/initializers directory, when these files are executed, how many times, in which order etc..
+
 ruby '2.7.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -12,7 +16,10 @@ gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '~> 4.0'
+# gem 'webpacker', '~> 4.0'
+# Adding sprockets
+gem 'sprockets', '~> 4'
+gem 'sprockets-rails', :require => 'sprockets/railtie'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -21,6 +28,15 @@ gem 'jbuilder', '~> 2.7'
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+
+# gem "letter_opener", group: :development
+gem 'letter_opener_web', '~> 1.0'
+
+#FIXME_AB: whenever you add any gem, specify its version
+
+gem 'exception_notification', '~> 4.4.1'
+gem 'bootstrap', '~> 4.5.0'
+gem "figaro", '~> 1.2.0'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -35,6 +51,7 @@ end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
+
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

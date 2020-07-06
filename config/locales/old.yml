@@ -1,0 +1,49 @@
+en:
+  # sessions:
+  #   new:
+  #     salutation: "Please Log In"
+  #     email: "Email:"
+  #     password: "Password:"
+  #     remember_me: "Remember Me"
+  #     forgot_password: "Forgot Password?"
+  #     login_btn: "Login"
+    
+  #   create:
+  #     unverified: "Please verify your account to login"
+  #     invalid_credentials: "Invalid user/password combination"
+  #     logout: "Logged out"
+
+  # password_resets:
+  #   create:
+  #     link_sent: "Reset link will be sent to your email!"
+
+  #   edit:
+  #     invalid: "Invalid Link"
+
+  #   update:
+  #     link_expired: "Password reset link has expired."
+  #     success: "Password has been reset."
+
+  # users:
+  #   invalid: "Invalid link"
+  #   login_required: "Please log in"
+
+  #   create:
+  #     success: 'User was successfully created.'
+
+  #   update:
+  #     success: 'User was successfully updated.'
+
+  #   destroy:
+  #     success: 'User was successfully destroyed.'
+    
+  #   verify:
+  #     success: "Account verified."
+  #     failure: "Account could not be verified."
+
+  # user_mailer:
+  #   verification_mail:
+  #     subject: 'Prashna: Verification Mail'
+    
+  #   password_reset_mail:
+  #     subject: 'Prashna: Password Reset Mail'

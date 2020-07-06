@@ -1,0 +1,7 @@
+en:
+  user_mailer:
+    verification_mail:
+      subject: 'Prashna: Verification Mail'
+    
+    password_reset_mail:
+      subject: 'Prashna: Password Reset Mail'

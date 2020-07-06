@@ -1,0 +1,16 @@
+en:
+  sessions:
+    new:
+      salutation: "Please Log In"
+      email: "Email:"
+      password: "Password:"
+      remember_me: "Remember Me"
+      forgot_password: "Forgot Password?"
+      login_btn: "Login"
+    
+    create:
+      unverified: "Please verify your account to login"
+      invalid_credentials: "Invalid user/password combination"
+    
+    destroy:
+      logout: "Logged out"

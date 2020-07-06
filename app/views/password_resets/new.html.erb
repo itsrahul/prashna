@@ -1,0 +1,12 @@
+
+<%= form_tag password_resets_create_path, method: :post do %>
+  <div class="form-group">
+    <%= label_tag :email %>
+    <%= text_field_tag :email, params[:email], placeholder: "Enter email used to register" %>
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <% #FIXME_AB: add hint. -%>
+  <div class="actions">
+    <%= submit_tag "Reset Password", class: "btn btn-primary"%>
+  </div>
+<% end %>

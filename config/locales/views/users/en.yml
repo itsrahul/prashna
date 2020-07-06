@@ -1,0 +1,18 @@
+en:
+  users:
+    invalid: "Invalid link"
+    login_required: "Please log in"
+
+    create:
+      success: 'User was successfully created.'
+
+    update:
+      success: 'User was successfully updated.'
+
+    destroy:
+      success: 'User was successfully destroyed.'
+      failure: "User could not be destroyed."
+    
+    verify:
+      success: "Account verified."
+      failure: "Account could not be verified."
