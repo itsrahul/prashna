@@ -24,9 +24,21 @@ class TopicAutocomplete{
         })
         .autocomplete({
           source: function( request, response ) {
-            $.getJSON( "topics", {
-              q: extractLast( request.term )
-            }, response );
+          
+            $.ajax({
+              dataType: "json",
+              url: "topics",
+              beforeSend: () => {
+                $('#user_topic').LoadingOverlay("show")
+              },
+              data: {
+                q: extractLast( request.term )
+              },
+              success: response,
+              complete: () => {
+                $('#user_topic').LoadingOverlay("hide", true)
+              },
+            });
           },
           search: function() {
             // custom minLength
