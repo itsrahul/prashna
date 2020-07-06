@@ -33,6 +33,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    #FIXME_AB: find_or_initialize_by_name
     @user.topics = Topic.where(name: params[:user][:topic].split(/,\s*/))
     respond_to do |format|
       if @user.update(user_params)

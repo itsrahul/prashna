@@ -29,9 +29,10 @@
       <%= form.file_field :profile_image, accept: 'image/png,image/gif,image/jpeg' %>
     </div>
 
-    <%= javascript_include_tag 'autocomplete_topics', 'data-turbolinks-track': 'reload' %>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    
+    <% content_for :js do -%>
+      <%= javascript_include_tag 'autocomplete_topics', 'data-turbolinks-track': 'reload' %>
+    <% end -%>
+
     <div class="ui-widget">
       <%= form.label :topic %>
       <%= form.text_field :topic %>

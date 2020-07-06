@@ -1,3 +1,4 @@
+<% #FIXME_AB: @user.verified? -%>
 <% if @user.verification_at && !@user.profile_image.attachment.nil? %>
 <%= image_tag @user.profile_image, width: 150%>
 <% end %>

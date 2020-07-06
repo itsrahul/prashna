@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  #FIXME_AB: Update readme file. include ruby rails db versions. steps to setup the project and rake tasks with description.
   before_action :authorize
   helper_method :current_user, :logged_in?
 

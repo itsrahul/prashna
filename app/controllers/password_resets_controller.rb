@@ -33,7 +33,6 @@ class PasswordResetsController < ApplicationController
     unless @user
       redirect_to root_path, notice: t('.invalid') and return
     end
-    #FIXME_AB: what if user not found
   end
 
   private def validate_reset_token
