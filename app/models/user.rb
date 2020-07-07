@@ -15,10 +15,7 @@ class User < ApplicationRecord
   validates :name, length: { minimum: 3}
   validates :email, uniqueness: { case_sensitive: false }, email: true, allow_blank: true
   validates :password, length: { minimum: 4 , maximum: 80}, password: true, allow_blank: true
-<<<<<<< Updated upstream
-=======
   validates :profile_image_url, image_url: true, if: Proc.new {|user| user.verified? }
->>>>>>> Stashed changes
 
 
   scope :verified, -> { where.not(verification_at: nil) }
@@ -37,11 +34,7 @@ class User < ApplicationRecord
     if verification_token_expire > Time.current
       update(verification_at: Time.current)
       #FIXME_AB: credit_transactions.signup.create
-<<<<<<< Updated upstream
-      credit_transactions.create(value: ENV['signup_credits'], reason: "Signup", transaction_type: 1)
-=======
       credit_transactions.signup.create(value: ENV['signup_credits'], reason: "Signup")
->>>>>>> Stashed changes
       clear_verification_reset_fields
       return true
     else
@@ -64,11 +57,7 @@ class User < ApplicationRecord
 
   private def ensure_no_purchase_history
     #FIXME_AB: use credit_transactions.purchase.exists?
-<<<<<<< Updated upstream
-    unless credit_transactions.purchase.blank?
-=======
     if credit_transactions.purchase.exists?
->>>>>>> Stashed changes
       errors.add(:base, 'User has purchased credits')
       throw :abort
     end

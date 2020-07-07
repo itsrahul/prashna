@@ -49,7 +49,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    #sone FIXME_AB: read what does destroy return
+    #FIXME_AB: read what does destroy return
     #FIXME_AB: handle a case when user is not destroyed
 
     respond_to do |format|
