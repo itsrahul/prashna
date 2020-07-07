@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :questions
+
+  get 'topics', to: "topics#search"
+  
   get 'topics/edit'
   get 'topics/index'
   root 'users#index'
@@ -23,9 +27,6 @@ Rails.application.routes.draw do
       get 'verify/:token', action: :verify, as: 'verification'
       get 'password_resets/:token', to: "password_resets#edit", as: 'send_token'
       post 'password_resets/:token', to: "password_resets#update", as: 'change_password'
-    end
-    member do
-      get 'topics', to: "topics#search"
     end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

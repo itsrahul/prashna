@@ -1,11 +1,9 @@
 class UsersController < ApplicationController
-  skip_before_action :authorize
+  skip_before_action :authorize, except: [:index]
 
   before_action :set_user, only: [:show, :edit, :update]
-  before_action :set_error, only: [:destroy]
   #FIXME_AB: remove index
   def index
-    @users = User.all
   end
 
   def show
@@ -34,8 +32,7 @@ class UsersController < ApplicationController
 
   def update
     #FIXME_AB: find_or_initialize_by_name
-    # @user.topics = Topic.where(name: params[:user][:topic].split(/,\s*/))
-    set_topics(params[:user][:topic])
+    set_topics(@user, params[:user][:topic])
   
     respond_to do |format|
       if @user.update(user_params)
@@ -84,17 +81,5 @@ class UsersController < ApplicationController
   private def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
-
-  private def set_topics(list)
-    topic_list = []
-    list.split(/,\s*/).each do |term|
-      topic_list << Topic.find_or_initialize_by(name: term.capitalize)
-    end
-    @user.topics = topic_list
-  end
-
-  private def set_error
-    throw(:abort)
-  end
 
 end

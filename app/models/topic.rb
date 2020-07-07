@@ -4,6 +4,7 @@ class Topic < ApplicationRecord
 
   #FIXME_AB: name unique index
   has_and_belongs_to_many :users
+  has_and_belongs_to_many :questions
 
   scope :search, ->(name) {
     where("name like ?", "%#{name}%")

@@ -44,10 +44,13 @@
             </li>
             <% if logged_in? %>
               <li class="nav-item">
-                <%= link_to 'Logout', logout_path, method: :delete, class: "nav-link" %>
+                <%= link_to 'Profile', user_path(session[:user_id]), class: "nav-link" %>
               </li>
               <li class="nav-item">
-                <%= link_to 'Profile', user_path(session[:user_id]), class: "nav-link" %>
+                <%= link_to 'Questions', questions_path, class: "nav-link" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'Logout', logout_path, method: :delete, class: "nav-link" %>
               </li>
             <% end %>
 
@@ -62,27 +65,19 @@
     </header>
 
     <section class="content">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <ul>
-              <% if logged_in? %>
-                <li><%= link_to 'Logout', logout_path, method: :delete %></li>
-              <% else%>
-                <li><%= link_to 'Login', login_path %></li>
-              <% end %>
-
-              <li><%# link_to 'Products', products_path %></li>
-            </ul>
-          </nav>
-      </nav>
-    <main class='<%=controller.controller_name%>'>
-    <%if notice %>
-    <div class="alert alert-dismissible alert-success">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <%= notice %>
-    </div>
-    <% end %>
-    <%= yield %>
-    </main>
+      <div class="container">
+        <div class="col-sm">
+          <main class='<%=controller.controller_name%>'>
+            <%if notice %>
+              <div class="alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <%= notice %>
+              </div>
+            <% end %>
+            <%= yield %>
+          </main>
+        </div>
+      </div>
     </section>
   </body>
 </html>

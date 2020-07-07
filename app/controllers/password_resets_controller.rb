@@ -7,6 +7,10 @@ class PasswordResetsController < ApplicationController
   end
 
   def create
+    if params[:email].blank?
+      redirect_to password_resets_new_path, notice: t('.empty') and return
+    end
+
     user = User.find_by_email(params[:email])
 
     if user

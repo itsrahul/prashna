@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_one_attached :profile_image
 
   has_many :credit_transactions, dependent: :destroy
+  has_many :questions
   has_and_belongs_to_many :topics
   #FIXME_AB: if user has any other credit_transactions except signup, then user can not be deleted.
 
