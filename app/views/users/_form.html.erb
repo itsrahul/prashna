@@ -23,7 +23,7 @@
     <%= form.password_field :password_confirmation, class: "form-control" %>
   </div>
 
-  <% if user.verification_at %>
+  <% if user.verified? %>
     <div class="form-group">
       <%= form.label :profile_image %>
       <%= form.file_field :profile_image, accept: 'image/png,image/gif,image/jpeg' %>

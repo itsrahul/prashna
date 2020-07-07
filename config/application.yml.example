@@ -1,0 +1,11 @@
+development:
+  verification_token_valid: '2'
+  reset_token_valid: '2'
+  signup_credits: '5'
+  default_mail: 'admin@prashna.com'
+
+production:
+  verification_token_valid: '4'
+  reset_token_valid: '4'
+  signup_credits: '10'
+  default_mail: 'admin@prashna.com'

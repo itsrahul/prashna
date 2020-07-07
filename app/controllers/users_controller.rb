@@ -34,7 +34,9 @@ class UsersController < ApplicationController
 
   def update
     #FIXME_AB: find_or_initialize_by_name
-    @user.topics = Topic.where(name: params[:user][:topic].split(/,\s*/))
+    # @user.topics = Topic.where(name: params[:user][:topic].split(/,\s*/))
+    set_topics(params[:user][:topic])
+  
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: t('.success') }
@@ -47,7 +49,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    #FIXME_AB: read what does destroy return
+    #sone FIXME_AB: read what does destroy return
     #FIXME_AB: handle a case when user is not destroyed
 
     respond_to do |format|
@@ -82,6 +84,15 @@ class UsersController < ApplicationController
   private def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
+
+  private def set_topics(list)
+    topic_list = []
+    list.split(/,\s*/).each do |term|
+      topic_list << Topic.find_or_initialize_by(name: term.capitalize)
+    end
+    @user.topics = topic_list
+  end
+
   private def set_error
     throw(:abort)
   end
