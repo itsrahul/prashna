@@ -1,14 +1,19 @@
 class User < ApplicationRecord
 
+#FIXME_AB:
+# 1. macros
+# 2. validations
+# 3. associations
+# 4. scopes
+# 5. callbacks
+
   enum role: { user: 0, admin: 1 }
 
-  #FIXME_AB: add validation that this should be an image
   has_one_attached :profile_image
 
   has_many :credit_transactions, dependent: :destroy
   has_many :questions
   has_and_belongs_to_many :topics
-  #FIXME_AB: if user has any other credit_transactions except signup, then user can not be deleted.
 
   has_secure_password
 
@@ -34,7 +39,6 @@ class User < ApplicationRecord
   def activate!
     if verification_token_expire > Time.current
       update(verification_at: Time.current)
-      #FIXME_AB: credit_transactions.signup.create
       credit_transactions.signup.create(value: ENV['signup_credits'], reason: "Signup")
       clear_verification_reset_fields
       return true
@@ -53,11 +57,11 @@ class User < ApplicationRecord
   end
 
   def verified?
+    #FIXME_AB: verification_at.present?
     !verification_at.nil?
   end
 
   private def ensure_no_purchase_history
-    #FIXME_AB: use credit_transactions.purchase.exists?
     if credit_transactions.purchase.exists?
       errors.add(:base, 'User has purchased credits')
       throw :abort
@@ -65,6 +69,7 @@ class User < ApplicationRecord
   end
 
   private def profile_image_url
+    #FIXME_AB: profile_image.attachment.image? can be used to check if attachment is image or not
     profile_image.attachment.blob.filename.to_s
   end
 

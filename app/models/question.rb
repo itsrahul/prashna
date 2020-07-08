@@ -1,6 +1,6 @@
 class Question < ApplicationRecord
   enum status: { draft: 0, published: 1 }
-  
+
   has_one_attached :file
 
   belongs_to :user
@@ -21,7 +21,7 @@ class Question < ApplicationRecord
   def to_param
     "#{id}-#{slug}"
   end
-  
+
   private def set_slug
     self.slug = title.to_s.parameterize
   end
@@ -35,6 +35,7 @@ class Question < ApplicationRecord
   end
 
   private def file_name
+    #FIXME_AB: try if you make use of content_type
     file.attachment.blob.filename.to_s
   end
 

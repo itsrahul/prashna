@@ -6,7 +6,7 @@ class SearchQuestions
     this.$form = options.form;
     this.$text = options.form.find('input[type=text]');
     this.$button = options.form.find('input[type=submit]');
-    
+
   }
 
   init()
@@ -19,10 +19,11 @@ class SearchQuestions
 
   magic(search_val, productUrl)
   {
+    // FIXME_AB: add ajax loader
     $.ajax({
       url: productUrl,
       type: "get",
-      data: $.param({ search: search_val }), 
+      data: $.param({ search: search_val }),
       success: (data) => {
         if (data){
           this.$main[0].innerHTML = data

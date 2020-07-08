@@ -21,6 +21,10 @@ class ApplicationController < ActionController::Base
     list.strip.split(/,\s*/).each do |term|
       topic_list << Topic.find_or_initialize_by(name: term.capitalize)
     end
+
+    #FIXME_AB: topic_list = list.strip.split(/,\s*/).collect{|term| Topic.find_or_initialize_by(name: term.capitalize) }
+    #FIXME_AB: try with inject
+
     unless topic_list.blank?
       object.topics = topic_list
     end

@@ -1,5 +1,3 @@
-// FIXME_AB: move this to app/assets/javascript
-
 class TopicAutocomplete{
   constructor($main){
     this.$main = $main;
@@ -27,7 +25,6 @@ class TopicAutocomplete{
           source: function( request, response ) {
             $.ajax({
               dataType: "json",
-              // FIXME_AB: don't hardcode url here. take url form element's data attribute using url helper
               url: options.url,
               beforeSend: function() {
                 options.main.LoadingOverlay("show")
