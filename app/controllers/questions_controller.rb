@@ -8,6 +8,10 @@ class QuestionsController < ApplicationController
     @questions = current_user.questions
   end
 
+  def questions
+    @questions = current_user.questions
+  end
+
   def new
     @question = Question.new
   end

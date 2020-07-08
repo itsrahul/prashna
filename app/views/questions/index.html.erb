@@ -1,40 +1,32 @@
+<%#= render partial: "questions" %>
 <% if logged_in? %>
   <strong>Hello, <%= current_user.name %></strong>
 <% end %>
 
 <h2>Your questions</h2>
 
-<table  class="table table-hover">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Content</th>
-      <th>Status</th>
-      <th>Topics</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
+    <div class="flex-container">  
     <% @questions.each do |question| %>
-      <tr class="table-light">
-        <td><%= question.title %></td>
-        <td><%= question.content %></td>
-        <td>
+      <div class="card bg-light mb-3" style="max-width: 20rem;">
+        <div class="card-header">      
           <% if question.published? %>
-          <span class="badge badge-success"><%= question.status %></span>
+            <span class="badge badge-success"><%= question.status.capitalize %></span>
           <% else %>
-          <span class="badge badge-secondary"><%= question.status %></span>
+            <span class="badge badge-secondary"><%= question.status.capitalize %></span>
           <% end %>
-        </td>
-        <td><%= question.topics.pluck(:name) %></td>
-        <td><%= link_to 'Show', question %></td>
-        <td><%= link_to 'Edit', edit_question_path(question) %></td>
-        <td><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+          <%= link_to 'Edit', edit_question_path(question) %>
+          <%= link_to 'Delete', question, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title"><%= question.title.capitalize %></h5>
+          <p class="card-text"><%= question.content.capitalize %></p>
+          <p><%= question.topics.pluck(:name) %></p>
+        </div>
+      </div>
     <% end %>
-  </tbody>
-</table>
+    </div>
+
 
 <br>
 

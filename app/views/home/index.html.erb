@@ -1,0 +1,25 @@
+<% if logged_in? %>
+  <strong>Hello, <%= current_user.name %></strong>
+<% end %>
+<h4>Published questions</h4>
+<form class="form-inline my-2 my-lg-0">
+  <input class="form-control mr-sm-2" type="text" placeholder="Search">
+  <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+</form>
+<br>
+<% @questions.each do |question| %>
+<div class="card bg-light mb-3" style="max-width: 150rem;">
+  <div class="card-header">      
+    <h5 class="card-title"><%= question.title.capitalize %></h5>
+  </div>
+  <div class="card-body">
+    <p class="card-text"><%= question.content.capitalize %></p>
+    <p class="card-text">
+    <% if question.topics.exists? %>
+      <%= question.topics.pluck(:name) %>
+    <% end %>
+    </p>
+  </div>
+</div>
+<% end %>
+<br>

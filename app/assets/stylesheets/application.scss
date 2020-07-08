@@ -33,6 +33,14 @@ header.main {
   }
 }
 
+.flex-container {
+  display: flex;
+  
+  div {
+    margin: 10px;
+  }
+}
+
 // .notice, #notice {
 //   background: #ffb;
 //   border-radius: 0.5em;

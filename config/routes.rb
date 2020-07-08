@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'home#index',  as: 'home_index'
   resources :questions
 
   get 'topics', to: "topics#search"

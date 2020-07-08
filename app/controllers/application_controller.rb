@@ -21,7 +21,9 @@ class ApplicationController < ActionController::Base
     list.strip.split(/,\s*/).each do |term|
       topic_list << Topic.find_or_initialize_by(name: term.capitalize)
     end
-    object.topics = topic_list
+    unless topic_list.blank?
+      object.topics = topic_list
+    end
   end
 
 end
