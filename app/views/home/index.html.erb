@@ -13,7 +13,7 @@
     <h5 class="card-title"><%= question.title.capitalize %></h5>
   </div>
   <div class="card-body">
-    <p class="card-text"><%= question.content.capitalize %></p>
+    <p class="card-text"><%= markdown(question.content) %></p>
     <p class="card-text">
     <% if question.topics.exists? %>
       <%= question.topics.pluck(:name) %>

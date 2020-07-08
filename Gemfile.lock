@@ -160,6 +160,7 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    redcarpet (3.5.0)
     regexp_parser (1.7.1)
     rubyzip (2.3.0)
     sass-rails (6.0.0)
@@ -227,6 +228,7 @@ DEPENDENCIES
   mysql2 (>= 0.4.4)
   puma (~> 4.1)
   rails (~> 6.0.3)
+  redcarpet (~> 3.3)
   sass-rails (>= 6)
   selenium-webdriver
   spring

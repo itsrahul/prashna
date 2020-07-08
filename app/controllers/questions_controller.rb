@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
 
   before_action :set_question, only: [:show, :edit, :update]
-  before_action :ensure_not_published, only: [:edit, :destroy]
+  before_action :ensure_not_published, only: [:destroy]
   before_action :ensure_credit_balance, only: [:create]
 
   def index

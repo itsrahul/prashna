@@ -32,6 +32,9 @@ gem 'bcrypt', '~> 3.1.7'
 # gem "letter_opener", group: :development
 gem 'letter_opener_web', '~> 1.0'
 
+# Using redcarpet for markdown format
+gem 'redcarpet', '~> 3.3'
+
 #FIXME_AB: whenever you add any gem, specify its version
 
 gem 'exception_notification', '~> 4.4.1'
