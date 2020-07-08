@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'home#index',  as: 'home_index'
-  resources :questions
+  resources :questions do
+    get :search, on: :collection
+  end
 
   get 'topics', to: "topics#search"
   

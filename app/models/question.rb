@@ -14,6 +14,10 @@ class Question < ApplicationRecord
   after_validation :set_slug, on: [:create, :update]
   before_destroy :ensure_not_published
 
+  scope :search_by_title, ->(val) {
+    published.where("title like ?", "%#{val}%").order(updated_at: :desc)
+  }
+
   def to_param
     "#{id}-#{slug}"
   end
@@ -24,7 +28,7 @@ class Question < ApplicationRecord
 
   private def ensure_not_published
     # change name and condition to until answered/commment/votes
-    if status.published?
+    if published?
       errors.add(:base, 'Question published, cannot be deleted now.')
       throw :abort
     end

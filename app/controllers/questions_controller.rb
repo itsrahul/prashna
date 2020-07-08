@@ -1,14 +1,10 @@
 class QuestionsController < ApplicationController
 
-  before_action :set_question, only: [:show, :edit, :update]
+  before_action :set_question, only: [:show, :edit, :update, :destroy]
   before_action :ensure_not_published, only: [:destroy]
   before_action :ensure_credit_balance, only: [:create]
 
   def index
-    @questions = current_user.questions
-  end
-
-  def questions
     @questions = current_user.questions
   end
 
@@ -17,6 +13,16 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+  end
+
+  def search
+    @questions = Question.search_by_title(params[:search])
+    if @questions.exists?
+      render partial: "questions"
+    else
+      render json: false
+    end
+    
   end
 
   def create
@@ -29,6 +35,7 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.save
+        set_topics(@question, params[:question][:topic])
         format.html { redirect_to @question, notice: t('.success') }
         format.json { render :show, status: :created, location: @question }
       else

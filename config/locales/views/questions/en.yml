@@ -15,3 +15,4 @@ en:
     destroy:
       success: 'Question was destroyed successfully.'
       failure: "Question could not be destroyed."
+      too_late: "Question can't be deleted now"

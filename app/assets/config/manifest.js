@@ -6,3 +6,4 @@
 //= link bootstrap.js
 //= link bootstrap.css
 //= link autocomplete_topics.js
+//= link search.js
