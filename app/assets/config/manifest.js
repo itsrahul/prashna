@@ -7,3 +7,5 @@
 //= link bootstrap.css
 //= link autocomplete_topics.js
 //= link search.js
+//= link answer.js
+//= link comment.js

@@ -1,22 +1,38 @@
 class Question < ApplicationRecord
+# 1. macros
+# 2. validations
+# 3. associations
+# 4. scopes
+# 5. callbacks
+  include SetTopic
+  include QuestionPublished
+
+  include BasicPresenter::Concern
   enum status: { draft: 0, published: 1 }
-
-  has_one_attached :file
-
-  belongs_to :user
-  has_and_belongs_to_many :topics
 
   validates :title, uniqueness: { case_sensitive: false }, presence: true
   validates :content, presence: true
   validates :questions_topic, length: { minimum: 1 }
-  validates :file_name, file_type_pdf: true, if: Proc.new {|q| q.file.attached? }
-
-  after_validation :set_slug, on: [:create, :update]
-  before_destroy :ensure_not_published
+  validates :doc, file_type_pdf: true, if: Proc.new {|q| q.doc.attached? }
+  
+  belongs_to :user
+  has_one_attached :doc
+  has_and_belongs_to_many :topics
+  has_many :answers
+  has_many :credit_transactions, as: :creditable
+  has_many :comments, as: :commentable
 
   scope :search_by_title, ->(val) {
-    published.where("title like ?", "%#{val}%").order(updated_at: :desc)
+    published.where("title like ?", "%#{val}%")
   }
+
+  after_validation :set_slug, on: [:create, :update]
+  before_create :ensure_credit_balance
+  before_update :ensure_not_published
+  before_destroy :ensure_not_published
+
+  @delegation_methods = [:markdown_content]
+  delegate *@delegation_methods, to: :presenter
 
   def to_param
     "#{id}-#{slug}"
@@ -29,14 +45,16 @@ class Question < ApplicationRecord
   private def ensure_not_published
     # change name and condition to until answered/commment/votes
     if published?
-      errors.add(:base, 'Question published, cannot be deleted now.')
+      errors.add(:base, 'Question published, cannot be changed now.')
       throw :abort
     end
   end
 
-  private def file_name
-    #FIXME_AB: try if you make use of content_type
-    file.attachment.blob.filename.to_s
+  private def ensure_credit_balance
+    if user.credits < ENV['credit_for_question_post'].to_i
+      errors.add(:base, 'Question cannot be published due to low balance.')
+      throw :abort
+    end
   end
 
   private def questions_topic

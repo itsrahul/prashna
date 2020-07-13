@@ -7,7 +7,7 @@
     <%= csp_meta_tag %>
     <%= javascript_include_tag 'https://code.jquery.com/jquery-3.5.1.js' %>
     <%= javascript_include_tag 'https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' %>
-    <%= javascript_include_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js' %>
+    <%#= javascript_include_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js' %>
     <%= javascript_include_tag 'bootstrap', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js' %>
 
@@ -38,14 +38,12 @@
             </li>
             <% unless logged_in? %>
               <li class="nav-item"><%= link_to 'Login', login_path, class: "nav-link" %></li>
-              <% #FIXME_AB: signup link -%>
+              <% #done FIXME_AB: signup link -%>
+              <li class="nav-item"><%= link_to 'Signup', signup_path, class: "nav-link" %></li>
             <% end %>
-            <li class="nav-item">
-              <%#= link_to 'Users', users_path, class: "nav-link" %>
-            </li>
             <% if logged_in? %>
               <li class="nav-item">
-                <%= link_to 'Profile', user_path(session[:user_id]), class: "nav-link" %>
+                <%= link_to 'Profile', profile_path, class: "nav-link" %>
               </li>
               <li class="nav-item">
                 <%#= link_to 'Questions', questions_path, class: "nav-link" %>

@@ -12,8 +12,6 @@ namespace :admin do
       STDIN.noecho(&:readline).chomp
     end
 
-    #FIXME_AB: Rails.logger.tagged() do
-    # end
     Rails.logger.tagged('admin:new') do
       admin = User.admin.new(
         name: get_detail("Name: "),

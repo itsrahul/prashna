@@ -1,0 +1,9 @@
+<% @comments.each do |comment| %>
+<div class="card bg-secondary mb-3" style="max-width: 25rem;">
+  <div class="card-body">
+    <p class="card-text"><%= comment.content %></p>
+    <p class="card-text">- <%= comment.user.name %></p>
+  </div>
+</div>
+<% end %>
+<br>

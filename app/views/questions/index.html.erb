@@ -4,30 +4,27 @@
 <% end %>
 
 <h2>Your questions</h2>
-
-
-    <div class="flex-container">  
-    <% @questions.each do |question| %>
-      <div class="card bg-light mb-3" style="max-width: 20rem;">
-        <div class="card-header">      
-          <% if question.published? %>
-            <span class="badge badge-success"><%= question.status.capitalize %></span>
-          <% else %>
-            <span class="badge badge-secondary"><%= question.status.capitalize %></span>
-          <% end %>
-          <%= link_to 'Edit', edit_question_path(question) %>
-          <%= link_to 'Delete', question, method: :delete, data: { confirm: 'Are you sure?' } %>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title"><%= question.title.capitalize %></h5>
-          <p class="card-text"><%= markdown(question.content) %></p>
-          <p><%= question.topics.pluck(:name) %></p>
-        </div>
+<div class="flex-container">  
+  <% @questions.each do |question| %>
+    <div class="card bg-light mb-3" style="max-width: 20rem;">
+      <div class="card-header">      
+        <% if question.published? %>
+          <span class="badge badge-success"><%= question.status.capitalize %></span>
+        <% else %>
+          <span class="badge badge-secondary"><%= question.status.capitalize %></span>
+        <% end %>
+        <%= link_to 'Edit', edit_question_path(question) %>
+        <%= link_to 'Delete', question, method: :delete, data: { confirm: 'Are you sure?' } %>
+      </div>  
+      <div class="card-body">
+        <h5 class="card-title"><%= question.title.capitalize %></h5>
+        <p class="card-text"><%= question.markdown_content %></p>
+        <p><%= question.topics.pluck(:name) %></p>
       </div>
-    <% end %>
     </div>
-
-
+  <% end %>
+</div>
 <br>
+<center><%= will_paginate @questions, class: "flickr_pagination" %></center>
 
 <%= link_to 'New Question', new_question_path %>

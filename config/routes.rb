@@ -1,9 +1,18 @@
 Rails.application.routes.draw do
+  get 'comments/create'
+  get 'answers/create'
+  get 'notifications/index'
   root 'home#index',  as: 'home_index'
-  resources :questions do
-    get :search, on: :collection
-  end
+  get 'search_questions/search'
+  get 'search_questions/filter'
 
+  resources :questions do
+    resources :comments, only: :create
+    resources :answers, only: :create
+  end
+  resources :answers, only: :create do
+    resources :comments, only: :create
+  end
   get 'topics', to: "topics#search"
   
   get 'topics/edit'
@@ -25,6 +34,11 @@ Rails.application.routes.draw do
   get 'sessions/create'
   get 'sessions/destroy'
 
+  controller :users do 
+    get 'signup' => :new
+    get 'profile' => :show
+  end
+  
   resources :users do
     collection do
       get 'verify/:token', action: :verify, as: 'verification'

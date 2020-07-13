@@ -35,7 +35,13 @@ gem 'letter_opener_web', '~> 1.0'
 # Using redcarpet for markdown format
 gem 'redcarpet', '~> 3.3'
 
-#FIXME_AB: whenever you add any gem, specify its version
+# Used for pagination
+gem 'will_paginate', '~> 3.3'
+
+# Used bullet
+gem 'bullet'
+
+gem 'basic_presenter', '~> 0.0.4'
 
 gem 'exception_notification', '~> 4.4.1'
 gem 'bootstrap', '~> 4.5.0'

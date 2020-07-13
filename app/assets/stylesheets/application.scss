@@ -35,23 +35,51 @@ header.main {
 
 .flex-container {
   display: flex;
-  
+  flex-wrap: wrap;
   div {
     margin: 10px;
-  }
+  } 
 }
 
-// .notice, #notice {
-//   background: #ffb;
-//   border-radius: 0.5em;
-//   border: solid 0.177em #882;
-//   color: #882;
-//   font-weight: bold;
-//   margin-bottom: 1em;
-//   padding: 1em 1.414em;
-//   text-align: center;
-// }
-
+.flickr_pagination {
+  text-align: center;
+  padding: 0.3em;
+  cursor: default;
+  a, span, em {
+    padding: 0.2em 0.5em;
+  }
+  .disabled {
+    color: #aaaaaa;
+  }
+  .current {
+    font-style: normal;
+    font-weight: bold;
+    color: #ff0084;
+  }
+  a {
+    border: 1px solid #dddddd;
+    color: #0063dc;
+    text-decoration: none;
+    &:hover, &:focus {
+      border-color: #003366;
+      background: #0063dc;
+      color: white;
+    }
+  }
+  .page_info {
+    color: #aaaaaa;
+    padding-top: 0.8em;
+  }
+  .previous_page, .next_page {
+      border-width: 2px;
+    }
+  .previous_page {
+    margin-right: 1em;
+  }
+  .next_page {
+    margin-left: 1em;
+  }
+}
 
 .content {
   margin: 0;

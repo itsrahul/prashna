@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
       if params[:remember_me]
         set_remember_me(user.id) 
       end
-      redirect_to users_url
+      redirect_to root_path
     else
       redirect_to login_url, notice: t(".invalid_credentials")
     end
@@ -26,7 +26,7 @@ class SessionsController < ApplicationController
   def destroy
     reset_session
     reset_remember_me
-    redirect_to users_url, notice: t('.logout')
+    redirect_to root_path, notice: t('.logout')
   end
 
   private def set_remember_me(id)
@@ -40,11 +40,8 @@ class SessionsController < ApplicationController
   private def get_user_from_cookie
     session[:user_id] = cookies.signed[:user_id]
     if session[:user_id]
-      redirect_to users_url
+      redirect_to root_path
     end
   end
 
-  private def check_verified(user)
-    user.verification_at
-  end
 end

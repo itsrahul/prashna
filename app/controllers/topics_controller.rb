@@ -4,4 +4,6 @@ class TopicsController < ApplicationController
     render json: topics
   end
 
+  def show
+  end
 end

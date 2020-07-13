@@ -4,26 +4,29 @@
 </p>
 
 <p>
-  <strong>Content:</strong>
-  <%= markdown(@question.content) %>
+  <%# <strong>Content:</strong> %>
+  <%= @question.markdown_content %>
 </p>
 
 <p>
-  <strong>Status:</strong>
+  <%# <strong>Status:</strong> %>
   <%= @question.status %>
 </p>
 
-<% if @question.file.attached? %>
+<% if @question.doc.attached? %>
   <p>
     <strong>File attached:</strong>
-    <%= @question.file.blob.filename.to_s %>
+    <%= @question.doc.blob.filename.to_s %>
   </p>
 <% end %>
 
 <p>
-  <strong>Topics:</strong>
+  <%# <strong>Topics:</strong> %>
   <%= @question.topics.pluck(:name) %>
 </p>
 
-<%= link_to 'Edit', edit_question_path(@question) %> |
-<%= link_to 'Back', questions_path %>
+<p>
+  Post by -<%= @question.user.name %>
+</p>
+<%#= link_to 'Edit', edit_question_path(@question) %>
+<%#= link_to 'Back', questions_path %>

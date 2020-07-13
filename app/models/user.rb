@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-
-#FIXME_AB:
+  include SetTopic
+#done FIXME_AB:
 # 1. macros
 # 2. validations
 # 3. associations
@@ -9,20 +9,21 @@ class User < ApplicationRecord
 
   enum role: { user: 0, admin: 1 }
 
-  has_one_attached :profile_image
-
-  has_many :credit_transactions, dependent: :destroy
-  has_many :questions
-  has_and_belongs_to_many :topics
-
-  has_secure_password
-
   validates :name, :email, presence: true
   validates :name, length: { minimum: 3}
   validates :email, uniqueness: { case_sensitive: false }, email: true, allow_blank: true
   validates :password, length: { minimum: 4 , maximum: 80}, password: true, allow_blank: true
-  validates :profile_image_url, image_url: true, if: Proc.new {|user| user.verified? }
+  validates :profile_image, presence: true, if: Proc.new {|user| user.verified? } 
+  validates :profile_image, image_url: true, if: Proc.new {|user| user.verified? && user.profile_image.attached? }
 
+  has_one_attached :profile_image
+  has_many :credit_transactions, as: :creditable, dependent: :destroy
+  # has_many :credit_transactions
+
+  has_many :questions
+  has_many :notifications
+  has_and_belongs_to_many :topics
+  has_secure_password
 
   scope :verified, -> { where.not(verification_at: nil) }
   scope :unverified, -> { where(verification_at: nil) }
@@ -32,18 +33,19 @@ class User < ApplicationRecord
   after_create_commit :send_verification_token, unless: Proc.new { |user| user.admin? }
 
   def send_reset_link
-    update(reset_token: SecureRandom.urlsafe_base64, reset_token_expire: ENV['reset_token_valid'].to_i.hours.after)
+    update(reset_token: SecureRandom.urlsafe_base64, reset_token_expire: ENV['reset_token_validity_in_hours'].to_i.hours.after)
     UserMailer.password_reset_mail(self.id).deliver_later
   end
 
   def activate!
     if verification_token_expire > Time.current
-      update(verification_at: Time.current)
-      credit_transactions.signup.create(value: ENV['signup_credits'], reason: "Signup")
-      clear_verification_reset_fields
+      update_columns(verification_at: Time.current)
+      # credit_transactions.signup.create(value: ENV['signup_credits'], reason: "Signup")
+      CreditTransaction.signup.create(user: self, value: ENV['signup_credits'], reason: "Signup", creditable: self)
+      clear_verification_fields
       return true
     else
-      clear_verification_reset_fields
+      clear_verification_fields
       return false
     end
   end
@@ -52,13 +54,13 @@ class User < ApplicationRecord
     update_columns(reset_token: nil, reset_token_expire: nil)
   end
 
-  def clear_verification_reset_fields
+  def clear_verification_fields
     update_columns(verification_token: nil, verification_token_expire: nil)
   end
 
   def verified?
-    #FIXME_AB: verification_at.present?
-    !verification_at.nil?
+    #done FIXME_AB: verification_at.present?
+    verification_at.present?
   end
 
   private def ensure_no_purchase_history
@@ -68,13 +70,8 @@ class User < ApplicationRecord
     end
   end
 
-  private def profile_image_url
-    #FIXME_AB: profile_image.attachment.image? can be used to check if attachment is image or not
-    profile_image.attachment.blob.filename.to_s
-  end
-
   private  def set_verification_token
-      self.update_columns(verification_token: SecureRandom.urlsafe_base64 , verification_token_expire: ENV['verification_token_valid'].to_i.hours.after)
+      self.update_columns(verification_token: SecureRandom.urlsafe_base64 , verification_token_expire: ENV['verification_token_validity_in_hours'].to_i.hours.after)
     end
 
   private  def send_verification_token
