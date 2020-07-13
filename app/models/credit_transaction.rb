@@ -7,7 +7,7 @@ class CreditTransaction < ApplicationRecord
   belongs_to :user
   belongs_to :creditable, polymorphic: true
 
-  #done FIXME_AB: use unless: user.destroyed?
+  #FIXME_AB: use unless: user.destroyed?
   after_commit :refresh_credits_balance!, unless: Proc.new { |ct| (ct.signup? || ct.creditable.destroyed? ) }
   after_commit :refresh_credits_balance, if: Proc.new { |ct| ct.signup? }, unless: Proc.new { |ct| ct.creditable.destroyed? }
 

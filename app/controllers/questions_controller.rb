@@ -2,15 +2,15 @@ class QuestionsController < ApplicationController
 
   before_action :set_question, only: [:edit, :update, :destroy]
   before_action :ensure_not_published, only: [:update, :destroy]
-  #done FIXME_AB: add :new also
+  #FIXME_AB: add :new also
 
   before_action :ensure_credit_balance, only: [:new, :create]
 
   def index
-    #done FIXME_AB: eagerload associations whver possible
-    #done FIXME_AB: use bullet gem
+    #FIXME_AB: eagerload associations whver possible
+    #FIXME_AB: use bullet gem
     @questions = current_user.questions.paginate(page: params[:page], per_page: ENV['pagination_size'].to_i)
-    #done FIXME_AB: paginated
+    #FIXME_AB: paginated
   end
 
   def new
@@ -79,14 +79,14 @@ class QuestionsController < ApplicationController
     end
   end
 
-  #done FIXME_AB: private
+  #FIXME_AB: private
   private def save_as_draft
     params[:commit] == "Save as Draft"
   end
 
   private  def set_question
-    #done FIXME_AB: current_user.questions.draft.find
-    #done FIXME_AB: add a callback before_update to check whether question is in published state.
+    #FIXME_AB: current_user.questions.draft.find
+    #FIXME_AB: add a callback before_update to check whether question is in published state.
     unless (@question = current_user.questions.draft.find_by(id: params[:id]))
       redirect_to questions_path, notice: t('.too_late')
     end
@@ -97,8 +97,8 @@ class QuestionsController < ApplicationController
   end
 
   private def ensure_credit_balance
-    #done FIXME_AB: take credits required for question posting from env.
-    #done FIXME_AB: validation in model, before create. check credit balance
+    #FIXME_AB: take credits required for question posting from env.
+    #FIXME_AB: validation in model, before create. check credit balance
     if current_user.credits < ENV['credit_for_question_post'].to_i
       redirect_to questions_path, notice: t('.low_balance')
     end

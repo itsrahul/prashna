@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   include SetTopic
-#done FIXME_AB:
+#FIXME_AB:
 # 1. macros
 # 2. validations
 # 3. associations
@@ -59,7 +59,7 @@ class User < ApplicationRecord
   end
 
   def verified?
-    #done FIXME_AB: verification_at.present?
+    #FIXME_AB: verification_at.present?
     verification_at.present?
   end
 

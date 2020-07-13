@@ -24,7 +24,7 @@ class SearchQuestions
 
   magic(search_val, searchUrl)
   {
-    // done FIXME_AB: add ajax loader
+    // FIXME_AB: add ajax loader
     $.ajax({
       url: searchUrl,
       type: "get",

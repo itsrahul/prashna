@@ -38,7 +38,7 @@
             </li>
             <% unless logged_in? %>
               <li class="nav-item"><%= link_to 'Login', login_path, class: "nav-link" %></li>
-              <% #done FIXME_AB: signup link -%>
+              <% #FIXME_AB: signup link -%>
               <li class="nav-item"><%= link_to 'Signup', signup_path, class: "nav-link" %></li>
             <% end %>
             <% if logged_in? %>
