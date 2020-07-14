@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_14_061207) do
+ActiveRecord::Schema.define(version: 2020_07_14_123806) do
 
   create_table "action_mailbox_inbound_emails", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.integer "status", default: 0, null: false
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2020_07_14_061207) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "comments_count", default: 0, null: false
+    t.integer "net_upvotes", default: 0
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
@@ -60,6 +61,7 @@ ActiveRecord::Schema.define(version: 2020_07_14_061207) do
     t.string "commentable_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "net_upvotes", default: 0
     t.index ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
@@ -146,7 +148,7 @@ ActiveRecord::Schema.define(version: 2020_07_14_061207) do
 
   create_table "votes", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.boolean "value", default: true
+    t.boolean "vote_type", default: true
     t.integer "votable_id"
     t.string "votable_type"
     t.datetime "created_at", precision: 6, null: false

@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_action :authorize
+  before_action :authorize, :notification_count
   helper_method :current_user, :logged_in?
 
   def current_user
@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
     current_user != nil
   end
 
+  def notification_count
+    @notifications = Notification.all
+    # where(user: current_user)
+  end
   protected def authorize
     unless current_user
       redirect_to login_url, notice: t('.login_required')

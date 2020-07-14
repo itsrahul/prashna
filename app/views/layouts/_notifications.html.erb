@@ -1,0 +1,7 @@
+<% if @notifications.present? %>
+  <% @notifications.each do |notification| %>
+  <%= link_to notification.message, question_path(notification.notifiable_id), class: "dropdown-item notification-item" %>
+  <% end %>
+<% else %>
+ <p class="dropdown-item"> No notifications</p>
+<% end %>

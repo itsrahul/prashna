@@ -13,7 +13,6 @@ class User < ApplicationRecord
   validates :name, length: { minimum: 3}
   validates :email, uniqueness: { case_sensitive: false }, email: true, allow_blank: true
   validates :password, length: { minimum: 4 , maximum: 80}, password: true, allow_blank: true
-  validates :profile_image, presence: true, if: Proc.new {|user| user.verified? } 
   validates :profile_image, image_url: true, if: Proc.new {|user| user.verified? && user.profile_image.attached? }
 
   has_one_attached :profile_image
@@ -22,6 +21,7 @@ class User < ApplicationRecord
 
   has_many :questions
   has_many :notifications
+  has_many :votes
   has_and_belongs_to_many :topics
   has_secure_password
 

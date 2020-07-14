@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'votes/create'
   get 'comments/create'
   get 'answers/create'
   get 'notifications/index'
@@ -10,9 +11,16 @@ Rails.application.routes.draw do
     resources :comments, only: :create
     resources :answers, only: :create
   end
+  
   resources :answers, only: :create do
     resources :comments, only: :create
+    resources :votes, only: :create
   end
+
+  resources :comments, only: :create do
+    resources :votes, only: :create
+  end
+
   get 'topics', to: "topics#search"
   
   get 'topics/edit'

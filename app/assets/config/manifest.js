@@ -9,3 +9,5 @@
 //= link search.js
 //= link answer.js
 //= link comment.js
+//= link notification.js
+//= link vote.js
