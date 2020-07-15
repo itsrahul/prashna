@@ -8,10 +8,9 @@ class VotesController < ApplicationController
     else
       @vote.down_vote!
     end
-    # implement ajax
-    # unless @vote.save
-      # redirect_to root_path
-    # end
+    # implement ajax properly
+    # send up/down votes for answer/comment i.e votable to update vote count
+    render json: { upcount: Vote.upvote_count(@votable), downcount: Vote.downvote_count(@votable) }
   end
 
   private def set_votable
