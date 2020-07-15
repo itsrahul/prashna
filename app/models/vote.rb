@@ -6,6 +6,9 @@ class Vote < ApplicationRecord
   belongs_to :user
   belongs_to :votable, polymorphic: true
 
+#FIXME_AB:  user can vote on comments of published question
+#FIXME_AB:  user can vote on answer of published question
+
   scope :upvote_count, -> (votable) { up_vote.where(votable: votable).size }
   scope :downvote_count, -> (votable) { down_vote.where(votable: votable).size }
 
