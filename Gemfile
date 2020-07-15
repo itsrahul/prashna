@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-#FIXME_AB: Read Gemfile vs Gemfile.lock
 #FIXME_AB: Read explain what is the difference between three rails env: development, production, test
 #FIXME_AB: Read about config/initializers directory, when these files are executed, how many times, in which order etc..
 
@@ -39,6 +38,7 @@ gem 'redcarpet', '~> 3.3'
 gem 'will_paginate', '~> 3.3'
 
 # Used bullet
+#FIXME_AB: add version
 gem 'bullet'
 
 gem 'basic_presenter', '~> 0.0.4'

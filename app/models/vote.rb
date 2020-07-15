@@ -9,6 +9,10 @@ class Vote < ApplicationRecord
   scope :upvote_count, -> (votable) { up_vote.where(votable: votable).size }
   scope :downvote_count, -> (votable) { down_vote.where(votable: votable).size }
 
+
+  #FIXME_AB: Vote.by_votable(@question).up_votes.count
+
+  #FIXME_AB: we don't need this unless condition
   after_commit :refresh_net_votes!, unless: Proc.new { |vt| vt.user.destroyed? }
 
   private def refresh_net_votes!

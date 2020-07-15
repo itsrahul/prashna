@@ -17,3 +17,7 @@ class SearchQuestionsController < ApplicationController
     end
   end
 end
+
+# /search/topics/ruby
+# /search/term/searchterm
+# /search/user/3

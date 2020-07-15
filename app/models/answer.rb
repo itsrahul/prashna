@@ -1,5 +1,6 @@
 class Answer < ApplicationRecord
   validates :content, presence: true
+  #FIXME_AB:  min words validation
 
   belongs_to :user
   belongs_to :question, counter_cache: true

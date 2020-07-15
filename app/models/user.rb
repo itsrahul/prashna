@@ -17,10 +17,12 @@ class User < ApplicationRecord
 
   has_one_attached :profile_image
   has_many :credit_transactions, as: :creditable, dependent: :destroy
-  # has_many :credit_transactions
 
+  #FIXME_AB: if user has published questions then can not be destroyed
   has_many :questions
+  #FIXME_AB: dependent option?
   has_many :notifications
+  #FIXME_AB: dependent restrict
   has_many :votes
   has_and_belongs_to_many :topics
   has_secure_password
@@ -59,7 +61,6 @@ class User < ApplicationRecord
   end
 
   def verified?
-    #FIXME_AB: verification_at.present?
     verification_at.present?
   end
 

@@ -11,7 +11,7 @@ class AnswersController < ApplicationController
 
   private def set_question
     unless (@question = Question.published.find(params[:question_id]))
-      redirect_to root_path, notice: "no question for answer"
+      redirect_to root_path, alert: "Question not found."
     end
   end
 
