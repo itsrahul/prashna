@@ -1,5 +1,15 @@
 class NotificationsController < ApplicationController
   def index
-    @notifications = Notification.where(user: current_user).limit(3)
+    notifications = current_user.notifications.unread
+    # debugger
+    render json: { count: notifications.count, items: notifications }
+  end
+
+  def open
+    notification = Notification.find(params[:format])
+    if notification.unread?
+      notification.mark_read
+    end
+    redirect_to question_path(notification.notifiable_id)
   end
 end

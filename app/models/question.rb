@@ -9,34 +9,53 @@ class Question < ApplicationRecord
 
   include BasicPresenter::Concern
   enum status: { draft: 0, published: 1 }
+  extend ActiveModel::Callbacks
+  define_model_callbacks :publish, :only => [:before, :after]
 
   validates :title, uniqueness: { case_sensitive: false }, presence: true
   validates :content, presence: true
   validates :questions_topic, length: { minimum: 1 }
   validates :doc, file_type_pdf: true, if: Proc.new {|q| q.doc.attached? }
 
-  #FIXME_AB: user should not be able to answer on his own question
+  #done FIXME_AB: user should not be able to answer on his own question
 
 
   belongs_to :user
-  #FIXME_AB: add dependent option
+  #done FIXME_AB: add dependent option
   has_one_attached :doc
   has_and_belongs_to_many :topics
-  has_many :answers
+  has_many :answers, dependent: :restrict_with_error
   has_many :credit_transactions, as: :creditable
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :restrict_with_error
 
   scope :search_by_title, ->(val) {
     published.where("title like ?", "%#{val}%")
   }
 
+  scope :since, ->(time) {
+    published.where("created_at > ?", time )
+  }
+
+
   after_validation :set_slug, on: [:create, :update]
   before_create :ensure_credit_balance
   before_update :ensure_not_published
   before_destroy :ensure_not_published
+  after_publish  :notify_other_users_and_charge_user
 
   @delegation_methods = [:markdown_content]
   delegate *@delegation_methods, to: :presenter
+
+  def publish
+    run_callbacks :publish
+  end
+
+  def notify_other_users_and_charge_user
+    unless credit_transactions.exists?
+      notify_users_except(user)
+      charge_credits(user)
+    end
+  end
 
   def to_param
     "#{id}-#{slug}"
@@ -47,15 +66,15 @@ class Question < ApplicationRecord
   end
 
   private def ensure_not_published
-    #FIXME_AB: this will not allow user to publish his drafted question. Use dirty objects
-    if published?
+    #done FIXME_AB: this will not allow user to publish his drafted question. Use dirty objects
+    if status_was == "published"
       errors.add(:base, 'Question published, cannot be changed now.')
       throw :abort
     end
   end
 
   private def ensure_credit_balance
-    if user.credits < ENV['credit_for_question_post'].to_i
+    unless user.has_sufficient_credits_to_post_question?
       errors.add(:base, 'Question cannot be published due to low balance.')
       throw :abort
     end

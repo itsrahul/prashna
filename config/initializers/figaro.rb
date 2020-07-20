@@ -1,1 +1,1 @@
-Figaro.require_keys("default_mail", "signup_credits", "verification_token_validity_in_hours", "reset_token_validity_in_hours")
+Figaro.require_keys("verification_token_validity_in_hours", "reset_token_validity_in_hours", "signup_credits", "default_mail", "pagination_size", "credit_for_question_post", "upvote_for_bonus_credit")

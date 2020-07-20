@@ -5,8 +5,8 @@ class QuestionsController < ApplicationController
   before_action :ensure_credit_balance, only: [:new, :create]
 
   def index
-    #FIXME_AB: eagerload associations whver possible
-    #FIXME_AB: use bullet gem
+    #done FIXME_AB: eagerload associations whver possible
+    #done FIXME_AB: use bullet gem
     @questions = current_user.questions.paginate(page: params[:page], per_page: ENV['pagination_size'].to_i)
   end
 
@@ -18,7 +18,10 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.published.find_by(id: params[:id])
+    @questions = Question.published.where(id: params[:id])
+    if @questions.blank?
+      redirect_to root_path, alert: "Invalid question id"
+    end
   end
 
   def create
@@ -26,9 +29,7 @@ class QuestionsController < ApplicationController
       @question = current_user.questions.draft.build(question_params)
     else
       @question = current_user.questions.published.build(question_params)
-      #create notification, charge 1 credit
-      @question.notify_question_pubished(current_user)
-      @question.charge_credits(current_user)
+      @question.publish
     end
 
     respond_to do |format|
@@ -48,12 +49,15 @@ class QuestionsController < ApplicationController
     respond_to do |format|
       if @question.update(question_params)
         unless save_as_draft
-          #FIXME_AB: @question.publish
-          @question.update_columns(status: "published")
-          #create notification, charge 1 credit
-          #FIXME_AB: Ideally it shoudl be a callback. if question is being published , and it was not published earlier. + user was not charged then charge.. in after publish callback
-          @question.notify_question_pubished(current_user)
-          @question.charge_credits(current_user)
+          #done FIXME_AB: @question.publish
+          unless @question.status_was == "published"
+            @question.update_columns(status: "published")
+            @question.publish
+          end
+          # @question.update_columns(status: "published")
+          #done FIXME_AB: Ideally it shoudl be a callback. if question is being published , and it was not published earlier. + user was not charged then charge.. in after publish callback
+          # @question.notify_question_pubished(current_user)
+          # @question.charge_credits(current_user)
         end
         format.html { redirect_to questions_url, notice: t('.success') }
         format.json { render :show, status: :ok, location: @question }
@@ -80,7 +84,7 @@ class QuestionsController < ApplicationController
   end
 
   private  def set_question
-    #FIXME_AB: add a callback before_update to check whether question is in published state.
+    #done FIXME_AB: add a callback before_update to check whether question is in published state.
     unless (@question = current_user.questions.draft.find_by(id: params[:id]))
       redirect_to questions_path, notice: t('.too_late')
     end
@@ -91,8 +95,8 @@ class QuestionsController < ApplicationController
   end
 
   private def ensure_credit_balance
-    #FIXME_AB: user.has_sufficient_credits_to_post_question => true / false
-    if current_user.credits < ENV['credit_for_question_post'].to_i
+    #done FIXME_AB: user.has_sufficient_credits_to_post_question? => true / false
+    unless current_user.has_sufficient_credits_to_post_question?
       redirect_to questions_path, notice: t('.low_balance')
     end
   end

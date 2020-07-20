@@ -3,9 +3,15 @@ development:
   reset_token_validity_in_hours: '2'
   signup_credits: '5'
   default_mail: 'admin@prashna.com'
+  pagination_size: '2'
+  credit_for_question_post: '1'
+  upvote_for_bonus_credit: '2'
 
 production:
   verification_token_validity_in_hours: '4'
   reset_token_validity_in_hours: '4'
   signup_credits: '10'
   default_mail: 'admin@prashna.com'
+  pagination_size: '5'
+  credit_for_question_post: '1'
+  upvote_for_bonus_credit: '6'

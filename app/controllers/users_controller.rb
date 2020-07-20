@@ -1,17 +1,12 @@
 class UsersController < ApplicationController
-  #FIXME_AB: we need to skip authorization for new and create only, edit, update, destroy we need authorization
   skip_before_action :authorize, only: [:new, :create, :verify]
 
-  #FIXME_AB: we can remove this before_action. and use current_user directly in actions
   before_action :ensure_not_logged_in, only: :new
-  #FIXME_AB: remove index
 
   def show
     @user = current_user
   end
 
-  #FIXME_AB: lets make route to /signup
-  #FIXME_AB: only non loged in user can access this. before_action
   def new
     @user = User.new
   end
@@ -24,7 +19,6 @@ class UsersController < ApplicationController
     @user = User.user.new(user_params)
 
     respond_to do |format|
-      #FIXME_AB: after signup I see notice: invalid link
       if @user.save
         format.html { redirect_to login_path, notice: t('.success') }
         format.json { render :show, status: :created, location: @user }
@@ -37,8 +31,7 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    #FIXME_AB: find_or_initialize_by_name
-    #FIXME_AB: move this method to model's concern and include in user and question model. so that you would be able to use it like: @user.set_topics(params[:user][:topic])
+    #done FIXME_AB: move this method to model's concern and include in user and question model. so that you would be able to use it like: @user.set_topics(params[:user][:topic])
     @user.set_topics(params[:user][:topic])
 
     respond_to do |format|
@@ -65,7 +58,7 @@ class UsersController < ApplicationController
 
   def verify
     user = User.unverified.find_by_verification_token(params[:token])
-    #FIXME_AB: there is an exception is verification process
+    #done FIXME_AB: there is an exception is verification process
     if user && user.activate!
       redirect_to login_path, notice: t('.success')
     else

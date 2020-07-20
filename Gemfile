@@ -38,8 +38,8 @@ gem 'redcarpet', '~> 3.3'
 gem 'will_paginate', '~> 3.3'
 
 # Used bullet
-#FIXME_AB: add version
-gem 'bullet'
+#done FIXME_AB: add version
+gem 'bullet', '~> 6.1.0'
 
 gem 'basic_presenter', '~> 0.0.4'
 

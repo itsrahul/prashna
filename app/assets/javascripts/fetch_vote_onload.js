@@ -1,4 +1,4 @@
-class CastVote
+class FetchVoteOnLoad
 {
   constructor(options){
     this.$main = options.main;
@@ -38,6 +38,6 @@ document.addEventListener('turbolinks:load', function() {
     main: $('.vote-answer-buttons > form > input[type=submit], .vote-comment-buttons > form > input[type=submit]'),
   }
 
-  let vote = new CastVote(options);
+  let vote = new FetchVoteOnLoad(options);
   vote.init();
 });

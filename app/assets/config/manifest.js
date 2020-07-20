@@ -11,3 +11,4 @@
 //= link comment.js
 //= link notification.js
 //= link vote.js
+//= link question_reload.js

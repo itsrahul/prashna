@@ -16,4 +16,14 @@ class UserMailer < ApplicationMailer
       mail to: @user.email, subject: t('.subject')
     end
   end
+
+  def answer_posted_mail(id, question_id)
+    @user = User.find(id)
+    @question = Question.published.find(question_id)
+    
+
+    if (@user && @question)
+      mail to: @user.email, subject: "New answer posted"
+    end
+  end
 end

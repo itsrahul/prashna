@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   include SetTopic
-#FIXME_AB:
+#done FIXME_AB:
 # 1. macros
 # 2. validations
 # 3. associations
@@ -18,19 +18,19 @@ class User < ApplicationRecord
   has_one_attached :profile_image
   has_many :credit_transactions, as: :creditable, dependent: :destroy
 
-  #FIXME_AB: if user has published questions then can not be destroyed
+  #done FIXME_AB: if user has published questions then can not be destroyed
   has_many :questions
-  #FIXME_AB: dependent option?
-  has_many :notifications
-  #FIXME_AB: dependent restrict
-  has_many :votes
+  #done FIXME_AB: dependent option?
+  has_many :notifications, dependent: :destroy
+  #done FIXME_AB: dependent restrict
+  has_many :votes, dependent: :restrict_with_error
   has_and_belongs_to_many :topics
   has_secure_password
 
   scope :verified, -> { where.not(verification_at: nil) }
   scope :unverified, -> { where(verification_at: nil) }
 
-  before_destroy :ensure_no_purchase_history
+  before_destroy :ensure_no_purchase_history, :ensure_no_published_question
   after_create_commit :set_verification_token
   after_create_commit :send_verification_token, unless: Proc.new { |user| user.admin? }
 
@@ -42,8 +42,7 @@ class User < ApplicationRecord
   def activate!
     if verification_token_expire > Time.current
       update_columns(verification_at: Time.current)
-      # credit_transactions.signup.create(value: ENV['signup_credits'], reason: "Signup")
-      CreditTransaction.signup.create(user: self, value: ENV['signup_credits'], reason: "Signup", creditable: self)
+      credit_transactions.signup.create(user: self, value: ENV['signup_credits'], reason: "Signup")
       clear_verification_fields
       return true
     else
@@ -64,9 +63,20 @@ class User < ApplicationRecord
     verification_at.present?
   end
 
+  def has_sufficient_credits_to_post_question?
+    credits >= ENV['credit_for_question_post'].to_i
+  end
+
   private def ensure_no_purchase_history
     if credit_transactions.purchase.exists?
       errors.add(:base, 'User has purchased credits')
+      throw :abort
+    end
+  end
+
+  private def ensure_no_published_question
+    if questions.published.exists?
+      errors.add(:base, 'User has publised questions')
       throw :abort
     end
   end

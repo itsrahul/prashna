@@ -3,6 +3,7 @@ class AnswersController < ApplicationController
 
   def create
     answer = @question.answers.create(user: current_user, content:  params[:content])
+    UserMailer.answer_posted_mail(@question.user.id, @question.id).deliver_later
     @answers = @question.answers
     if @answers
       render partial: "shared/answers"

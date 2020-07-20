@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_action :authorize, :notification_count
+  before_action :authorize, :fetch_notification
   helper_method :current_user, :logged_in?
 
   def current_user
@@ -10,13 +10,16 @@ class ApplicationController < ActionController::Base
     current_user != nil
   end
 
-  def notification_count
-    @notifications = Notification.all
-    # where(user: current_user)
+  def fetch_notification
+    if logged_in?
+      @notifications = current_user.notifications
+    end
+    #TODO: will shift to ajax call, not doing
   end
+
   protected def authorize
     unless current_user
-      redirect_to login_url, notice: t('.login_required')
+      redirect_to login_url, alert: t('.login_required')
     end
   end
 end

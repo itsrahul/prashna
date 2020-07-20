@@ -1,7 +1,7 @@
 <% @questions.each do |question| %>
 <div class="card bg-light mb-3" style="max-width: 150rem;">
   <div class="card-header">      
-    <h5 class="card-title"><%= question.title.capitalize %></h5>
+    <h5 class="card-title"><%= link_to question.title.capitalize, question_path(question.id) %></h5>
   </div>
   <div class="card-body">
     <p class="card-text"><%= question.markdown_content %></p>
@@ -9,12 +9,12 @@
       <% if question.topics.exists? %>
         <% question.topics.each do |topic| %>
           <span class="btn btn-dark">
-            <%= link_to(topic.name , search_questions_search_path(search: topic.name) , method: :get, remote: true, class: "filter-topics") %>
+            <%= link_to topic.name , search_topic_path(topic.name) %>
           </span>
         <% end %>
         <% #FIXME_AB: make these topis a link. click on that would filter questions belongs to these topic,, params[:search]: (topic.name) -%>
       <% end %>
-    <p class="card-text">Post by -<%= question.user.name %></p>
+    <p class="card-text">Post by -<%= link_to question.user.name, search_user_path(question.user.id) %></p>
     <p>
       <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#collapseAnswers-<%= question.id%>" role="button" aria-expanded="false" aria-controls="collapseExample">
         Answers(<%= question.answers_count %>)
@@ -73,4 +73,6 @@
 </div>
 <% end %>
 <br>
+<% if @questions.respond_to?(:total_pages) %>
 <center><%= will_paginate @questions, previous_label: "previous",  class: "flickr_pagination" %></center>
+<% end %>

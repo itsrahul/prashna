@@ -2,11 +2,21 @@ Rails.application.routes.draw do
   get 'votes/create'
   get 'comments/create'
   get 'answers/create'
+  get 'home/refresh'
   get 'notifications/index'
+  get 'notifications/open', to: 'notifications#open', as: 'opens_notification'
   root 'home#index',  as: 'home_index'
-  get 'search_questions/search'
-  get 'search_questions/filter'
+  get 'search', to: "search#search"
+  get 'search/topics/:name', to: "search#topics", as: 'search_topic'
+  get 'search/user/:id', to: "search#user", as: 'search_user'
 
+  # resources :search do
+  #   collection do
+      # get 'topics/:name', to: "search", as: 'topic'
+      # get 'term/:term', action: :term, as: 'term'
+      # get 'users/:id', action: :verify, as: 'user'
+    # end
+  # end
   resources :questions do
     resources :comments, only: :create
     resources :answers, only: :create
@@ -24,7 +34,7 @@ Rails.application.routes.draw do
   get 'topics', to: "topics#search"
   
   get 'topics/edit'
-  get 'topics/index'
+  # get 'topics/:name', to: "topics#index", as: 'topic'
   root 'users#index'
 
   get 'password_resets/new'

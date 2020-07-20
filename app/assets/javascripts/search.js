@@ -53,5 +53,5 @@ $(document).on('turbolinks:load', function() {
   }
 
   let updater = new SearchQuestions(options);
-  updater.init();
+  // updater.init();
 });

@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
       end
       redirect_to root_path
     else
-      redirect_to login_url, notice: t(".invalid_credentials")
+      redirect_to login_url, alert: t(".invalid_credentials")
     end
   end
 

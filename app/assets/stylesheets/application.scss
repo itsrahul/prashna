@@ -32,6 +32,25 @@ header.main {
     display: none;
   }
 }
+.vote-comment-buttons {
+    margin: 0px;
+    * {
+    padding: 0px;
+    display: inline;
+    }
+}
+.vote-answer-buttons {
+  margin: 0px;
+  * {
+  padding: 0px;
+  display: inline;
+  }
+}
+.scrollable-menu {
+  height: auto;
+  max-height: 125px;
+  overflow-x: hidden;
+}
 
 .flex-container {
   display: flex;
