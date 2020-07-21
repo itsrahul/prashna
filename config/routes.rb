@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'credit_transactions/', to: 'credit_transactions#index', as: 'credit_transactions'
+  get 'abuse_reports/:abusable/:id', to: 'abuse_reports#new', as: 'report_abuse'
+  post 'abuse_reports/:abusable/:id', to: 'abuse_reports#create'
   get 'votes/create'
   get 'comments/create'
   get 'answers/create'

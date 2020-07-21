@@ -3,16 +3,18 @@ en:
     login_required: "Please log in"
 
     create:
-      success: 'Question was created successfully.'
+      success: "Question was created successfully."
       low_balance: "You are low on credts balance. Please topup."
     
     edit:
       too_late: "Question can't be edited now"
 
     update:
-      success: 'Question was updated successfully.'
+      success: "Question was updated successfully."
+      abused: "Question can't published now, too many abuse reported."
 
     destroy:
       success: 'Question was destroyed successfully.'
       failure: "Question could not be destroyed."
       too_late: "Question can't be deleted now"
+      abused: "Question can't be deleted."

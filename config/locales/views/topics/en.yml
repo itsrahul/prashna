@@ -3,3 +3,6 @@ en:
     edit:
       invalid: "Invalid Link"
       login_required: "Please log in"
+
+    index:
+      invalid: "No topic found"

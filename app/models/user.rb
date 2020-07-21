@@ -17,6 +17,7 @@ class User < ApplicationRecord
 
   has_one_attached :profile_image
   has_many :credit_transactions, as: :creditable, dependent: :destroy
+  has_many :abuse_reports
 
   #done FIXME_AB: if user has published questions then can not be destroyed
   has_many :questions

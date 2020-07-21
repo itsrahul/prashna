@@ -23,7 +23,7 @@ class UserMailer < ApplicationMailer
     
 
     if (@user && @question)
-      mail to: @user.email, subject: "New answer posted"
+      mail to: @user.email, subject: t('.subject')
     end
   end
 end

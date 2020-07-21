@@ -10,11 +10,10 @@ class FetchQuestions
 
   init()
   {
-    let time;
+    let time = new Date().toISOString(); 
     setInterval( () => {
-      time = new Date().toUTCString();
-      // #TODO: test 
       this.magic(time);
+      time = new Date().toISOString();
     }, this.interval);
   }
   magic(time)
@@ -45,5 +44,5 @@ document.addEventListener('turbolinks:load', function() {
   }
 
   let refresh = new FetchQuestions(options);
-  // refresh.init();
+  refresh.init();
 });

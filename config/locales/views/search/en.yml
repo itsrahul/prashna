@@ -1,0 +1,10 @@
+en:
+  topics:
+    search:
+      invalid: "No questions found"
+
+    topics:
+      invalid: "No topic found"
+
+    user:
+      invalid: "No questions found"

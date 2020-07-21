@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 
   protected def authorize
     unless current_user
-      redirect_to login_url, alert: t('.login_required')
+      redirect_to login_url, notice: t('.login_required')
     end
   end
 end

@@ -9,6 +9,8 @@ class Question < ApplicationRecord
 
   include BasicPresenter::Concern
   enum status: { draft: 0, published: 1 }
+  enum abuse_status: { abused: true, unabused: false }
+
   extend ActiveModel::Callbacks
   define_model_callbacks :publish, :only => [:before, :after]
 
@@ -19,7 +21,6 @@ class Question < ApplicationRecord
 
   #done FIXME_AB: user should not be able to answer on his own question
 
-
   belongs_to :user
   #done FIXME_AB: add dependent option
   has_one_attached :doc
@@ -27,20 +28,23 @@ class Question < ApplicationRecord
   has_many :answers, dependent: :restrict_with_error
   has_many :credit_transactions, as: :creditable
   has_many :comments, as: :commentable, dependent: :restrict_with_error
+  has_many :abuse_reports, as: :abusable
+
+  default_scope { unabused }
 
   scope :search_by_title, ->(val) {
     published.where("title like ?", "%#{val}%")
   }
 
   scope :since, ->(time) {
-    published.where("created_at > ?", time )
+    published.where("updated_at > ?", time )
   }
 
-
   after_validation :set_slug, on: [:create, :update]
-  before_create :ensure_credit_balance
-  before_update :ensure_not_published
-  before_destroy :ensure_not_published
+  before_create  :ensure_credit_balance
+  before_update  :ensure_not_published, :ensure_not_abused
+  before_destroy :ensure_not_published, :ensure_not_abused
+  after_commit   :actions_if_abused
   after_publish  :notify_other_users_and_charge_user
 
   @delegation_methods = [:markdown_content]
@@ -76,6 +80,19 @@ class Question < ApplicationRecord
   private def ensure_credit_balance
     unless user.has_sufficient_credits_to_post_question?
       errors.add(:base, 'Question cannot be published due to low balance.')
+      throw :abort
+    end
+  end
+
+  private def actions_if_abused
+    if abused?
+      update_columns(status: 0)
+    end
+  end
+
+  private def ensure_not_abused
+    if abused?
+      errors.add(:base, 'Question cannot be published as it has reported too many times.')
       throw :abort
     end
   end

@@ -1,0 +1,34 @@
+<strong>Hello, <%= current_user.name %>.</strong>
+<strong>Your credit balance is: <%= current_user.credits %></strong>
+
+<h2>Your transaction</h2>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Value</th>
+      <th scope="col">Reason</th>
+      <th scope="col">creditable Type</th>
+      <th scope="col">creditable Id</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @transactions.each do |tr| %>
+    <tr>
+      <th scope="row"><%= tr.id %></th>
+      <td> <%= tr.value %></td>
+      <td> <%= tr.reason %></td>
+      <td> <%= tr.creditable_type %></td>
+      <% if tr.creditable.is_a?(Question) %>
+        <td> <%= tr.creditable.title %></td>
+      <% elsif tr.creditable.is_a?(User) %>
+        <td> Signup </td>
+      <% else %>
+        <td> <%= tr.creditable.markdown_content %></td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table> 
+<br>
+<center><%= will_paginate @transactions, class: "flickr_pagination" %></center>

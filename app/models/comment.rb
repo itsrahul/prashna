@@ -1,12 +1,16 @@
 class Comment < ApplicationRecord
-  validates :content, presence: true
-  # validates :words_in_content, length: { minimum: 3}
-  #done FIXME_AB: add min words validation
+  enum abuse_status: { abused: true, unabused: false }
 
+  validates :content, presence: true
+  validates :words_in_content, length: { minimum: 3}
+  #done FIXME_AB: add min words validation
 
   belongs_to :user
   belongs_to :commentable, polymorphic: true, counter_cache: true
   has_many :votes, as: :votable
+  has_many :abuse_reports, as: :abusable
+
+  default_scope { unabused }
 
   before_create :ensure_question_published
 

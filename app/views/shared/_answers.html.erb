@@ -15,6 +15,7 @@
         <%= form.submit "Comment", class: "btn btn-secondary my-2 my-sm-0 btn-sm" %>
       </div>
     <% end %>
+
     <div class="vote-answer">
       <div class="vote-answer-buttons">
       <%#TODO: switch to button_to %>
@@ -23,6 +24,9 @@
         <%#TODO: switch to button_to %>
         <%= button_to 'Dislike', answer_votes_path(answer.id, false),class: "btn btn-sm answer-#{answer.id}", data: {id: "answer-#{answer.id}" }, method: :post %>
         <small><p class="answer-<%= answer.id %>-count" data-type="like" ></p></small>
+        <a class="btn btn-sm" href="<%= report_abuse_path("answer", answer.id) %>" role="button" aria-expanded="false">
+          Report
+        </a>  
       </div>
     </div>
   </div>

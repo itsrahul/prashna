@@ -6,6 +6,8 @@ development:
   pagination_size: '2'
   credit_for_question_post: '1'
   upvote_for_bonus_credit: '2'
+  reports_count_for_removal: '5'
+  transaction_pagination_size: '8'
 
 production:
   verification_token_validity_in_hours: '4'
@@ -15,3 +17,5 @@ production:
   pagination_size: '5'
   credit_for_question_post: '1'
   upvote_for_bonus_credit: '6'
+  reports_count_for_removal: '7'
+  transaction_pagination_size: '8'

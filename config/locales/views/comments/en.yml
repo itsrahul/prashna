@@ -1,0 +1,4 @@
+en:
+  comments:
+    create:
+      login_required: "Please login first."

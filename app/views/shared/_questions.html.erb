@@ -26,7 +26,7 @@
     <div class="collapse" id="collapseAnswers-<%= question.id%>">
       <div class="card card-body">
           <div class="answer-list">
-          <% @answers = question.answers %>
+          <% @answers = question.answers.order(net_upvotes: :desc) %>
           <%= render partial: "shared/answers" %>
         </div>
       </div>
@@ -45,6 +45,9 @@
       </a>
       <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#collapseGiveComments-<%= question.id%>" role="button" aria-expanded="false" aria-controls="collapseExample">
         Comment...
+      </a>
+      <a class="btn btn-primary btn-sm" href="<%= report_abuse_path("question", question.id) %>" role="button" aria-expanded="false">
+        Report
       </a>
     </p>
     <div class="collapse" id="collapseGiveAnswers-<%= question.id%>">

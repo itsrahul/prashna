@@ -1,0 +1,5 @@
+en:
+  answers:
+    create:
+      not_found: "Question not found."
+      login_required: "Please log in"

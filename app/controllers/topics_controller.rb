@@ -11,7 +11,7 @@ class TopicsController < ApplicationController
     if (topic = Topic.find_by(name: params[:name]) )
       @questions = topic.questions.published.paginate(page: params[:page], per_page: ENV['pagination_size'].to_i)
     else
-      redirect_to root_path, notice: "No topic found"
+      redirect_to root_path, notice: t('.invalid')
     end
   end
   

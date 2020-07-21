@@ -1,7 +1,9 @@
 class QuestionsController < ApplicationController
+  skip_before_action :authorize
 
   before_action :set_question, only: [:edit, :update, :destroy]
   before_action :ensure_not_published, only: [:update, :destroy]
+  before_action :ensure_not_abused, only: [:update, :destroy]
   before_action :ensure_credit_balance, only: [:new, :create]
 
   def index
@@ -105,6 +107,12 @@ class QuestionsController < ApplicationController
     # change name and condition to until answered/commment/votes
     if @question.published?
       redirect_to questions_path, notice: t('.too_late')
+    end
+  end
+
+  private def ensure_not_abused
+    if abused?
+      redirect_to questions_path, notice: t('.abused_q')
     end
   end
 end
