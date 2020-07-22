@@ -16,9 +16,13 @@ class VotesController < ApplicationController
         @vote.up_vote!
       end
     end
-    #TODO: implement ajax properly
-    #TODO: send up/down votes for answer/comment i.e votable to update vote count
     render json: { upcount: Vote.by_votable(@votable).up_vote.count, downcount: Vote.by_votable(@votable).down_vote.count }
+  end
+
+  def index
+    type = ( params[:format] ? 0 : 1)
+    voted = ( Vote.find_by(votable: @votable, user: current_user, vote_type: type) ? true : false)
+    render json: { upcount: Vote.by_votable(@votable).up_vote.count, downcount: Vote.by_votable(@votable).down_vote.count, voted: voted }
   end
 
   private def set_votable

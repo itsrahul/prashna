@@ -1,9 +1,4 @@
 class Question < ApplicationRecord
-# 1. macros
-# 2. validations
-# 3. associations
-# 4. scopes
-# 5. callbacks
   include SetTopic
   include QuestionPublished
 

@@ -1,3 +1,6 @@
+<% unless @answers.exists? %>
+No answer yet.
+<% else %>
 <% @answers.each do |answer| %>
 <div class="card bg-light mb-3" style="max-width: 150rem;">
   <div class="card-body">
@@ -18,10 +21,8 @@
 
     <div class="vote-answer">
       <div class="vote-answer-buttons">
-      <%#TODO: switch to button_to %>
         <%= button_to "Like", answer_votes_path(answer.id), class: "btn btn-sm answer-#{answer.id}", data: {id: "answer-#{answer.id}" }, method: :post %>
         <small><p class="answer-<%= answer.id %>-count" data-type="like" ></p></small>
-        <%#TODO: switch to button_to %>
         <%= button_to 'Dislike', answer_votes_path(answer.id, false),class: "btn btn-sm answer-#{answer.id}", data: {id: "answer-#{answer.id}" }, method: :post %>
         <small><p class="answer-<%= answer.id %>-count" data-type="like" ></p></small>
         <a class="btn btn-sm" href="<%= report_abuse_path("answer", answer.id) %>" role="button" aria-expanded="false">
@@ -34,3 +35,4 @@
 </div>
 <% end %>
 <br>
+<% end %>

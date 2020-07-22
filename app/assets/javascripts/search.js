@@ -54,4 +54,5 @@ $(document).on('turbolinks:load', function() {
 
   let updater = new SearchQuestions(options);
   // updater.init();
+  // NOT IN USE NOW
 });

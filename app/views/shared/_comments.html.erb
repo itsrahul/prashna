@@ -3,10 +3,8 @@
   <div class="vote-comment">
     <%= comment.content %>
     - <%= comment.user.name %>
-    <%#TODO: switch to button_to %>
     <div class="vote-comment-buttons">
       <%= button_to 'like', comment_votes_path(comment.id), class: "btn btn-sm comment-#{comment.id}", data: {id: "comment-#{comment.id}" } ,method: :post %>
-      <%#TODO: switch to button_to %>
       <small><p class="comment-<%= comment.id %>-count" data-type="like" ></p></small>
       <%= button_to 'dislike', comment_votes_path(comment.id, false), class: "btn btn-sm comment-#{comment.id}", data: {id: "comment-#{comment.id}" }, method: :post %>
       <small><p class="comment-<%= comment.id %>-count" data-type="dislike"></p></small>

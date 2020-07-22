@@ -1,7 +1,6 @@
 class NotificationsController < ApplicationController
   def index
     notifications = current_user.notifications.unread
-    # debugger
     render json: { count: notifications.count, items: notifications }
   end
 

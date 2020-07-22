@@ -11,6 +11,7 @@ en:
     create:
       unverified: "Please verify your account to login"
       invalid_credentials: "Invalid user/password combination"
+      no_user_found: "Please signup first."
     
     destroy:
       logout: "Logged out"

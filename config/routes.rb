@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'abuse_reports/:abusable/:id', to: 'abuse_reports#new', as: 'report_abuse'
   post 'abuse_reports/:abusable/:id', to: 'abuse_reports#create'
   get 'votes/create'
+  get 'votes/fetch'
   get 'comments/create'
   get 'answers/create'
   get 'home/refresh'
@@ -13,13 +14,6 @@ Rails.application.routes.draw do
   get 'search/topics/:name', to: "search#topics", as: 'search_topic'
   get 'search/user/:id', to: "search#user", as: 'search_user'
 
-  # resources :search do
-  #   collection do
-      # get 'topics/:name', to: "search", as: 'topic'
-      # get 'term/:term', action: :term, as: 'term'
-      # get 'users/:id', action: :verify, as: 'user'
-    # end
-  # end
   resources :questions do
     resources :comments, only: :create
     resources :answers, only: :create
@@ -27,17 +21,16 @@ Rails.application.routes.draw do
   
   resources :answers, only: :create do
     resources :comments, only: :create
-    resources :votes, only: :create
+    resources :votes, only: [:create, :index]
   end
 
   resources :comments, only: :create do
-    resources :votes, only: :create
+    resources :votes, only: [:create, :index]
   end
 
   get 'topics', to: "topics#search"
   
   get 'topics/edit'
-  # get 'topics/:name', to: "topics#index", as: 'topic'
   root 'users#index'
 
   get 'password_resets/new'

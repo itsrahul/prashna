@@ -7,7 +7,6 @@ class CastVote
   init(){
     this.$main.each((i,element) => element.addEventListener('click',(event) => {
       $(event.target).toggleClass("btn-success");
-      // $(`.${event.target.dataset["id"]}`)
       this.magic(event.target.dataset["id"], event.target.form.action);
       event.preventDefault();
     } ))

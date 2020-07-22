@@ -5,28 +5,23 @@ class FetchVoteOnLoad
   }
 
   init(){
-    this.$main.each((i,element) => element.addEventListener('click',(event) => {
-      $(event.target).toggleClass("btn-success");
-      // $(`.${event.target.dataset["id"]}`)
-      this.magic(event.target.dataset["id"], event.target.form.action);
-      event.preventDefault();
-    } ))
+    this.$main.each((i,element) => {
+      this.magic(element, element.dataset["id"], element.form.action);
+    })
   }
 
-  magic(id, voteUrl)
-  { 
+  magic(element, id, voteUrl)
+  {
     $.ajax({
       url: voteUrl,
-      type: "post",
-      beforeSend: () => {
-        $.LoadingOverlay("show");
-      },
+      type: "get",
       success: (data) => {
         $(`.${id}-count`)[0].textContent = `(${data.upcount})`
         $(`.${id}-count`)[1].textContent = `(${data.downcount})`
-      },
-      complete: () => {
-        $.LoadingOverlay("hide");
+        if (data.voted)
+        {
+          $(element).toggleClass("btn-success");
+        }
       },
     })
   }

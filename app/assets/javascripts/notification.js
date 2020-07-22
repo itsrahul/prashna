@@ -12,7 +12,6 @@ class SetNotifications
 
   init()
   {
-    // #TODO: fetch notification count.
     const myVar = setInterval( () => {
       this.magic();
       if (this.clearIntervalCount > 1)

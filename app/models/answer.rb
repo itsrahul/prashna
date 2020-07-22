@@ -2,7 +2,7 @@ class Answer < ApplicationRecord
   enum abuse_status: { abused: true, unabused: false }
 
   validates :content, presence: true
-  # validates :words_in_content, length: { minimum: 3 }, allow_blank: true
+  validates :words_in_content, length: { minimum: 3 }, allow_blank: true
   #done FIXME_AB:  min words validation
 
   belongs_to :user
