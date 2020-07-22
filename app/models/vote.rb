@@ -7,15 +7,11 @@ class Vote < ApplicationRecord
   belongs_to :user
   belongs_to :votable, polymorphic: true
 
-  #done FIXME_AB: Vote.by_votable(@question).up_votes.count
   scope :by_votable, -> (votable) { where(votable: votable) }
 
 
-  #FIXME_AB:  user can vote on comments of published question
-  #FIXME_AB:  user can vote on answer of published question
   before_create :ensure_votable_belongs_to_published_question, :ensure_votable_belongs_to_other_user
-  
-  #done FIXME_AB: we don't need this unless condition
+
   after_commit :refresh_net_votes!
 
   private def ensure_votable_belongs_to_published_question
@@ -27,6 +23,7 @@ class Vote < ApplicationRecord
   end
 
   def ensure_votable_belongs_to_other_user
+    #FIXME_AB: votable.voted_by?(user)
     if user == votable.user
       errors.add(:base, 'Cannot vote your own answer/comment.')
       throw :abort
@@ -42,6 +39,7 @@ class Vote < ApplicationRecord
   end
 
   private def refresh_net_votes!
+    #FIXME_AB: votable.votes.up_vote.count
     votable.net_upvotes = Vote.by_votable(votable).up_vote.count - Vote.by_votable(votable).down_vote.count
     votable.save!
   end

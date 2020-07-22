@@ -14,10 +14,8 @@ class Question < ApplicationRecord
   validates :questions_topic, length: { minimum: 1 }
   validates :doc, file_type_pdf: true, if: Proc.new {|q| q.doc.attached? }
 
-  #done FIXME_AB: user should not be able to answer on his own question
 
   belongs_to :user
-  #done FIXME_AB: add dependent option
   has_one_attached :doc
   has_and_belongs_to_many :topics
   has_many :answers, dependent: :restrict_with_error
@@ -65,7 +63,6 @@ class Question < ApplicationRecord
   end
 
   private def ensure_not_published
-    #done FIXME_AB: this will not allow user to publish his drafted question. Use dirty objects
     if status_was == "published"
       errors.add(:base, 'Question published, cannot be changed now.')
       throw :abort

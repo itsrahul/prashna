@@ -21,9 +21,7 @@ class User < ApplicationRecord
 
   #done FIXME_AB: if user has published questions then can not be destroyed
   has_many :questions
-  #done FIXME_AB: dependent option?
   has_many :notifications, dependent: :destroy
-  #done FIXME_AB: dependent restrict
   has_many :votes, dependent: :restrict_with_error
   has_and_belongs_to_many :topics
   has_secure_password

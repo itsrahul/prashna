@@ -3,10 +3,10 @@ class Answer < ApplicationRecord
 
   validates :content, presence: true
   validates :words_in_content, length: { minimum: 3 }, allow_blank: true
-  #done FIXME_AB:  min words validation
 
   belongs_to :user
   belongs_to :question, counter_cache: true
+  #FIXME_AB: think about dependent optoins
   has_many :comments, as: :commentable
   has_many :votes, as: :votable
   has_many :credit_transactions, as: :creditable
@@ -23,6 +23,7 @@ class Answer < ApplicationRecord
   end
 
   private def ensure_questions_belongs_to_other_user
+    #FIXME_AB: question.posted_by?(user)
     if user == question.user
       errors.add(:base, 'Cannot answer your own question.')
       throw :abort
@@ -30,6 +31,7 @@ class Answer < ApplicationRecord
   end
 
   private def ensure_question_published
+    #FIXME_AB: if not question.published?
     unless question.published?
       errors.add(:base, 'Cannot answer unpublished question.')
       throw :abort
@@ -39,13 +41,15 @@ class Answer < ApplicationRecord
   private def actions_if_abused
     if abused?
       # give -ve credit if +ve sum
-      unless credit_transactions.sum(:value).zero?
+      #FIXME_AB: lets do -1 * abs(sum)
+      if not credit_transactions.sum(:value).zero?
         credit_transactions.create(user: user, value: -1, reason: "abuse reported, bonus reverted")
       end
     end
   end
 
   private def give_net_upvote_based_credit
+    #FIXME_AB: take 1 from env
     if net_upvotes >= ENV['upvote_for_bonus_credit'].to_i
       if credit_transactions.sum(:value).zero?
         credit_transactions.create(user: user, value: 1, reason: "upvotes bonus add")
