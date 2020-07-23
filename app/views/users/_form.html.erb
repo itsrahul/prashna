@@ -35,7 +35,7 @@
 
     <div class="form-group">
       <%= form.label :topic %>
-      <%= form.text_field :topic, data: { url: topics_path }, class: "form-control" %>
+      <%= form.text_field :topic, data: { url: topics_path }, class: "form-control", placeholder: user.topics.pluck(:name).join(', ') %>
     </div>
   <% end %>
 

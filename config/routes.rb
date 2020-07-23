@@ -13,7 +13,8 @@ Rails.application.routes.draw do
   get 'search', to: "search#search"
   get 'search/topics/:name', to: "search#topics", as: 'search_topic'
   get 'search/user/:id', to: "search#user", as: 'search_user'
-
+  post 'questions/:id', to: "questions#update"
+  post 'users/:id', to: "users#update"
   resources :questions do
     resources :comments, only: :create
     resources :answers, only: :create

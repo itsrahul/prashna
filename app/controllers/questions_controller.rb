@@ -9,7 +9,7 @@ class QuestionsController < ApplicationController
   def index
     #done FIXME_AB: eagerload associations whver possible
     #done FIXME_AB: use bullet gem
-    @questions = current_user.questions.paginate(page: params[:page], per_page: ENV['pagination_size'].to_i)
+    @questions = Question.unscoped.where(user: current_user).paginate(page: params[:page], per_page: ENV['pagination_size'].to_i)
   end
 
   def new
@@ -20,7 +20,11 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @questions = Question.published.where(id: params[:id])
+    @questions = Question.where(id: params[:id])
+    if not @questions.first.published?
+      redirect_to questions_path, alert: "Question is not published yet."
+      return
+    end
     if @questions.blank?
       redirect_to root_path, alert: "Invalid question id"
     end
@@ -51,15 +55,10 @@ class QuestionsController < ApplicationController
     respond_to do |format|
       if @question.update(question_params)
         if not save_as_draft
-          #done FIXME_AB: @question.publish
           if not @question.status_was == "published"
             @question.update_columns(status: "published")
             @question.publish
           end
-          # @question.update_columns(status: "published")
-          #done FIXME_AB: Ideally it shoudl be a callback. if question is being published , and it was not published earlier. + user was not charged then charge.. in after publish callback
-          # @question.notify_question_pubished(current_user)
-          # @question.charge_credits(current_user)
         end
         format.html { redirect_to questions_url, notice: t('.success') }
         format.json { render :show, status: :ok, location: @question }
@@ -111,7 +110,7 @@ class QuestionsController < ApplicationController
   end
 
   private def ensure_not_abused
-    if abused?
+    if  @question.abused?
       redirect_to questions_path, notice: t('.abused_q')
     end
   end

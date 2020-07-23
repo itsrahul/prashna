@@ -18,7 +18,7 @@
 
 <p>
   <strong>Topics:</strong>
-  <%= @user.topics.pluck(:name) %>
+  <%= @user.topics.pluck(:name).join(', ') %>
 </p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |

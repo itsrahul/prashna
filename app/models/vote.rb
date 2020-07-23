@@ -27,8 +27,7 @@ class Vote < ApplicationRecord
   end
 
   def ensure_votable_belongs_to_other_user
-    #FIXME_AB: votable.voted_by?(user)
-    # if user == votable.user
+    #done FIXME_AB: votable.voted_by?(user)
     if votable_created_by?(self.user)
       errors.add(:base, 'Cannot vote your own answer/comment.')
       throw :abort

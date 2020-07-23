@@ -2,11 +2,9 @@ module QuestionPublished
   include ActiveSupport::Concern
 
   def notify_users_except(current_user)
-    #FIXME_AB: should not generate multiple notifications for same question for a same user
-    self.topics.includes(:users).each do |topic|
-      (topic.users- [current_user]).each do |user|
-        user.notifications.create(message: topic.name, notifiable: self)
-      end
+    #done FIXME_AB: should not generate multiple notifications for same question for a same user
+    (topics.collect_concat(&:users).uniq-[current_user]).each do |user|
+      user.notifications.create(notifiable: self)
     end
   end
 
