@@ -4,7 +4,7 @@ class Question < ApplicationRecord
 
   include BasicPresenter::Concern
   enum status: { draft: 0, published: 1 }
-  enum abuse_status: { abused: true, unabused: false }
+  enum abuse_status: { unabused: 0, abused: 1 }
 
   extend ActiveModel::Callbacks
   define_model_callbacks :publish, :only => [:before, :after]
@@ -48,7 +48,7 @@ class Question < ApplicationRecord
   end
 
   def notify_other_users_and_charge_user
-    unless credit_transactions.exists?
+    if not credit_transactions.exists?
       notify_users_except(user)
       charge_credits(user)
     end
@@ -70,7 +70,7 @@ class Question < ApplicationRecord
   end
 
   private def ensure_credit_balance
-    unless user.has_sufficient_credits_to_post_question?
+    if not user.has_sufficient_credits_to_post_question?
       errors.add(:base, 'Question cannot be published due to low balance.')
       throw :abort
     end

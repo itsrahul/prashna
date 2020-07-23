@@ -8,7 +8,7 @@ class CreditTransactionsController < ApplicationController
   end
 
   private def ensure_logged_in
-    unless logged_in?
+    if not logged_in?
       redirect_to root_path, notice: t('.login_req')
     end
   end

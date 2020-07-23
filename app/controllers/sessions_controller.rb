@@ -8,11 +8,11 @@ class SessionsController < ApplicationController
   def create
     user = User.verified.find_by(email: params[:email])
 
-    unless User.where(email: params[:email]).exists?
+    if not User.where(email: params[:email]).exists?
       redirect_to login_url, alert: t('.no_user_found')
       return
     end
-    unless user.verified?
+    if not user.verified?
       redirect_to login_url, alert: t('.unverified')
       return
     end

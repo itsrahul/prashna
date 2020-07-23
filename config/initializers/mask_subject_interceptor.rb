@@ -4,6 +4,6 @@ class MaskSubjectInterceptor
   end
 end
 
-unless Rails.env.production?
+if not Rails.env.production?
   ActionMailer::Base.register_interceptor(MaskSubjectInterceptor)
 end

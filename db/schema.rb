@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_21_131147) do
+ActiveRecord::Schema.define(version: 2020_07_22_122021) do
 
   create_table "abuse_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 2020_07_21_131147) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "comments_count", default: 0, null: false
     t.integer "net_upvotes", default: 0
-    t.boolean "abuse_status", default: false, null: false
+    t.integer "abuse_status", default: 0, null: false
     t.index ["abuse_status"], name: "index_answers_on_abuse_status"
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 2020_07_21_131147) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "net_upvotes", default: 0
-    t.boolean "abuse_status", default: false, null: false
+    t.integer "abuse_status", default: 0, null: false
     t.index ["abuse_status"], name: "index_comments_on_abuse_status"
     t.index ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type"
     t.index ["user_id"], name: "index_comments_on_user_id"
@@ -117,7 +117,7 @@ ActiveRecord::Schema.define(version: 2020_07_21_131147) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "answers_count", default: 0, null: false
     t.integer "comments_count", default: 0, null: false
-    t.boolean "abuse_status", default: false, null: false
+    t.integer "abuse_status", default: 0, null: false
     t.index ["abuse_status"], name: "index_questions_on_abuse_status"
     t.index ["slug"], name: "index_questions_on_slug", unique: true
     t.index ["status"], name: "index_questions_on_status"

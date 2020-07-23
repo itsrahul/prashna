@@ -28,9 +28,9 @@ class QuestionsController < ApplicationController
 
   def create
     if save_as_draft
-      @question = current_user.questions.draft.build(question_params)
+      @question = current_user.questions.unabused.draft.build(question_params)
     else
-      @question = current_user.questions.published.build(question_params)
+      @question = current_user.questions.unabused.published.build(question_params)
       @question.publish
     end
 
@@ -50,9 +50,9 @@ class QuestionsController < ApplicationController
     @question.set_topics(params[:question][:topic])
     respond_to do |format|
       if @question.update(question_params)
-        unless save_as_draft
+        if not save_as_draft
           #done FIXME_AB: @question.publish
-          unless @question.status_was == "published"
+          if not @question.status_was == "published"
             @question.update_columns(status: "published")
             @question.publish
           end
@@ -87,7 +87,7 @@ class QuestionsController < ApplicationController
 
   private  def set_question
     #done FIXME_AB: add a callback before_update to check whether question is in published state.
-    unless (@question = current_user.questions.draft.find_by(id: params[:id]))
+    if not (@question = current_user.questions.draft.find_by(id: params[:id]))
       redirect_to questions_path, notice: t('.too_late')
     end
   end
@@ -98,7 +98,7 @@ class QuestionsController < ApplicationController
 
   private def ensure_credit_balance
     #done FIXME_AB: user.has_sufficient_credits_to_post_question? => true / false
-    unless current_user.has_sufficient_credits_to_post_question?
+    if not current_user.has_sufficient_credits_to_post_question?
       redirect_to questions_path, notice: t('.low_balance')
     end
   end
