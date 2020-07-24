@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   get 'abuse_reports/:abusable/:id', to: 'abuse_reports#new', as: 'report_abuse'
   post 'abuse_reports/:abusable/:id', to: 'abuse_reports#create'
   get 'votes/create'
-  get 'votes/fetch'
   get 'comments/create'
   get 'answers/create'
   get 'home/refresh'
@@ -15,8 +14,11 @@ Rails.application.routes.draw do
   get 'search/user/:id', to: "search#user", as: 'search_user'
   post 'questions/:id', to: "questions#update"
   post 'users/:id', to: "users#update"
+  # get 'user/:id/follow', to: "followers#create", as: 'follow_user'
+
   resources :questions do
-    resources :comments, only: :create
+      get 'user_followers', to: "questions#follower", as: 'follower', on: :collection
+      resources :comments, only: :create
     resources :answers, only: :create
   end
   
@@ -56,6 +58,9 @@ Rails.application.routes.draw do
   
   resources :users do
     collection do
+      # get 'follower_questions', to: "questions#follower"
+      post 'follows/:id', to: "followers#create", as: 'follows'
+      post 'follows/fetch/:id', to: "followers#index", as: 'fetch_follows'
       get 'verify/:token', action: :verify, as: 'verification'
       get 'password_resets/:token', to: "password_resets#edit", as: 'send_token'
       post 'password_resets/:token', to: "password_resets#update", as: 'change_password'

@@ -12,3 +12,4 @@
 //= link vote.js
 //= link question_reload.js
 //= link fetch_vote_onload.js
+//= link follow.js

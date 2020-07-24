@@ -20,11 +20,18 @@ class User < ApplicationRecord
   has_many :abuse_reports
 
   #done FIXME_AB: if user has published questions then can not be destroyed
-  has_many :questions
+  has_many :questions, dependent: :restrict_with_error
   has_many :notifications, dependent: :destroy
   has_many :votes, dependent: :restrict_with_error
   has_and_belongs_to_many :topics
   has_secure_password
+
+  has_many :users_followed, foreign_key: "follower_id", class_name: "UserFollower"
+  has_many :followed_by, foreign_key: "followed_id", class_name: "UserFollower"
+  # has_and_belongs_to_many :followers,
+  #   class_name: "User",
+  #   join_table: "followers",
+  #   association_foreign_key: "follower_user_id"
 
   scope :verified, -> { where.not(verification_at: nil) }
   scope :unverified, -> { where(verification_at: nil) }
@@ -60,6 +67,11 @@ class User < ApplicationRecord
 
   def verified?
     verification_at.present?
+  end
+
+  def follows
+    # User.find_by_sql("SELECT * FROM followers
+    #   WHERE id = 21")
   end
 
   def has_sufficient_credits_to_post_question?

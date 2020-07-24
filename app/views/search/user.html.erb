@@ -1,4 +1,15 @@
 <div class='questions-list'>
+<% content_for :js do -%>
+  <%= javascript_include_tag 'follow', 'data-turbolinks-track': 'reload' %>
+<% end %>
+<% if not current_user == @user %>
+  <%#= button_to(follows_users_path(@user.id), class: "btn", data: {id: "follow-user-#{@user.id}" , status: 0}, remote: :true, method: :post) do %>
+  <%= form_with(url: follows_users_path(@user.id), class: "btn", remote: :true, method: :post) do %>
+    <%= image_tag "follow.png", class: "follow-user", data: {id: "follow-user-#{@user.id}", fetch: fetch_follows_users_path(@user.id), status: 0 } %> 
+  <small><p class="follow-user-<%= @user.id %>" data-type="follow" ></p></small>
+  <% end %>
+<% end %>
+
   <% if @questions %>
   <%= render partial: "shared/questions" %>
   <% end %>

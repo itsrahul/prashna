@@ -18,8 +18,8 @@ class SearchController < ApplicationController
   end
 
   def user
-    if (user = User.find_by(id: params[:id]) )
-      @questions = user.questions.published.includes([:comments, :topics]).paginate(page: params[:page], per_page: ENV['pagination_size'].to_i)
+    if (@user = User.find_by(id: params[:id]) )
+      @questions = @user.questions.published.includes([:comments, :topics]).paginate(page: params[:page], per_page: ENV['pagination_size'].to_i)
     else
       redirect_to root_path, notice: t('.invalid')
     end
