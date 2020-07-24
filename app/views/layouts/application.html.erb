@@ -7,18 +7,21 @@
     <%= csp_meta_tag %>
     <%= javascript_include_tag 'https://code.jquery.com/jquery-3.5.1.js' %>
     <%= javascript_include_tag 'https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js' %>
-    <%= javascript_include_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js' %>
-    <%= stylesheet_link_tag 'bootstrap', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%#= javascript_include_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js' %>
     <%= javascript_include_tag 'bootstrap', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js' %>
 
 
     <%= javascript_include_tag 'https://code.jquery.com/ui/1.12.1/jquery-ui.js' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'notification', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'vote', 'data-turbolinks-track': 'reload' %>
+
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+    <%= stylesheet_link_tag 'bootstrap', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%#= stylesheet_link_tag 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/litera/bootstrap.min.css' %>
     <%= yield :js -%>
   </head>
 
@@ -36,53 +39,86 @@
             <li class="nav-item active">
               <%= link_to 'Home', root_path, class: "nav-link" %><span class="sr-only">(current)</span>
             </li>
-            <% unless logged_in? %>
+            <% if not logged_in? %>
               <li class="nav-item"><%= link_to 'Login', login_path, class: "nav-link" %></li>
+              <li class="nav-item"><%= link_to 'Signup', signup_path, class: "nav-link" %></li>
             <% end %>
-            <li class="nav-item">
-              <%= link_to 'Users', users_path, class: "nav-link" %>
-            </li>
             <% if logged_in? %>
               <li class="nav-item">
-                <%= link_to 'Logout', logout_path, method: :delete, class: "nav-link" %>
+                <%= link_to 'Profile', profile_path, class: "nav-link" %>
               </li>
               <li class="nav-item">
-                <%= link_to 'Profile', user_path(session[:user_id]), class: "nav-link" %>
+                <%= link_to 'Transactions', credit_transactions_path, class: "nav-link" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'My Questions', questions_path, class: "nav-link" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'Followed User', follower_questions_path, class: "nav-link" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to 'Logout', logout_path, method: :delete, class: "nav-link" %>
               </li>
             <% end %>
 
 
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bell" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z"/>
+                <path fill-rule="evenodd" d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+              </svg>
+              <span class="badge notification-counter badge-success"></span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right notification-dropdown scrollable-menu" data-path=<%= notifications_index_path %>
+              data-notification-path=<%= opens_notification_path %>>
+                <%= render "layouts/notifications" %>
+            </div>
+          </div>
+          <form class="form-inline my-2 my-lg-0" action="/search" method="get">
+            <input id="title" name="title"class="form-control mr-sm-2" type="text" placeholder="Search">
+            <input type="submit" name="commit" value="Search" class="btn btn-secondary my-2 my-sm-0" autocomplete="off" data-disable-with="Search">
           </form>
+          
         </div>
       </nav>
     </header>
 
     <section class="content">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <ul>
-              <% if logged_in? %>
-                <li><%= link_to 'Logout', logout_path, method: :delete %></li>
-              <% else%>
-                <li><%= link_to 'Login', login_path %></li>
-              <% end %>
-
-              <li><%# link_to 'Products', products_path %></li>
-            </ul>
-          </nav>
-      </nav>
-    <main class='<%=controller.controller_name%>'>
-    <%if notice %>
-    <div class="alert alert-dismissible alert-success">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <%= notice %>
-    </div>
-    <% end %>
-    <%= yield %>
-    </main>
+      <div class="container">
+        <div class="col-sm">
+          <main class='<%=controller.controller_name%>'>
+            <%if notice %>
+              <div class="alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <%= notice %>
+              </div>
+            <% end %>
+            <%if alert %>
+              <div class="alert alert-dismissible alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <%= alert %>
+              </div>
+            <% end %>
+            <%= yield %>
+          </main>
+        </div>
+      </div>
+        <div>
+          <div class="toast question-toast"  data-autohide="false" role="status" aria-live="polite" aria-atomic="true" data-path=<%= home_refresh_path %> data-redirect-path=<%= home_index_path %> >
+            <div class="toast-header">
+              <strong class="mr-auto">Bootstrap</strong>
+              <small>11 mins ago</small>
+              <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="toast-body">
+              Hello, world! This is a toast message.
+            </div>
+          </div>
+        </div>
     </section>
   </body>
 </html>

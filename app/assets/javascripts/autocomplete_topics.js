@@ -1,14 +1,11 @@
-// FIXME_AB: move this to app/assets/javascript
-
 class TopicAutocomplete{
   constructor($main){
     this.$main = $main;
   }
 
-  init(){
+  init(options){
     this.$main.val('');
 
-    // $( () => {
       function split( val ) {
         return val.split( /,\s*/ );
       }
@@ -28,17 +25,16 @@ class TopicAutocomplete{
           source: function( request, response ) {
             $.ajax({
               dataType: "json",
-              // FIXME_AB: don't hardcode url here. take url form element's data attribute using url helper
-              url: "topics",
+              url: options.url,
               beforeSend: function() {
-                $('#user_topic').LoadingOverlay("show")
+                options.main.LoadingOverlay("show")
               },
               data: {
                 q: extractLast( request.term )
               },
               success: response,
               complete: () => {
-                $('#user_topic').LoadingOverlay("hide", true)
+                options.main.LoadingOverlay("hide", true)
               },
             });
           },
@@ -65,10 +61,15 @@ class TopicAutocomplete{
             return false;
           }
         });
-    // } );
   }
 }
 
 document.addEventListener('turbolinks:load', function() {
-  new TopicAutocomplete($('#user_topic')).init();
+  let $main = $('#user_topic, #question_topic');
+  let options = {
+    main: $main,
+    url: $main.data("url")
+  }
+  let completer = new TopicAutocomplete(options.main);
+  completer.init(options);
 });

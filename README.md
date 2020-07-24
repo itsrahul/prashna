@@ -12,7 +12,7 @@ It works on Ruby on Rails framework.
 ## Configuration
 
 After downloading the project, use `bundle install` to install all the dependencies.
-After this is done, configure database.yml.example to database.yml, as per your system parameters.
+After this is done, configure application.yml and database.yml from application.yml.example and database.yml.example respectively, as per your system.
 
 ## Rake Task
 

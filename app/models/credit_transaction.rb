@@ -1,12 +1,16 @@
 class CreditTransaction < ApplicationRecord
-  enum transaction_type: { signup: 1, purchase: 2}
+  enum transaction_type: { signup: 1, purchase: 2, question: 3, others: 4}
 
-  #FIXME_AB: validations.
-#FIXME_AB: add index on transaction type
-
-  #FIXME_AB: we'll make it polymorphic so that transaction can be related to questions, answers, votes, purchase
+  validates :value, numericality: { other_than: 0 }
 
   belongs_to :user
+  belongs_to :creditable, polymorphic: true
 
-  #FIXME_AB: after commit. call a method refresh_credits_balance! which will update the final credit balance of the user in the user table
+  after_commit :refresh_credits_balance!, unless: Proc.new { |ct| ct.creditable.destroyed? }
+
+  private def refresh_credits_balance!
+    user.credits = CreditTransaction.where(user: user).sum(&:value)
+    user.save!
+  end
+
 end

@@ -5,3 +5,6 @@ en:
     
     password_reset_mail:
       subject: 'Prashna: Password Reset Mail'
+
+    answer_posted_mail:
+      subject: 'Prashna: New answer posted.'

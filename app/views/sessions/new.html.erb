@@ -20,5 +20,7 @@
       <%= label_tag :remember_me, t('.remember_me') %><br>
       <%= submit_tag t('.login_btn'), class: "btn btn-primary" %>
     </div>
+    <% #FIXME_AB: give a link to signup form -%>
+  <%= link_to 'New here? Signup', signup_path %>
   <% end %>
 </section>

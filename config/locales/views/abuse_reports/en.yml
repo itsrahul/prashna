@@ -1,0 +1,8 @@
+en:
+  abuse_reports:
+    new:
+      login_required: "Please login first."
+      already: "Already reported."
+
+    create:
+      success: ", was successfully reported."

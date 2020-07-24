@@ -1,19 +1,20 @@
-<%= form_with model: @user, url: send_token_users_url(@user.reset_token), method: :post, local: true do |form| %>
+<%= form_with(model: @user, url: send_token_users_url(@user.reset_token), method: :post, local: true) do |form| %>
 
   <%= render "shared/error", object: @user %>
   <div class="field">
     Hello <%= @user.name %>,
   </div>
-
-  <div class="field">
+  <% #done FIXME_AB: fix designs, and addd some text like please set your password.... -%>
+  <div class="form-group">
     <%=form.label :password %>
-    <%=form.password_field :password %>
+    <%=form.password_field :password , class: "form-control" %>
+    <small id="passwordHelp" class="form-text text-muted">Minimum length 4, must have minimum 1 digit, 1 alphabet</small>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%=form.label :confirmation %>
-    <%=form.password_field :password_confirmation %>
+    <%=form.password_field :password_confirmation, class: "form-control"  %>
   </div>
-  <div class="actions">
-    <%=form.submit "Update Password" %>
+  <div>
+    <%=form.submit "Update Password", class: "btn btn-primary"  %>
   </div>
 <% end %>

@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-#FIXME_AB: Read Gemfile vs Gemfile.lock
 #FIXME_AB: Read explain what is the difference between three rails env: development, production, test
 #FIXME_AB: Read about config/initializers directory, when these files are executed, how many times, in which order etc..
 
@@ -32,7 +31,17 @@ gem 'bcrypt', '~> 3.1.7'
 # gem "letter_opener", group: :development
 gem 'letter_opener_web', '~> 1.0'
 
-#FIXME_AB: whenever you add any gem, specify its version
+# Using redcarpet for markdown format
+gem 'redcarpet', '~> 3.3'
+
+# Used for pagination
+gem 'will_paginate', '~> 3.3'
+
+# Used bullet
+#done FIXME_AB: add version
+gem 'bullet', '~> 6.1.0'
+
+gem 'basic_presenter', '~> 0.0.4'
 
 gem 'exception_notification', '~> 4.4.1'
 gem 'bootstrap', '~> 4.5.0'
