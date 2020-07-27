@@ -7,8 +7,8 @@ class User < ApplicationRecord
 # 4. scopes
 # 5. callbacks
 
-  enum role: { user: false, admin: true }
-  enum disable_status: { enabled: false, disabled: true }
+  enum role: { user: 0, admin: 1 }
+  enum disable_status: { enabled: 0, disabled: 1 }
 
   validates :name, :email, presence: true
   validates :name, length: { minimum: 3}

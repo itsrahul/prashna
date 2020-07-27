@@ -6,19 +6,20 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.verified.find_by(email: params[:email])
+    user = User.find_by(email: params[:email])
     
-    if user.disabled?
-      redirect_to login_url, alert: t('.user_disabled')
-      return
-    end
-
     if not User.enabled.where(email: params[:email]).exists?
       redirect_to login_url, alert: t('.no_user_found')
       return
     end
+
     if not user.verified?
       redirect_to login_url, alert: t('.unverified')
+      return
+    end
+    
+    if user.disabled?
+      redirect_to login_url, alert: t('.user_disabled')
       return
     end
 
