@@ -1,3 +1,6 @@
+#FIXME_AB: remove status
+#FIXME_AB: make it a partial and use at both places
+#FIXME_AB: lets include upvotes and downvotes
 json.questions @questions do |question|
   json.title question.title
   json.by question.user.name

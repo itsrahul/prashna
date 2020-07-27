@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     resources :comments, only: :create
     resources :answers, only: :create
   end
-  
+
   resources :answers, only: :create do
     resources :comments, only: :create
     resources :votes, only: [:create, :index]
@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   end
 
   get 'topics', to: "topics#search"
-  
+
   get 'topics/edit'
   root 'users#index'
 
@@ -51,11 +51,11 @@ Rails.application.routes.draw do
   get 'sessions/create'
   get 'sessions/destroy'
 
-  controller :users do 
+  controller :users do
     get 'signup' => :new
     get 'profile' => :show
   end
-  
+
   resources :users do
     collection do
       # get 'follower_questions', to: "questions#follower"
@@ -67,9 +67,10 @@ Rails.application.routes.draw do
     end
   end
 
+  #FIXME_AB: /admin should redirect to admin/home
   get 'admin/home', to: "admin#index", as: 'admin'
   namespace :admin do
-    resources :users, only: [:index, :show] 
+    resources :users, only: [:index, :show]
     resources :questions, only: [:index, :show, :edit] do
       resources :answers, only: :index
       resources :comments, only: :index

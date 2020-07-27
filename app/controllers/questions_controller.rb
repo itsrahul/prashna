@@ -7,8 +7,6 @@ class QuestionsController < ApplicationController
   before_action :ensure_credit_balance, only: [:new, :create]
 
   def index
-    #done FIXME_AB: eagerload associations whver possible
-    #done FIXME_AB: use bullet gem
     @questions = Question.unscoped.where(user: current_user).paginate(page: params[:page], per_page: ENV['pagination_size'].to_i)
   end
 

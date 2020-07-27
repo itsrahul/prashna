@@ -79,7 +79,7 @@ Rails.application.configure do
     Bullet.bugsnag = false
     Bullet.airbrake = false
     Bullet.rollbar = false
-    Bullet.add_footer = false
+    Bullet.add_footer = !false
     Bullet.skip_html_injection = false
     Bullet.stacktrace_includes = [ 'your_gem', 'your_middleware' ]
     Bullet.stacktrace_excludes = [ 'their_gem', 'their_middleware', ['my_file.rb', 'my_method'], ['my_file.rb', 16..20] ]

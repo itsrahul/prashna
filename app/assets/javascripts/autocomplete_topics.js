@@ -4,7 +4,7 @@ class TopicAutocomplete{
   }
 
   init(options){
-    this.$main.val('');
+    // this.$main.val('');
 
       function split( val ) {
         return val.split( /,\s*/ );

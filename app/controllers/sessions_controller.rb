@@ -6,8 +6,11 @@ class SessionsController < ApplicationController
   end
 
   def create
+
+    #FIXME_AB: User.enabled.verified.find_by
+
     user = User.find_by(email: params[:email])
-    
+
     if not User.enabled.where(email: params[:email]).exists?
       redirect_to login_url, alert: t('.no_user_found')
       return
@@ -17,7 +20,7 @@ class SessionsController < ApplicationController
       redirect_to login_url, alert: t('.unverified')
       return
     end
-    
+
     if user.disabled?
       redirect_to login_url, alert: t('.user_disabled')
       return
@@ -26,7 +29,7 @@ class SessionsController < ApplicationController
     if user.try(:authenticate, params[:password])
       session[:user_id] = user.id
       if params[:remember_me]
-        set_remember_me(user.id) 
+        set_remember_me(user.id)
       end
       redirect_to root_path
     else

@@ -22,7 +22,7 @@
 
   <div class="form-group">
     <%= form.label :topic %>
-    <%= form.text_field :topic, data: { url: topics_path }, class: "form-control" %>
+    <%= form.text_field :topic, value: question.topics.collect(&:name).join(', '), data: { url: topics_path }, class: "form-control" %>
   </div>
 
   <div>

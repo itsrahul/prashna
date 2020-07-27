@@ -2,8 +2,10 @@ class Admin::UsersController < AdminController
   before_action :set_user, only: [:show, :disable, :enable]
   def index
     @users = User.user.all
+
   end
 
+  #FIXME_AB: lets show complete info of learner that we have including credit transactions.
   def show
     @user.includes(:questions, :answers, :comments)
   end
