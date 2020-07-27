@@ -1,0 +1,36 @@
+<% if @commentable.is_a? Question %>
+  <h5>Comments for <%= @commentable.class %>: "<%= @commentable.title %>"</h5>
+<% elsif @commentable.is_a? Answer %>
+  <h5>Comments for <%= @commentable.class %>: "<%= @commentable.content %>"</h5>
+<% end %>
+
+<table  class="table table-hover">
+  <thead>
+    <tr>
+      <th>User Name</th>
+      <th>Content</th>
+      <th>Net Upvotes</th>
+      <th>Abused Status</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @comments.each do |comment| %>
+      <tr class="table-light">
+        <td><%= comment.user.name %></td>
+        <td><%= comment.content %></td>
+        <td><%= comment.net_upvotes %></td>
+        <td><%= comment.abuse_status %></td>
+        <td><%= link_to 'Mark Unfit', admin_unpublish_comment_path(comment.id), method: :post, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<% if @commentable.is_a? Question %>
+  <%= link_to 'Back', admin_question_path(@commentable.id) %>
+<% elsif @commentable.is_a? Answer %>
+  <%= link_to 'Back', admin_answer_path(@commentable.id) %>
+<% end %>

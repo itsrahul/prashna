@@ -1,0 +1,45 @@
+<h2>Question: <%= @question.id %></h2>
+
+<p>
+  <strong>Author:</strong>
+  <%= @question.user.name %>
+</p><hr>
+
+<p>
+  <strong>Title:</strong>
+  <%= @question.title %>
+</p><hr>
+
+<p>
+  <strong>Content:</strong>
+  <%= @question.markdown_content %>
+</p><hr>
+
+<p>
+  <strong>Status:</strong>
+  <%= @question.status %>
+</p><hr>
+
+<p>
+  <%#TODO: add link_to %>
+  <strong> Answers Count:</strong>
+  <%= link_to @question.answers_count, admin_question_answers_path(@question.id) %>
+</p><hr>
+
+<p>
+  <%#TODO: add link_to %>
+  <strong> Comments Count:</strong>
+  <%= link_to @question.comments_count, admin_question_comments_path(@question.id) %>
+</p><hr>
+
+<p>
+  <strong>Topics:</strong>
+  <%= @question.topics.pluck(:name).join(', ') %>
+</p><hr>
+
+<%#= link_to 'Questions', admin_enable_question_path(question.id), method: :post, data: { confirm: 'Are you sure?' } %>
+<%#= link_to 'Answers', admin_disable_question_path(question.id), method: :post, data: { confirm: 'Are you sure?' } %>
+<%#= link_to 'Comments', admin_disable_question_path(question.id), method: :post, data: { confirm: 'Are you sure?' } %>
+
+<%= link_to 'Back', admin_questions_path %>
+<br>

@@ -12,6 +12,7 @@ en:
       unverified: "Please verify your account to login"
       invalid_credentials: "Invalid user/password combination"
       no_user_found: "Please signup first."
+      user_disabled: "Your account has been disabled."
     
     destroy:
       logout: "Logged out"

@@ -11,7 +11,7 @@ class PasswordResetsController < ApplicationController
       redirect_to password_resets_new_path, notice: t('.empty') and return
     end
 
-    user = User.find_by_email(params[:email])
+    user = User.enabled.find_by_email(params[:email])
 
     if user
       user.send_reset_link
@@ -33,7 +33,7 @@ class PasswordResetsController < ApplicationController
   end
 
   private def find_user_by_reset_token
-    @user = User.find_by_reset_token(params[:token])
+    @user = User.enabled.find_by_reset_token(params[:token])
     if not @user
       redirect_to root_path, notice: t('.invalid') and return
     end

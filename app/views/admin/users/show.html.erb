@@ -1,0 +1,31 @@
+<h2>Users</h2>
+
+<% if @user.verified? && @user.profile_image.attached? %>
+  <%= image_tag @user.profile_image, width: 150%>
+<% end %>
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Credits:</strong>
+  <%= @user.credits %>
+</p>
+
+<p>
+  <strong>Topics:</strong>
+  <%= @user.topics.pluck(:name).join(', ') %>
+</p>
+
+<%#= link_to 'Questions', admin_enable_user_path(user.id), method: :post, data: { confirm: 'Are you sure?' } %>
+<%#= link_to 'Answers', admin_disable_user_path(user.id), method: :post, data: { confirm: 'Are you sure?' } %>
+<%#= link_to 'Comments', admin_disable_user_path(user.id), method: :post, data: { confirm: 'Are you sure?' } %>
+
+<%= link_to 'Back', admin_path %>
+<br>

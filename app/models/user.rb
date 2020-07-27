@@ -7,7 +7,8 @@ class User < ApplicationRecord
 # 4. scopes
 # 5. callbacks
 
-  enum role: { user: 0, admin: 1 }
+  enum role: { user: false, admin: true }
+  enum disable_status: { enabled: false, disabled: true }
 
   validates :name, :email, presence: true
   validates :name, length: { minimum: 3}
@@ -47,7 +48,7 @@ class User < ApplicationRecord
 
   def activate!
     if verification_token_expire > Time.current
-      update_columns(verification_at: Time.current)
+      update_columns(verification_at: Time.current, auth_token: SecureRandom.urlsafe_base64)
       credit_transactions.signup.create(user: self, value: ENV['signup_credits'], reason: "Signup")
       clear_verification_fields
       return true
@@ -67,11 +68,6 @@ class User < ApplicationRecord
 
   def verified?
     verification_at.present?
-  end
-
-  def follows
-    # User.find_by_sql("SELECT * FROM followers
-    #   WHERE id = 21")
   end
 
   def has_sufficient_credits_to_post_question?

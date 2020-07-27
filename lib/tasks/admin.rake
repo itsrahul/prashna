@@ -13,7 +13,7 @@ namespace :admin do
     end
 
     Rails.logger.tagged('admin:new') do
-      admin = User.admin.new(
+      admin = User.enabled.admin.new(
         name: get_detail("Name: "),
         email: get_detail("Email: "),
         password: get_secure("Password: ")

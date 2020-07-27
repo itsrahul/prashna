@@ -22,6 +22,6 @@ class FollowersController < ApplicationController
   end
   
   private def set_user
-    @user = User.find(params[:id])
+    @user = User.enabled.find(params[:id])
   end
 end

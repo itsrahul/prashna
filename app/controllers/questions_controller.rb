@@ -13,8 +13,8 @@ class QuestionsController < ApplicationController
   end
 
   def follower
-    #TODO: get user_followers -> questions
-    @questions = Question.published.where(user: current_user.users_followed.includes(:followed).collect(&:followed) ).paginate(page: params[:page], per_page: ENV['pagination_size'].to_i)
+    #TODO: get user_followers -> questions.. # {answers: [:user, {comments: [:user]}]} ??
+    @questions = Question.published.where(user: current_user.users_followed.includes(:followed).collect(&:followed) ).includes(:user, {comments: [:user]}).paginate(page: params[:page], per_page: ENV['pagination_size'].to_i)
   end
 
   def new

@@ -1,0 +1,43 @@
+<h2>Questions</h2>
+
+<table  class="table table-hover">
+  <thead>
+    <tr>
+      <th>User Name</th>
+      <th>Title</th>
+      <th>Status</th>
+      <th>Answers Count</th>
+      <th>Comments Count</th>
+      <th>Abused Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @questions.each do |question| %>
+      <tr class="table-light">
+        <td><%= question.user.name %></td>
+        <td><%= link_to question.title, admin_question_path(question.id) %></td>
+        <td><%= question.status %></td>
+        <td>
+          <% if question.answers_count > 0 %>
+            <%= link_to question.answers_count, admin_question_answers_path(question.id) %>
+          <% else %>
+            <%= question.answers_count %>
+          <% end %>
+        </td>
+        <td>
+          <% if question.comments_count > 0 %>
+            <%= link_to question.comments_count, admin_question_comments_path(question.id) %>
+          <% else %>
+            <%= question.comments_count %>
+          <% end %>
+        </td>
+
+        <td><%= question.abuse_status %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<%= link_to 'Back', admin_path %>

@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.user.new(user_params)
+    @user = User.user.enabled.new(user_params)
 
     respond_to do |format|
       if @user.save
@@ -57,7 +57,7 @@ class UsersController < ApplicationController
   end
 
   def verify
-    user = User.unverified.find_by_verification_token(params[:token])
+    user = User.enabled.unverified.find_by_verification_token(params[:token])
     #done FIXME_AB: there is an exception is verification process
     if user && user.activate!
       redirect_to login_path, notice: t('.success')

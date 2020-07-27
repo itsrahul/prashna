@@ -2,7 +2,7 @@ class UserMailer < ApplicationMailer
 
 
   def verification_mail(id)
-    @user = User.unverified.find(id)
+    @user = User.enabled.unverified.find(id)
 
     if @user
       mail to: @user.email, subject: t('.subject')
@@ -10,7 +10,7 @@ class UserMailer < ApplicationMailer
   end
 
   def password_reset_mail(id)
-    @user = User.find(id)
+    @user = User.enabled.find(id)
 
     if @user
       mail to: @user.email, subject: t('.subject')
@@ -18,7 +18,7 @@ class UserMailer < ApplicationMailer
   end
 
   def answer_posted_mail(id, question_id)
-    @user = User.find(id)
+    @user = User.enabled.find(id)
     @question = Question.published.find(question_id)
     
 

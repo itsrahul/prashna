@@ -21,5 +21,11 @@
   <%= @user.topics.pluck(:name).join(', ') %>
 </p>
 
+<p>
+  <strong>Authentication Token:</strong>
+  <%= @user.auth_token %>
+  <br>
+  <small>Do not share authentication token with anyone</small>
+</p>
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', root_path %>

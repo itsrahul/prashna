@@ -17,8 +17,8 @@ Rails.application.routes.draw do
   # get 'user/:id/follow', to: "followers#create", as: 'follow_user'
 
   resources :questions do
-      get 'user_followers', to: "questions#follower", as: 'follower', on: :collection
-      resources :comments, only: :create
+    get 'user_followers', to: "questions#follower", as: 'follower', on: :collection
+    resources :comments, only: :create
     resources :answers, only: :create
   end
   
@@ -65,6 +65,31 @@ Rails.application.routes.draw do
       get 'password_resets/:token', to: "password_resets#edit", as: 'send_token'
       post 'password_resets/:token', to: "password_resets#update", as: 'change_password'
     end
+  end
+
+  get 'admin/home', to: "admin#index", as: 'admin'
+  namespace :admin do
+    resources :users, only: [:index, :show] 
+    resources :questions, only: [:index, :show, :edit] do
+      resources :answers, only: :index
+      resources :comments, only: :index
+    end
+    resources :answers, only: [:index, :show] do
+      resources :comments, only: :index
+    end
+    resources :comments, only: [:index]
+    post 'disable/user/:id', to: "users#disable", as: 'disable_user'
+    post 'enable/user/:id', to: "users#enable", as: 'enable_user'
+    # post 'unpublish/question/:id', to: "questions#unpublish", as: 'unpublish_question'
+    post 'unpublish/answer/:id', to: "answers#unpublish", as: 'unpublish_answer'
+    post 'unpublish/comment/:id', to: "comments#unpublish", as: 'unpublish_comment'
+
+  end
+
+  namespace :api do
+    resources :topics, only: :show
+    resources :feed, only: :index
+    # get 'feed', to: "feed#index"
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
