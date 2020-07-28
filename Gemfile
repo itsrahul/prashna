@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 #FIXME_AB: Read explain what is the difference between three rails env: development, production, test
 #FIXME_AB: Read about config/initializers directory, when these files are executed, how many times, in which order etc..
 
-ruby '2.7.1'
+ruby '2.7.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3'
@@ -66,6 +66,11 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'capistrano',                 '3.11.2'
+  gem 'capistrano-rails',           '1.4.0'
+  gem 'capistrano-passenger',       '0.2.0'
+  gem "capistrano-rails-logs-tail", "~> 1.0"
+  gem 'capistrano-rails-console', require: false
 end
 
 group :test do
