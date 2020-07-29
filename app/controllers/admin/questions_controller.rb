@@ -17,6 +17,6 @@ class Admin::QuestionsController < AdminController
   end
 
   private def set_question
-    @question = Question.find(params[:id])
+    @question = Question.unscoped.find(params[:id])
   end
 end

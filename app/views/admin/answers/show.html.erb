@@ -1,5 +1,7 @@
 <h5>Answer id: <%= @answer.id %></h5>
-
+<% if @answer.abused? %>
+  <h3> ABUSED</h3>
+<% end %>
 <p>
   <strong>Author:</strong>
   <%= @answer.user.name %>

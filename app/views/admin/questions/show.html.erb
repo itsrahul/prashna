@@ -1,5 +1,7 @@
 <h2>Question: <%= @question.id %></h2>
-
+<% if @question.abused? %>
+  <h3> ABUSED</h3>
+<% end %>
 <p>
   <strong>Author:</strong>
   <%= @question.user.name %>
