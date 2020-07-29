@@ -41,8 +41,8 @@ class QuestionsController < ApplicationController
     end
 
     respond_to do |format|
+      @question.set_topics(params[:question][:topic])
       if @question.save
-        @question.set_topics(params[:question][:topic])
         @question.publish if @question.published?
         format.html { redirect_to @question, notice: t('.success') }
         format.json { render :show, status: :created, location: @question }

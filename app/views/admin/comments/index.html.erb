@@ -1,10 +1,10 @@
+<% if @comments.present? %>
 <% if @commentable.is_a? Question %>
   <h5>Comments for <%= @commentable.class %>: "<%= @commentable.title %>"</h5>
 <% elsif @commentable.is_a? Answer %>
   <h5>Comments for <%= @commentable.class %>: "<%= @commentable.content %>"</h5>
 <% end %>
-
-<table  class="table table-hover">
+<table class="table table-hover">
   <thead>
     <tr>
       <th>User Name</th>
@@ -27,6 +27,9 @@
     <% end %>
   </tbody>
 </table>
+<% else %>
+  <h5> No comments so far.</h5>
+<% end %>
 
 <br>
 <% if @commentable.is_a? Question %>

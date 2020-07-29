@@ -29,12 +29,20 @@
 
 <p>
   <strong> Answers Count:</strong>
-  <%= link_to @question.answers_count, admin_question_answers_path(@question.id) %>
+  <% if @question.answers_count > 0 %>
+    <%= link_to @question.answers_count, admin_question_answers_path(@question.id) %>
+  <% else %>
+    <%= @question.answers_count %>
+  <% end %>
 </p><hr>
 
 <p>
   <strong> Comments Count:</strong>
-  <%= link_to @question.comments_count, admin_question_comments_path(@question.id) %>
+  <% if @question.comments_count > 0 %>
+    <%= link_to @question.comments_count, admin_question_comments_path(@question.id) %>
+  <% else %>
+    <%= @question.comments_count %>
+  <% end %>
 </p><hr>
 
 <p>

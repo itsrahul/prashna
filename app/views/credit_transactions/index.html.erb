@@ -23,8 +23,8 @@
         <td> <%= tr.creditable.title %></td>
       <% elsif tr.creditable.is_a?(User) %>
         <td> Signup </td>
-      <% else %>
-        <td> <%= tr.creditable.content %></td>
+      <%# else %>
+        <td> <%#= tr.creditable.content %></td>
       <% end %>
     </tr>
   <% end %>
