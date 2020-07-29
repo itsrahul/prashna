@@ -9,6 +9,7 @@
       <th>Answers Count</th>
       <th>Comments Count</th>
       <th>Abused Status</th>
+      <th>Mark Abused</th>
     </tr>
   </thead>
 
@@ -34,6 +35,7 @@
         </td>
 
         <td><%= question.abuse_status %></td>
+        <td><%= link_to 'Mark', admin_unpublish_question_path(question.id), method: :post, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

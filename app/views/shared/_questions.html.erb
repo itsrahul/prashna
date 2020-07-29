@@ -24,9 +24,12 @@
         <% end %>
       <% end %>
     <p class="card-text">
+    <%#TODO: remove if statement later %>
+    <% if question.published_at %>
       posted by <%= link_to question.user.name, search_user_path(question.user.id) %>
       about <%= question.published_ago %> ago
     </p>
+    <% end  %>
     <p>
       <a class="btn btn-primary btn-sm" data-toggle="collapse" href="#collapseAnswers-<%= question.id%>" role="button" aria-expanded="false" aria-controls="collapseExample">
         Answers(<%= question.answers_count %>)

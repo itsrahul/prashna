@@ -81,7 +81,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:index]
     post 'disable/user/:id', to: "users#disable", as: 'disable_user'
     post 'enable/user/:id', to: "users#enable", as: 'enable_user'
-    # post 'unpublish/question/:id', to: "questions#unpublish", as: 'unpublish_question'
+    post 'unpublish/question/:id', to: "questions#unpublish", as: 'unpublish_question'
     post 'unpublish/answer/:id', to: "answers#unpublish", as: 'unpublish_answer'
     post 'unpublish/comment/:id', to: "comments#unpublish", as: 'unpublish_comment'
 
