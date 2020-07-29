@@ -2,7 +2,7 @@ module Admin
   class UsersController < AdminController
     before_action :set_user, only: [:show, :disable, :enable]
     def index
-      @users = User.user.all
+      @users = User.all
 
     end
 

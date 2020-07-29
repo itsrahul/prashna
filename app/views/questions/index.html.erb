@@ -19,15 +19,15 @@
               <span class="badge badge-success"><%= question.status.capitalize %></span>
             <% else %>
               <span class="badge badge-secondary"><%= question.status.capitalize %></span>
-            <% end %>
             <%= link_to 'Edit', edit_question_path(question) %>
             <%= link_to 'Delete', question, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% end %>
           <% end %>
         </div>  
         <div class="card-body">
           <h5 class="card-title"><%= link_to question.title.capitalize, question_path(question.id) %></h5>
           <p class="card-text"><%= question.markdown_content.truncate(100) %></p>
-          <p><%= question.topics.pluck(:name).join(', ') %></p>
+          <p><span class="badge badge-dark badge-large"><%= question.topics.pluck(:name).join(', ') %></span></p>
         </div>
       </div>
     <% end %>

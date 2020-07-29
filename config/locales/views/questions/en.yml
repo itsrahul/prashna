@@ -6,6 +6,9 @@ en:
       success: "Question was created successfully."
       low_balance: "You are low on credts balance. Please topup."
     
+    new:
+      low_balance: "You are low on credts balance. Please topup."
+
     edit:
       too_late: "Question can't be edited now"
 

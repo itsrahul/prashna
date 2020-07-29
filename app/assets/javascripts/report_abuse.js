@@ -10,13 +10,12 @@ class ReportAbuse
   init(){
     this.$buttons.each((i,element) => element.addEventListener('click',(event) => {
       let resultDiv = $(this.$main[i]).find(this.result)
-      this.magic(this.$inputs[i].value, resultDiv, element.form.action);
-      this.$inputs[i].value = '';
+      this.magic(this.$inputs[i].value, resultDiv, element.form.action, i);
       event.preventDefault();})
     )
   }
 
-  magic(reasonVal, resultDiv ,reportAbuseUrl)
+  magic(reasonVal, resultDiv ,reportAbuseUrl, index)
   {
     $.ajax({
       url: reportAbuseUrl,
@@ -25,11 +24,12 @@ class ReportAbuse
       success: (data) => {
         if (data.success)
         {
-          resultDiv[0].innerHTML = `<div class="alert alert-primary report-abuse-success" role="alert"> ${data.success} </div>`
+          resultDiv[0].innerHTML = `<div class="alert alert-primary" role="alert"> ${data.success} </div>`
         }
         else
         {
-          resultDiv[0].innerHTML = `<div class="alert alert-warning report-abuse-failure" role="alert"> ${data.failure} </div>`
+          resultDiv[0].innerHTML = `<div class="alert alert-warning" role="alert"> ${data.failure} </div>`
+          this.$inputs[index].value = '';
         }
       },
     })

@@ -18,7 +18,7 @@
     <p class="card-text">
       <% if question.topics.exists? %>
         <% question.topics.each do |topic| %>
-          <span class="btn btn-dark">
+          <span class="btn btn-info">
             <%= link_to topic.name , search_topic_path(topic.name) %>
           </span>
         <% end %>
@@ -65,7 +65,7 @@
         Comment...
       </a>
       <% if not question.user == current_user %>
-        <a class="btn btn-sm btn-primary" data-toggle="modal" role="button" data-target="#modalReportAbuse-<%= question.id%>">
+        <a class="btn btn-sm btn-primary" href="" data-toggle="modal" role="button" data-target="#modalReportAbuse-<%= question.id%>">
           Report
         </a>
       <% end %>

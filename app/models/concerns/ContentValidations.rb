@@ -1,4 +1,4 @@
-module Validations
+module ContentValidations
   include ActiveSupport::Concern
 
   def words_in_content

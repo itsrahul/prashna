@@ -1,6 +1,7 @@
 class Question < ApplicationRecord
   include SetTopic
   include QuestionPublished
+  include ContentValidations
 
   include BasicPresenter::Concern
   enum status: { draft: 0, published: 1 }
@@ -11,7 +12,8 @@ class Question < ApplicationRecord
 
   validates :title, uniqueness: { case_sensitive: false }, presence: true
   validates :content, presence: true
-  validates :questions_topic, length: { minimum: 1 }
+  validates :words_in_content, length: { minimum: 5 , message: "should be atleast 5"}, allow_blank: true
+  validates :questions_topic, numericality: { greater_than_or_equal_to: 1,  message: "should have atleast 1 entry." }
   validates :doc, file_type_pdf: true, if: Proc.new {|q| q.doc.attached? }
 
 

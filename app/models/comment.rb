@@ -1,9 +1,9 @@
 class Comment < ApplicationRecord
   enum abuse_status: { unabused: 0, abused: 1 }
-  include Validations
+  include ContentValidations
 
   validates :content, presence: true
-  validates :words_in_content, length: { minimum: 3}
+  validates :words_in_content, length: { minimum: 3 , message: "should be atleast 3"}, allow_blank: true
 
   belongs_to :user
   belongs_to :commentable, polymorphic: true, counter_cache: true
@@ -32,10 +32,6 @@ class Comment < ApplicationRecord
       return commentable.question
     end
   end
-
-  # def words_in_content
-  #   content.scan(/\w+/)
-  # end
 
   private def ensure_question_published
     if not question.published?

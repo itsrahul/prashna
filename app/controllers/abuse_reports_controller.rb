@@ -7,12 +7,10 @@ class AbuseReportsController < ApplicationController
 
     # @abuse = current_user.abuse_reports.new(abusable: @abusable, reason: params[:reason])
     if @abuse.save
-      # flash.now[:alert] = 
-      notice = "#{@abusable.class}: \"#{@abusable.title}\" #{t('.success')}"
+      # notice = "#{@abusable.class}: \"#{@abusable.title}\" #{t('.success')}"
       render json: { success: "#{@abusable.class}: \"#{@abusable.title}\" #{t('.success')}"}
     else
-      # flash.now[:alert] =
-      notice = @abuse.errors.full_messages.join(', ')
+      # notice = @abuse.errors.full_messages.join(', ')
       render json: { failure: @abuse.errors.full_messages.join(', ') }
     end
   end

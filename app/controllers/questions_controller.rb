@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
   before_action :ensure_credit_balance, only: [:new, :create]
 
   def index
-    @questions = Question.unscoped.where(user: current_user).paginate(page: params[:page], per_page: ENV['pagination_size'].to_i)
+    @questions = Question.unscoped.where(user: current_user).paginate(page: params[:page], per_page: ENV['pagination_size'].to_i).order(updated_at: :desc)
   end
 
   def follower
