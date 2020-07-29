@@ -15,8 +15,8 @@
   <tbody>
     <% @users.each do |user| %>
       <tr class="table-light">
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
+        <td><%= link_to user.name, admin_user_path(user.id) %></td>
+        <td><%= user.email %></td >
         <td><%= user.verified? ? "Yes" : "No" %></td>
         <td><%= user.credits %></td>
         <% if user.disabled? %>

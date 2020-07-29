@@ -3,7 +3,7 @@ class Answer < ApplicationRecord
   include Validations
 
   validates :content, presence: true
-  # validates :words_in_content, length: { minimum: 3 }, allow_blank: true
+  validates :words_in_content, length: { minimum: 3 }, allow_blank: true
 
   belongs_to :user
   belongs_to :question, counter_cache: true

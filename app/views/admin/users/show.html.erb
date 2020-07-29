@@ -23,9 +23,34 @@
   <%= @user.topics.pluck(:name).join(', ') %>
 </p>
 
-<%#= link_to 'Questions', admin_enable_user_path(user.id), method: :post, data: { confirm: 'Are you sure?' } %>
-<%#= link_to 'Answers', admin_disable_user_path(user.id), method: :post, data: { confirm: 'Are you sure?' } %>
-<%#= link_to 'Comments', admin_disable_user_path(user.id), method: :post, data: { confirm: 'Are you sure?' } %>
-
+<h2>User transaction</h2>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Value</th>
+      <th scope="col">Reason</th>
+      <th scope="col">creditable Type</th>
+      <th scope="col">creditable Id</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% CreditTransaction.unscoped.where(user: @user).each do |tr| %>
+    <tr>
+      <th scope="row"><%= tr.id %></th>
+      <td> <%= tr.value %></td>
+      <td> <%= tr.reason %></td>
+      <td> <%= tr.creditable_type %></td>
+      <% if tr.creditable.is_a?(Question) %>
+        <td> <%= tr.creditable.title %></td>
+      <% elsif tr.creditable.is_a?(User) %>
+        <td> Signup </td>
+      <% else %>
+        <td> <%= tr.creditable.content %></td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table> 
 <%= link_to 'Back', admin_path %>
 <br>

@@ -1,33 +1,28 @@
-class Admin::UsersController < AdminController
-  before_action :set_user, only: [:show, :disable, :enable]
-  def index
-    @users = User.user.all
+module Admin
+  class UsersController < AdminController
+    before_action :set_user, only: [:show, :disable, :enable]
+    def index
+      @users = User.user.all
 
+    end
+
+    #done FIXME_AB: lets show complete info of learner that we have including credit transactions.
+    def show
+    @user
   end
 
-  #FIXME_AB: lets show complete info of learner that we have including credit transactions.
-  def show
-    @user.includes(:questions, :answers, :comments)
-  end
+    def disable
+      @user.disabled!
+      redirect_to admin_users_path, notice: "User disabled successfully."
+    end
 
-  def disable
-    # mark user disable.
-    # disabled user can't login.
-    @user.disabled!
-    redirect_to admin_users_path, notice: "User disabled successfully."
-  end
+    def enable
+      @user.enabled!
+      redirect_to admin_users_path, notice: "User re-enabled successfully."
+    end
 
-  def enable
-    # if params[:status].to_i == 1
-    #   @user.disabled!
-    # elsif params[:status].to_i == 0
-    #   @user.enabled!
-    # end
-    @user.enabled!
-    redirect_to admin_users_path, notice: "User re-enabled successfully."
-  end
-
-  private def set_user
-    @user = User.find(params[:id])
+    private def set_user
+      @user = User.find(params[:id])
+    end
   end
 end

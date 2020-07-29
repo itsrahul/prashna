@@ -14,15 +14,16 @@
 
     <%= javascript_include_tag 'https://code.jquery.com/ui/1.12.1/jquery-ui.js' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'notification', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'vote', 'data-turbolinks-track': 'reload' %>
-
+    <% if logged_in? %>
+      <%= javascript_include_tag 'notification', 'data-turbolinks-track': 'reload' %>
+      <%= javascript_include_tag 'vote', 'data-turbolinks-track': 'reload' %>
+    <% end %>
+    <%= yield :js -%>
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <%= stylesheet_link_tag 'bootstrap', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%#= stylesheet_link_tag 'https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/litera/bootstrap.min.css' %>
-    <%= yield :js -%>
   </head>
 
   <body>
@@ -39,31 +40,41 @@
             <li class="nav-item active">
               <%= link_to 'Home', root_path, class: "nav-link" %><span class="sr-only">(current)</span>
             </li>
-            <% if not logged_in? %>
-              <li class="nav-item"><%= link_to 'Login', login_path, class: "nav-link" %></li>
-              <li class="nav-item"><%= link_to 'Signup', signup_path, class: "nav-link" %></li>
+            <% if logged_in? and not current_user.user? and content_for?(:admin) %>
+              <%= yield :admin %>
+            <% else %>
+              <% if not logged_in? %>
+                <li class="nav-item"><%= link_to 'Login', login_path, class: "nav-link" %></li>
+                <li class="nav-item"><%= link_to 'Signup', signup_path, class: "nav-link" %></li>
+              <% end %>
+              <% if logged_in? %>
+                <li class="nav-item">
+                  <%= link_to 'Profile', profile_path, class: "nav-link" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to 'Transactions', credit_transactions_path, class: "nav-link" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to 'My Questions', questions_path, class: "nav-link" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to 'Followed User', follower_questions_path, class: "nav-link" %>
+                </li>
+                <li class="nav-item">
+                  <%= link_to 'Logout', logout_path, method: :delete, class: "nav-link" %>
+                </li>
+              <% end %>
             <% end %>
-            <% if logged_in? %>
-              <li class="nav-item">
-                <%= link_to 'Profile', profile_path, class: "nav-link" %>
-              </li>
-              <li class="nav-item">
-                <%= link_to 'Transactions', credit_transactions_path, class: "nav-link" %>
-              </li>
-              <li class="nav-item">
-                <%= link_to 'My Questions', questions_path, class: "nav-link" %>
-              </li>
-              <li class="nav-item">
-                <%= link_to 'Followed User', follower_questions_path, class: "nav-link" %>
-              </li>
-              <li class="nav-item">
-                <%= link_to 'Logout', logout_path, method: :delete, class: "nav-link" %>
-              </li>
-            <% end %>
-
 
           </ul>
           <div class="btn-group">
+            <ul class="navbar-nav mr-auto">
+              <% if logged_in? and current_user.admin? and not content_for?(:admin)%>
+                <li class="nav-item">
+                  <%= link_to 'Admin Home', admin_path,   class: "nav-link" %>
+                </li>
+              <% end %>
+            </ul>
             <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bell" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z"/>

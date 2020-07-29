@@ -3,6 +3,10 @@ class AnswersController < ApplicationController
 
   def create
     answer = @question.answers.create(user: current_user, content:  params[:content])
+    if answer.errors.present?
+      render json: { errors: answer.errors.full_messages.join(', ')}
+      return
+    end
     UserMailer.answer_posted_mail(@question.user.id, @question.id).deliver_later
     @answers = @question.answers
     if @answers

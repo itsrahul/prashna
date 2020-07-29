@@ -24,7 +24,7 @@
       <% elsif tr.creditable.is_a?(User) %>
         <td> Signup </td>
       <% else %>
-        <td> <%= tr.creditable.markdown_content %></td>
+        <td> <%= tr.creditable.content %></td>
       <% end %>
     </tr>
   <% end %>

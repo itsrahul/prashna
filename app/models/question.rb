@@ -38,9 +38,9 @@ class Question < ApplicationRecord
   before_update  :ensure_not_published, :ensure_not_abused
   before_destroy :ensure_not_published, :ensure_not_abused
   after_commit   :actions_if_abused
-  after_publish  :notify_other_users_and_charge_user
+  after_publish  :notify_other_users_and_charge_user, :set_published_at
 
-  @delegation_methods = [:markdown_content]
+  @delegation_methods = [:markdown_content, :published_ago]
   delegate *@delegation_methods, to: :presenter
 
   def publish
@@ -52,6 +52,10 @@ class Question < ApplicationRecord
       notify_users_except(user)
       charge_credits(user)
     end
+  end
+
+  def set_published_at
+    update_columns(published_at: Time.current)
   end
 
   def to_param

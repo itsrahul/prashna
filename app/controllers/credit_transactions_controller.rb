@@ -4,7 +4,7 @@ class CreditTransactionsController < ApplicationController
   def index
     # @transactions = current_user.credit_transactions.paginate(page: params[:page], per_page: ENV['pagination_size'].to_i)
     # above check for (creditable: current_user), not (user: current_user).
-    @transactions = CreditTransaction.includes([:creditable]).where(user: current_user).paginate(page: params[:page], per_page: ENV['transaction_pagination_size'].to_i)
+    @transactions = CreditTransaction.includes([:creditable]).where(user: current_user).paginate(page: params[:page], per_page: ENV['transaction_pagination_size'].to_i).order(updated_at: :desc)
   end
 
   private def ensure_logged_in

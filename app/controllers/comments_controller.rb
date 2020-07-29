@@ -2,6 +2,10 @@ class CommentsController < ApplicationController
   before_action :set_commentable
   def create
     comment = Comment.create(user: current_user, content:  params[:content], commentable: @commentable)
+    if comment.errors.present?
+      render json: { errors: comment.errors.full_messages.join(', ')}
+      return
+    end
     @comments = @commentable.comments
     if @comments
       render partial: "shared/comments"

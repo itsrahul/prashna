@@ -1,5 +1,5 @@
 class Admin::AnswersController < AdminController
-  #FIXME_AB: lets have different admin layout for all admin controllers with navbar having admin specific links.
+  #done FIXME_AB: lets have different admin layout for all admin controllers with navbar having admin specific links.
   before_action :set_answer, only: [:show, :unpublish]
   before_action :set_question, only: [:index]
 

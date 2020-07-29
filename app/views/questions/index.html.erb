@@ -1,34 +1,37 @@
-<%#= render partial: "questions" %>
 <% if logged_in? %>
   <strong>Hello, <%= current_user.name %></strong>
 <% end %>
 
-<h2>Your questions</h2>
-<div class="flex-container">  
-  <% @questions.each do |question| %>
-    <div class="card bg-light mb-3" style="max-width: 20rem;">
-      <div class="card-header">      
-        <% if question.abused? %>
-          <span class="badge badge-danger"><%= question.abuse_status.capitalize %></span>
-        <% else %>
-          <% if question.published? %>
-            <span class="badge badge-success"><%= question.status.capitalize %></span>
+<% if @questions.blank? %>
+  <h2>You don't have any questions yet.</h2>
+  <%= link_to 'New Question', new_question_path %>
+<% else %>
+  <h2>Your questions</h2>
+  <%= link_to 'New Question', new_question_path %>
+  <div class="flex-container">  
+    <% @questions.each do |question| %>
+      <div class="card bg-light mb-3" style="max-width: 20rem;">
+        <div class="card-header">      
+          <% if question.abused? %>
+            <span class="badge badge-danger"><%= question.abuse_status.capitalize %></span>
           <% else %>
-            <span class="badge badge-secondary"><%= question.status.capitalize %></span>
+            <% if question.published? %>
+              <span class="badge badge-success"><%= question.status.capitalize %></span>
+            <% else %>
+              <span class="badge badge-secondary"><%= question.status.capitalize %></span>
+            <% end %>
+            <%= link_to 'Edit', edit_question_path(question) %>
+            <%= link_to 'Delete', question, method: :delete, data: { confirm: 'Are you sure?' } %>
           <% end %>
-          <%= link_to 'Edit', edit_question_path(question) %>
-          <%= link_to 'Delete', question, method: :delete, data: { confirm: 'Are you sure?' } %>
-        <% end %>
-      </div>  
-      <div class="card-body">
-        <h5 class="card-title"><%= question.title.capitalize %></h5>
-        <p class="card-text"><%= question.markdown_content %></p>
-        <p><%= question.topics.pluck(:name).join(', ') %></p>
+        </div>  
+        <div class="card-body">
+          <h5 class="card-title"><%= link_to question.title.capitalize, question_path(question.id) %></h5>
+          <p class="card-text"><%= question.markdown_content.truncate(100) %></p>
+          <p><%= question.topics.pluck(:name).join(', ') %></p>
+        </div>
       </div>
-    </div>
-  <% end %>
-</div>
+    <% end %>
+  </div>
+<% end %>
 <br>
 <center><%= will_paginate @questions, class: "flickr_pagination" %></center>
-
-<%= link_to 'New Question', new_question_path %>

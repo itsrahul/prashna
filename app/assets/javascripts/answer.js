@@ -4,7 +4,7 @@ class AnswerUpdater
   {
     this.$main = options.main;
     this.$form = options.form;
-    this.$text = options.form.find('input[type=text]');
+    this.$text = options.form.find('textarea');
     this.$button = options.form.find('.submit-answer');
 
   }
@@ -27,12 +27,29 @@ class AnswerUpdater
         $.LoadingOverlay("show");
       },
       success: (data) => {
-        this.$main[index].innerHTML = data
+        this.setResult(data, index);
       },
       complete: () => {
         $.LoadingOverlay("hide");
       },
     })
+  }
+
+  setResult(data, index)
+  {
+    let $resultDiv = $(`.${this.$form[index].dataset["result"]}`);
+
+    if (data.errors)
+    {
+      $resultDiv[0].innerHTML = `<div class="alert alert-warning" role="alert"> ${data.errors} </div>`
+    }
+    else
+    {
+      this.$main[index].innerHTML = data
+      this.$text[index].value = '';
+      $resultDiv[0].innerHTML = `<div class="alert alert-success" role="alert"> Answer posted successfully. </div>`
+    }
+
   }
 }
 

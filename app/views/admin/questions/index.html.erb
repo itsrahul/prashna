@@ -15,7 +15,7 @@
   <tbody>
     <% @questions.each do |question| %>
       <tr class="table-light">
-        <td><%= question.user.name %></td>
+        <td><%= link_to question.user.name, admin_user_path(question.user.id) %></td>
         <td><%= link_to question.title, admin_question_path(question.id) %></td>
         <td><%= question.status %></td>
         <td>

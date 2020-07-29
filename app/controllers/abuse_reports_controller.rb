@@ -2,18 +2,26 @@ class AbuseReportsController < ApplicationController
   before_action :set_abusable
 
   def new
-    if current_user.abuse_reports.find_by(abusable: @abusable)
-      debugger
-      redirect_to root_path, notice: t('.already')
+    @abuse = current_user.abuse_reports.find_or_initialize_by(abusable: @abusable)
+    @abuse.reason = params[:reason]
+
+    # @abuse = current_user.abuse_reports.new(abusable: @abusable, reason: params[:reason])
+    if @abuse.save
+      # flash.now[:alert] = 
+      notice = "#{@abusable.class}: \"#{@abusable.title}\" #{t('.success')}"
+      render json: { success: "#{@abusable.class}: \"#{@abusable.title}\" #{t('.success')}"}
+    else
+      # flash.now[:alert] =
+      notice = @abuse.errors.full_messages.join(', ')
+      render json: { failure: @abuse.errors.full_messages.join(', ') }
     end
-    @abuse = current_user.abuse_reports.new(abusable: @abusable)
   end
 
   def create
-    @abuse = current_user.abuse_reports.new(abusable: @abusable, reason: abuse_params[:reason])
-    if @abuse.save
-      redirect_to root_path, notice: "#{@abusable.class}: \"#{@abusable.title}\" #{t('.success')}"
-    end
+    # @abuse   = current_user.abuse_reports.new(abusable: @abusable, reason: abuse_params[:reason])
+    # if @abuse.save
+    #   redirect_to root_path, notice: "#{@abusable.class}: \"#{@abusable.title}\" #{t('.success')}"
+    # end
   end
 
   private def set_abusable
@@ -26,7 +34,7 @@ class AbuseReportsController < ApplicationController
     end
   end
 
-  private def abuse_params
-    params.require(:abuse_report).permit(:reason)
-  end
+  # private def abuse_params
+  #   params.require(:abuse_report).permit(:reason)
+  # end
 end

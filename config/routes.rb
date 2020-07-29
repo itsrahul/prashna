@@ -67,8 +67,8 @@ Rails.application.routes.draw do
     end
   end
 
-  #FIXME_AB: /admin should redirect to admin/home
-  get 'admin/home', to: "admin#index", as: 'admin'
+  #done FIXME_AB: /admin should redirect to admin/home
+  get 'admin', to: "admin#index", as: 'admin'
   namespace :admin do
     resources :users, only: [:index, :show]
     resources :questions, only: [:index, :show, :edit] do

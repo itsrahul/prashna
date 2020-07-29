@@ -2,12 +2,12 @@
   <strong>Hello, <%= current_user.name %></strong>
 <% end %>
 
-<% content_for :js do -%>
-  <%= javascript_include_tag 'question_reload', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_include_tag 'fetch_vote_onload', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_include_tag 'answer', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_include_tag 'comment', 'data-turbolinks-track': 'reload' %>
-<% end -%>
+<%# content_for :js do -%>
+  <%#= javascript_include_tag 'question_reload', 'data-turbolinks-track': 'reload' %>
+  <%#= javascript_include_tag 'fetch_vote_onload', 'data-turbolinks-track': 'reload' %>
+  <%#= javascript_include_tag 'answer', 'data-turbolinks-track': 'reload' %>
+  <%#= javascript_include_tag 'comment', 'data-turbolinks-track': 'reload' %>
+<%# end -%>
 <br>
 <div class='questions-list'>
   <%= render partial: "shared/questions" %>

@@ -12,24 +12,27 @@ No answer yet.
         <%= render partial: "shared/comments" %>
       </div>
     <% end %>
-    <%= form_with(model: answer, url: answer_comments_path(answer.id), remote: true, method: :post, class: "form-inline my-2 my-lg-0" ) do |form| %>
-      <div class="form-group answer-comment-div">
-        <%= form.text_field :comment, class: "form-control mr-sm-2 form-control-sm", placeholder: "Comment on answer", autocomplete: "off" %>
-        <%= form.submit "Comment", class: "btn btn-secondary my-2 my-sm-0 btn-sm" %>
+    <% if logged_in? %>
+      <div class="comment-result-answer-<%= answer.id%>" role="alert">
+      </div>
+      <%= form_with(model: answer, url: answer_comments_path(answer.id), remote: true, method: :post, class: "form-inline my-2 my-lg-0" ) do |form| %>
+        <div class="form-group answer-comment-div" data-result="comment-result-answer-<%= answer.id%>">
+          <%= form.text_area :comment, class: "form-control mr-sm-2 form-control-sm", placeholder: "Comment on answer", autocomplete: "off" %>
+          <%= form.submit "Comment", class: "btn btn-secondary my-2 my-sm-0 btn-sm" %>
+        </div>
+      <% end %>
+      <div class="vote-answer">
+        <div class="vote-answer-buttons">
+          <%= button_to "Like", answer_votes_path(answer.id), class: "btn btn-sm answer-#{answer.id}", data: {id: "answer-#{answer.id}" }, method: :post %>
+          <small><p class="answer-<%= answer.id %>-count" data-type="like" ></p></small>
+          <%= button_to 'Dislike', answer_votes_path(answer.id, false),class: "btn btn-sm answer-#{answer.id}", data: {id: "answer-#{answer.id}" }, method: :post %>
+          <small><p class="answer-<%= answer.id %>-count" data-type="like" ></p></small>
+          <a class="btn btn-sm" href="<%= report_abuse_path("answer", answer.id) %>" role="button" aria-expanded="false">
+            Report
+          </a>  
+        </div>
       </div>
     <% end %>
-
-    <div class="vote-answer">
-      <div class="vote-answer-buttons">
-        <%= button_to "Like", answer_votes_path(answer.id), class: "btn btn-sm answer-#{answer.id}", data: {id: "answer-#{answer.id}" }, method: :post %>
-        <small><p class="answer-<%= answer.id %>-count" data-type="like" ></p></small>
-        <%= button_to 'Dislike', answer_votes_path(answer.id, false),class: "btn btn-sm answer-#{answer.id}", data: {id: "answer-#{answer.id}" }, method: :post %>
-        <small><p class="answer-<%= answer.id %>-count" data-type="like" ></p></small>
-        <a class="btn btn-sm" href="<%= report_abuse_path("answer", answer.id) %>" role="button" aria-expanded="false">
-          Report
-        </a>  
-      </div>
-    </div>
   </div>
 
 </div>
