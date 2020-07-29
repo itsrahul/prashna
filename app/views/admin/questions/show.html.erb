@@ -20,14 +20,19 @@
   <%= @question.status %>
 </p><hr>
 
+<% if @question.published_at %>
 <p>
-  <%#TODO: add link_to %>
+  <strong>Published:</strong>
+  <%= @question.published_ago %> ago
+</p><hr>
+<% end %>
+
+<p>
   <strong> Answers Count:</strong>
   <%= link_to @question.answers_count, admin_question_answers_path(@question.id) %>
 </p><hr>
 
 <p>
-  <%#TODO: add link_to %>
   <strong> Comments Count:</strong>
   <%= link_to @question.comments_count, admin_question_comments_path(@question.id) %>
 </p><hr>
@@ -37,9 +42,6 @@
   <%= @question.topics.pluck(:name).join(', ') %>
 </p><hr>
 
-<%#= link_to 'Questions', admin_enable_question_path(question.id), method: :post, data: { confirm: 'Are you sure?' } %>
-<%#= link_to 'Answers', admin_disable_question_path(question.id), method: :post, data: { confirm: 'Are you sure?' } %>
-<%#= link_to 'Comments', admin_disable_question_path(question.id), method: :post, data: { confirm: 'Are you sure?' } %>
 
 <%= link_to 'Back', admin_questions_path %>
 <br>

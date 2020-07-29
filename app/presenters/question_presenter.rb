@@ -13,13 +13,15 @@ class QuestionPresenter < ApplicationPresenter
   end
 
   def published_ago
-    time_diff = (Time.current - published_at)
-    if (time_diff / 1.minute).round < 60
-      return "#{(time_diff / 1.minute).round} minutes"
-    elsif (time_diff / 1.hour).round < 24
-      return "#{(time_diff / 1.hour).round} hours"
-    else
-      return "#{(time_diff / 1.day).round} days"
+    if published_at
+      time_diff = (Time.current - published_at)
+      if (time_diff / 1.minute).round < 60
+        return "#{(time_diff / 1.minute).round} minutes"
+      elsif (time_diff / 1.hour).round < 24
+        return "#{(time_diff / 1.hour).round} hours"
+      else
+        return "#{(time_diff / 1.day).round} days"
+      end
     end
   end
 end
