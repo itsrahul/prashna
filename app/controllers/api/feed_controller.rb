@@ -1,8 +1,4 @@
 #done FIXME_AB: read about ruby module nesting
-# module Api
-#   class FeedController
-#   end
-# end
 module Api
   class FeedController < ApiController
 

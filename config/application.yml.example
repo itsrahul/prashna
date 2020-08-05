@@ -7,12 +7,14 @@ development:
   credit_for_question_post: '1'
   upvote_for_bonus_credit: '2'
   bonus_credit_on_upvotes: '1'
-  reports_count_for_removal: '5'
+  reports_count_for_removal: '2'
   transaction_pagination_size: '8'
   admin_pagination_size: '8'
   public_api_requests_question_limit: '4'
   public_api_requests_time_limit: '1'
   public_api_requests_request_limit: '5'
+  stripe_publishable_key: ''
+  stripe_secret_key: ''
 
 production:
   verification_token_validity_in_hours: '4'
@@ -29,3 +31,5 @@ production:
   public_api_requests_question_limit: '4'
   public_api_requests_time_limit: '1'
   public_api_requests_request_limit: '5'
+  stripe_publishable_key: ''
+  stripe_secret_key: ''

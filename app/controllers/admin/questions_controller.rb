@@ -5,7 +5,6 @@ class Admin::QuestionsController < AdminController
   end
 
   def show
-    # @question
   end
 
   def unpublish

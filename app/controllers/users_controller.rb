@@ -33,7 +33,6 @@ class UsersController < ApplicationController
     @user = current_user
     #done FIXME_AB: move this method to model's concern and include in user and question model. so that you would be able to use it like: @user.set_topics(params[:user][:topic])
     @user.set_topics(params[:user][:topic])
-    # user_params.delete(:password) if user_params[:password].blank?
 
     respond_to do |format|
       if @user.update(user_params)

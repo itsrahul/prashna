@@ -14,7 +14,6 @@ class ApplicationController < ActionController::Base
     if logged_in?
       @notifications = current_user.notifications
     end
-    #TODO: will shift to ajax call, not doing
   end
 
   protected def authorize
