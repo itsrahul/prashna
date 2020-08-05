@@ -1,1 +1,18 @@
-Figaro.require_keys("verification_token_validity_in_hours", "reset_token_validity_in_hours", "signup_credits", "default_mail", "pagination_size", "credit_for_question_post", "upvote_for_bonus_credit")
+Figaro.require_keys(
+  'verification_token_validity_in_hours',
+  'reset_token_validity_in_hours',
+  'signup_credits',
+  'default_mail',
+  'pagination_size',
+  'credit_for_question_post',
+  'upvote_for_bonus_credit',
+  'bonus_credit_on_upvotes',
+  'reports_count_for_removal',
+  'transaction_pagination_size',
+  'admin_pagination_size',
+  'public_api_requests_question_limit',
+  'public_api_requests_time_limit',
+  'public_api_requests_request_limit',
+  'stripe_publishable_key',
+  'stripe_secret_key'
+)

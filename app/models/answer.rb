@@ -16,7 +16,6 @@ class Answer < ApplicationRecord
   default_scope { unabused }
 
   before_create :ensure_questions_belongs_to_other_user, :ensure_question_published
-  # after_commit :actions_if_abused
   after_commit :give_net_upvote_based_credit
 
   def question_posted_by?(given_user)
@@ -41,12 +40,6 @@ class Answer < ApplicationRecord
 
   # moved to MarkAbused concern
   # private def actions_if_abused
-  #   if abused?
-  #     #done FIXME_AB: lets do -1 * abs(sum)
-  #     if not (credit_sum = credit_transactions.sum(:value)).zero?
-  #       credit_transactions.create(user: user, value: -1 * credit_sum.abs, reason: "abuse reported, bonus reverted")
-  #     end
-  #   end
   # end
 
   private def give_net_upvote_based_credit

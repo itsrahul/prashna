@@ -9,7 +9,6 @@ class Admin::CommentsController < AdminController
   def unpublish
     @comment.abused!
     redirect_to admin_question_comments_path(@comment.commentable_id), notice: "unpublished successfully."
-    # @comment.destroy
   end
 
   private def set_comment

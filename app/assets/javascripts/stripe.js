@@ -6,8 +6,8 @@ class StripeAuthentication
     this.stripe_token = options.form.data('stripe_token');
     this.elementsDiv = options.form.find(options.elementsDiv);
     this.errorDiv = options.form.find(options.errorDiv)[0];
-    // this.stripe = await loadStripe(stripe_token);
-    this.stripe = Stripe('pk_test_51HAFWJIXM1LcFa3fgSHv9WHvMKElfcX7lJ6vuilB4nCgdlmFhEVx3MPO1qrB4g1Rg5LFMRAcR3Zx4Tz72O0w27Yw00DXMzjwyb');
+    this.stripe_key = this.$form.data('stripe-key');
+    this.stripe = Stripe(this.stripe_key);
     // Create an instance of Elements.
     this.elements = this.stripe.elements();
     

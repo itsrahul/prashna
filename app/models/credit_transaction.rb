@@ -11,7 +11,6 @@ class CreditTransaction < ApplicationRecord
   private def refresh_credits_balance!
     user.credits = user.credit_transactions.sum(&:value)
     user.save!
-    # user.update_columns(credits: user.credit_transactions.sum(&:value))
   end
 
 end
