@@ -17,8 +17,8 @@ class UserMailer < ApplicationMailer
     end
   end
 
-  def answer_posted_mail(id, question_id)
-    @user = User.enabled.find(id)
+  def answer_posted_mail(user_id, question_id)
+    @user = User.enabled.find(user_id)
     @question = Question.published.find(question_id)
     
 

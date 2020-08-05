@@ -1,6 +1,6 @@
 module Api
   class TopicsController < ApiController
-    skip_before_action :authorize
+    skip_before_action :authorize_user_token
     before_action :set_topic, :ensure_limited_requests, only: [:show]
     after_action :create_request_record, only: [:show]
 

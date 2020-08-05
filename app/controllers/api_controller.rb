@@ -1,9 +1,9 @@
 class ApiController < ActionController::Base
   #done FIXME_AB: inherit from ActionController::Base
-  before_action :authorize
+  before_action :authorize_user_token
 
   #done FIXME_AB: move this to ApiController as authorize
-  protected def authorize
+  protected def authorize_user_token
     if not (@user = User.find_by_auth_token(params[:token]))
       render json: { error: "Invalid auth token"}
     end

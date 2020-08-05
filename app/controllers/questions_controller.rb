@@ -23,13 +23,18 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @questions = Question.where(id: params[:id])
-    if not @questions.first.published?
-      redirect_to questions_path, alert: "Question is not published yet."
+    @questions = Question.unscoped.where(id: params[:id])
+    if @questions.first.abused?
+      redirect_to root_path, alert: "Question has been reported abused."
       return
     end
     if @questions.blank?
       redirect_to root_path, alert: "Invalid question id"
+      return
+    end
+    if not @questions.first.published?
+      redirect_to questions_path, alert: "Question is not published yet."
+      return
     end
   end
 

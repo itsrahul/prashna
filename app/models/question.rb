@@ -2,6 +2,7 @@ class Question < ApplicationRecord
   include SetTopic
   include QuestionPublished
   include ContentValidations
+  include MarkAbused
 
   include BasicPresenter::Concern
   enum status: { draft: 0, published: 1 }
@@ -39,7 +40,7 @@ class Question < ApplicationRecord
   before_create  :ensure_credit_balance
   before_update  :ensure_not_published, :ensure_not_abused
   before_destroy :ensure_not_published, :ensure_not_abused
-  after_commit   :actions_if_abused
+  # after_commit   :actions_if_abused
   after_publish  :notify_other_users_and_charge_user, :set_published_at
 
   @delegation_methods = [:markdown_content, :published_ago]
@@ -82,11 +83,12 @@ class Question < ApplicationRecord
     end
   end
 
-  private def actions_if_abused
-    if abused?
-      update_columns(status: 0)
-    end
-  end
+  # moves to MarkAbused concern
+  # private def actions_if_abused
+  #   if abused?
+  #     update_columns(status: 0)
+  #   end
+  # end
 
   private def ensure_not_abused
     if abused?

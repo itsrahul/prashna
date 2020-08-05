@@ -1,5 +1,5 @@
 <h3>Dear <%= @user.name %></h3>
 <p>
   Someone has posted a new answer on your question: <%= @question.title %>
-  Click <%= link_to 'here', question_path(@question.id) %> to see your post.
+  Click <%= link_to 'here', question_url(@question.id) %> to see your post.
 </p>

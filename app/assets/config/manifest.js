@@ -14,3 +14,4 @@
 //= link fetch_vote_onload.js
 //= link follow.js
 //= link report_abuse.js
+//= link stripe.js

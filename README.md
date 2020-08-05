@@ -19,3 +19,15 @@ After this is done, configure application.yml and database.yml from application.
 ### Setting up Admin Account
 
 Use this to create an admin account, which used for adminstrative purposes. Use `rails admin:new` to run rake task
+
+### Generating Auth Token
+
+Use this to create auth token for old users. Use `rails gen_auth_token` to run rake task.
+
+### Creating Default Packs
+
+Use this to create some default credit packs, including signup. Use `rails create_credit_packs` to run rake task.
+
+### Port Legacy User's Signup credit transaction's creditable
+
+Use this to port user's signup transactions creditable to Pack. Use `rails port_legacy_signup_transactions` to run rake task.

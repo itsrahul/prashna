@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_28_081643) do
+ActiveRecord::Schema.define(version: 2020_08_03_101358) do
 
   create_table "abuse_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -114,6 +114,30 @@ ActiveRecord::Schema.define(version: 2020_07_28_081643) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
+  create_table "packs", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.string "name"
+    t.integer "value", null: false
+    t.decimal "price", precision: 8, scale: 2, null: false
+    t.integer "status", default: 1, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_packs_on_name", unique: true
+    t.index ["status"], name: "index_packs_on_status"
+  end
+
+  create_table "payment_transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "pack_id", null: false
+    t.string "charge_id"
+    t.integer "status", default: 0
+    t.datetime "success_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["charge_id"], name: "index_payment_transactions_on_charge_id"
+    t.index ["pack_id"], name: "index_payment_transactions_on_pack_id"
+    t.index ["user_id"], name: "index_payment_transactions_on_user_id"
+  end
+
   create_table "questions", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "title"
     t.bigint "user_id"
@@ -180,9 +204,11 @@ ActiveRecord::Schema.define(version: 2020_07_28_081643) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "disable_status", default: 0
     t.string "auth_token"
+    t.string "stripe_token"
     t.index ["auth_token"], name: "index_users_on_auth_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_token"], name: "index_users_on_reset_token", unique: true
+    t.index ["stripe_token"], name: "index_users_on_stripe_token"
     t.index ["verification_token"], name: "index_users_on_verification_token", unique: true
   end
 
@@ -204,6 +230,8 @@ ActiveRecord::Schema.define(version: 2020_07_28_081643) do
   add_foreign_key "comments", "users"
   add_foreign_key "credit_transactions", "users"
   add_foreign_key "notifications", "users"
+  add_foreign_key "payment_transactions", "packs"
+  add_foreign_key "payment_transactions", "users"
   add_foreign_key "questions", "users"
   add_foreign_key "user_followers", "users", column: "followed_id"
   add_foreign_key "user_followers", "users", column: "follower_id"

@@ -46,7 +46,7 @@ gem 'basic_presenter', '~> 0.0.4'
 gem 'exception_notification', '~> 4.4.1'
 gem 'bootstrap', '~> 4.5.0'
 gem "figaro", '~> 1.2.0'
-
+gem 'stripe', '~> 5.22.0'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
