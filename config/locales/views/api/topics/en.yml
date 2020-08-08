@@ -1,0 +1,5 @@
+en:
+  api:
+    topics:
+      show:
+        no_topic: "No such topic found."

@@ -5,7 +5,7 @@ It works on Ruby on Rails framework.
 
 * **Rails version**: 6.0.3.2
 
-* **Ruby version**: ruby 2.7.1-p83
+* **Ruby version**: ruby 2.7.0-p0
 
 * **Database**: mysql2
 

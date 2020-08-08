@@ -1,4 +1,4 @@
-<% if not @answers.exists? %>
+<% if not @answers.load.exists? %>
 No answer yet.
 <% else %>
 <% @answers.each do |answer| %>
