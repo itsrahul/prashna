@@ -11,7 +11,7 @@ module Api
 
     private def set_topic
       if not (@topic = Topic.find_by_name(params[:id]))
-        render json: { error: "No such topic found"}
+        render json: { error: t('.no_topic')}
       end
     end
   end
