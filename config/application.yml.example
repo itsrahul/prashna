@@ -13,8 +13,8 @@ development:
   public_api_requests_question_limit: '4'
   public_api_requests_time_limit: '1'
   public_api_requests_request_limit: '5'
-  stripe_publishable_key: ''
-  stripe_secret_key: ''
+  stripe_publishable_key: 'pk_test_51HAFWJIXM1LcFa3fgSHv9WHvMKElfcX7lJ6vuilB4nCgdlmFhEVx3MPO1qrB4g1Rg5LFMRAcR3Zx4Tz72O0w27Yw00DXMzjwyb'
+  stripe_secret_key: 'sk_test_51HAFWJIXM1LcFa3fJAC7thqw6CH18UUbA9UVOBqq3EmLQ6sbrCC3zbHPiHvAVNYmGnrUo6bHLZ6SorB1x88sZT0t00BVhExy1m'
 
 production:
   verification_token_validity_in_hours: '4'
