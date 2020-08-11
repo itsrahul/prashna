@@ -10,6 +10,7 @@ class CreditTransaction < ApplicationRecord
 
   private def refresh_credits_balance!
     user.credits = user.credit_transactions.sum(&:value)
+    # user.credits = CreditTransaction.unscoped.where(user: user).sum(&:value)
     user.save!
   end
 

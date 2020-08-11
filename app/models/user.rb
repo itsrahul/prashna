@@ -48,7 +48,7 @@ class User < ApplicationRecord
   def activate!
     if verification_token_expire > Time.current
       update_columns(verification_at: Time.current, auth_token: SecureRandom.urlsafe_base64)
-      credit_transactions.signup.create(value: Pack.signup.value, reason: "Signup", creditable: Pack.signup)
+      credit_transactions.signup.create(value: Pack.signup.credit, reason: "Signup", creditable: Pack.signup)
       clear_verification_fields
       return true
     else
@@ -75,6 +75,7 @@ class User < ApplicationRecord
 
   def get_or_create_stripe_token
     if stripe_token.blank?
+      # customer = StripeServices.create_customer(name, email)
       customer = Stripe::Customer.create(name: name, email: email)
       update_columns(stripe_token: customer.id)
     end
