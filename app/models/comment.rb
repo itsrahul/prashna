@@ -1,6 +1,7 @@
 class Comment < ApplicationRecord
   enum abuse_status: { unabused: 0, abused: 1 }
   include ContentValidations
+  include MarkAbused
 
   validates :content, presence: true
   validates :words_in_content, length: { minimum: 3 , message: "should be atleast 3"}, allow_blank: true

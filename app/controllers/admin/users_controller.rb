@@ -8,8 +8,7 @@ module Admin
 
     #done FIXME_AB: lets show complete info of learner that we have including credit transactions.
     def show
-    @user
-  end
+    end
 
     def disable
       @user.disabled!

@@ -1,0 +1,8 @@
+en:
+  admin:
+    comments:
+      index:
+        not_admin: "You don't have privilege to access this section"
+
+      unpublish:
+        not_admin: "You don't have privilege to access this section"

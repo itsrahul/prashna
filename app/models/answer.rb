@@ -1,6 +1,7 @@
 class Answer < ApplicationRecord
   enum abuse_status: { unabused: 0, abused: 1 }
   include ContentValidations
+  include MarkAbused
 
   validates :content, presence: true
   validates :words_in_content, length: { minimum: 5 , message: "should be atleast 5"}, allow_blank: true
@@ -15,8 +16,7 @@ class Answer < ApplicationRecord
   default_scope { unabused }
 
   before_create :ensure_questions_belongs_to_other_user, :ensure_question_published
-  after_commit :actions_if_abused
-  after_commit :give_net_upvote_based_credit, if: Proc.new {|ans| ans.votes.exists? }
+  after_commit :give_net_upvote_based_credit
 
   def question_posted_by?(given_user)
     given_user == question.user ? true : false
@@ -38,24 +38,19 @@ class Answer < ApplicationRecord
     end
   end
 
-  private def actions_if_abused
-    if abused?
-      #done FIXME_AB: lets do -1 * abs(sum)
-      if not (credit_sum = credit_transactions.sum(:value)).zero?
-        credit_transactions.create(user: user, value: -1 * credit_sum.abs, reason: "abuse reported, bonus reverted")
-      end
-    end
-  end
+  # moved to MarkAbused concern
+  # private def actions_if_abused
+  # end
 
   private def give_net_upvote_based_credit
     #done FIXME_AB: take 1 from env
     if net_upvotes >= ENV['upvote_for_bonus_credit'].to_i
       if credit_transactions.sum(:value).zero?
-        credit_transactions.create(user: user, value: ENV['bonus_credit_on_upvotes'], reason: "upvotes bonus add")
+        credit_transactions.others.create(user: user, value: ENV['bonus_credit_on_upvotes'].to_i, reason: "upvotes bonus added.")
       end
     else
       if not credit_transactions.sum(:value).zero?
-        credit_transactions.create(user: user, value: -1 * ENV['bonus_credit_on_upvotes'], reason: "upvotes bonus remove")
+        credit_transactions.others.create(user: user, value: -1 * ENV['bonus_credit_on_upvotes'].to_i, reason: "upvotes bonus removed.")
       end
     end
   end

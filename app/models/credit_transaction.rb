@@ -9,7 +9,8 @@ class CreditTransaction < ApplicationRecord
   after_commit :refresh_credits_balance!, unless: Proc.new { |ct| ct.creditable.destroyed? }
 
   private def refresh_credits_balance!
-    user.credits = CreditTransaction.unscoped.where(user: user).sum(&:value)
+    user.credits = user.credit_transactions.sum(&:value)
+    # user.credits = CreditTransaction.unscoped.where(user: user).sum(&:value)
     user.save!
   end
 

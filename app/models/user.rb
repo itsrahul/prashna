@@ -11,17 +11,20 @@ class User < ApplicationRecord
   enum disable_status: { enabled: 0, disabled: 1 }
 
   validates :name, :email, presence: true
+  validates :password, presence: true, on: :create
   validates :name, length: { minimum: 3}
   validates :email, uniqueness: { case_sensitive: false }, email: true, allow_blank: true
-  validates :password, length: { minimum: 4 , maximum: 80}, password: true, allow_blank: true
+  validates :password, length: { minimum: 4 , maximum: 80}, password: true, allow_nil: true
   validates :profile_image, image_url: true, if: Proc.new {|user| user.verified? && user.profile_image.attached? }
 
   has_one_attached :profile_image
-  has_many :credit_transactions, as: :creditable, dependent: :destroy
+  has_many :credit_transactions, dependent: :destroy
+  has_many :payment_transactions, dependent: :destroy
   has_many :abuse_reports
 
-  #done FIXME_AB: if user has published questions then can not be destroyed
   has_many :questions, dependent: :restrict_with_error
+  has_many :answers, dependent: :restrict_with_error
+  has_many :comments, dependent: :restrict_with_error
   has_many :notifications, dependent: :destroy
   has_many :votes, dependent: :restrict_with_error
   has_and_belongs_to_many :topics
@@ -29,10 +32,6 @@ class User < ApplicationRecord
 
   has_many :users_followed, foreign_key: "follower_id", class_name: "UserFollower"
   has_many :followed_by, foreign_key: "followed_id", class_name: "UserFollower"
-  # has_and_belongs_to_many :followers,
-  #   class_name: "User",
-  #   join_table: "followers",
-  #   association_foreign_key: "follower_user_id"
 
   scope :verified, -> { where.not(verification_at: nil) }
   scope :unverified, -> { where(verification_at: nil) }
@@ -49,7 +48,7 @@ class User < ApplicationRecord
   def activate!
     if verification_token_expire > Time.current
       update_columns(verification_at: Time.current, auth_token: SecureRandom.urlsafe_base64)
-      credit_transactions.signup.create(user: self, value: ENV['signup_credits'], reason: "Signup")
+      credit_transactions.signup.create(value: Pack.signup.credit, reason: "Signup", creditable: Pack.signup)
       clear_verification_fields
       return true
     else
@@ -72,6 +71,15 @@ class User < ApplicationRecord
 
   def has_sufficient_credits_to_post_question?
     credits >= ENV['credit_for_question_post'].to_i
+  end
+
+  def get_or_create_stripe_token
+    if stripe_token.blank?
+      # customer = StripeServices.create_customer(name, email)
+      customer = Stripe::Customer.create(name: name, email: email)
+      update_columns(stripe_token: customer.id)
+    end
+    stripe_token
   end
 
   private def ensure_no_purchase_history

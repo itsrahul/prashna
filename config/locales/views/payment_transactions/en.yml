@@ -1,0 +1,4 @@
+en:
+  payment_transactions:
+    index:
+      login_required: "Please Log In"

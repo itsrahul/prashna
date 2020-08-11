@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :purchase_packs, only: :index 
+
+  get 'payment_transactions/', to: 'payment_transactions#index', as: 'payment_transactions'
+  get 'checkout/:id', to: 'payment_transactions#new', as: 'pack_payment'
+  post 'checkout/:id', to: 'payment_transactions#create'
+
   get 'credit_transactions/', to: 'credit_transactions#index', as: 'credit_transactions'
   get 'abuse_reports/:abusable/:id', to: 'abuse_reports#new', as: 'report_abuse'
   post 'abuse_reports/:abusable/:id', to: 'abuse_reports#create'

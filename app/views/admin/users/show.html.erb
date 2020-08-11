@@ -30,8 +30,7 @@
       <th scope="col">Id</th>
       <th scope="col">Value</th>
       <th scope="col">Reason</th>
-      <th scope="col">creditable Type</th>
-      <th scope="col">creditable Id</th>
+      <th scope="col">Type</th>
     </tr>
   </thead>
   <tbody>
@@ -41,13 +40,6 @@
       <td> <%= tr.value %></td>
       <td> <%= tr.reason %></td>
       <td> <%= tr.creditable_type %></td>
-      <% if tr.creditable.is_a?(Question) %>
-        <td> <%= tr.creditable.title %></td>
-      <% elsif tr.creditable.is_a?(User) %>
-        <td> Signup </td>
-      <%# else %>
-        <td> <%#= tr.creditable.content %></td>
-      <% end %>
     </tr>
   <% end %>
   </tbody>

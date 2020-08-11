@@ -14,7 +14,7 @@ class AbuseReport < ApplicationRecord
 
   def check_for_abuse_count
     if abusable.abuse_reports.count >= ENV['reports_count_for_removal'].to_i
-      abusable.abused!
+      abusable.mark_abused!
     end
   end
 

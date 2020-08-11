@@ -49,5 +49,6 @@ class Vote < ApplicationRecord
     # works but runs 2 sql queries, instead of one 
     votable.net_upvotes = Vote.by_votable(votable).up_vote.count - Vote.by_votable(votable).down_vote.count
     votable.save!
+
   end
 end

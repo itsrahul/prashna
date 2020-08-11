@@ -9,7 +9,7 @@ class AdminController < ApplicationController
   
   def ensure_user_is_admin
     unless current_user.admin?
-      redirect_to root_path, notice: "You don't have privilege to access this section"
+      redirect_to root_path, notice: t('.not_admin')
     end
   end
 end

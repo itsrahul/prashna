@@ -13,7 +13,6 @@ class Admin::AnswersController < AdminController
   def unpublish
     @answer.abused!
     redirect_to admin_question_answers_path(@answer.question.id), notice: "unpublished successfully."
-    # @answer.destroy
   end
 
   private def set_answer

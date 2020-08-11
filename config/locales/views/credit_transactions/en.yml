@@ -1,4 +1,4 @@
 en:
   credit_transactions:
     index:
-      login_req: "Please Log In"
+      login_required: "Please Log In"
