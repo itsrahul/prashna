@@ -8,7 +8,7 @@ class Admin::QuestionsController < AdminController
   end
 
   def unpublish
-    @question.update_columns(abuse_status: 1)
+    @question.update_columns(abuse_status: 'abused')
     redirect_to admin_questions_path , notice: "Unpublished successfully."
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_03_101358) do
+ActiveRecord::Schema.define(version: 2020_08_10_120149) do
 
   create_table "abuse_reports", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -116,7 +116,7 @@ ActiveRecord::Schema.define(version: 2020_08_03_101358) do
 
   create_table "packs", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "name"
-    t.integer "value", null: false
+    t.integer "credit", null: false
     t.decimal "price", precision: 8, scale: 2, null: false
     t.integer "status", default: 1, null: false
     t.datetime "created_at", precision: 6, null: false

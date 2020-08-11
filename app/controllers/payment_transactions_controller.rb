@@ -10,24 +10,23 @@ class PaymentTransactionsController < ApplicationController
 
   def create
     begin
-      stripe_token = params[:stripe_token]
-      stripe_customer = Stripe::Customer.retrieve(current_user.get_or_create_stripe_token)
+      stripe_card_token = params[:stripe_token]
+      stripe_user_token = current_user.get_or_create_stripe_token
       payment = current_user.payment_transactions.inprogress.create(pack: @pack)
 
-      stripe_charge = Stripe::Charge.create({
+      options = {
         amount: @pack.price.to_i*100,
         currency: 'inr',
-        source: stripe_token,
+        source: stripe_card_token,
         description: "Purchasing Pack - #{@pack.name}",
-      })
+      }
 
-      Stripe::Charge.update(stripe_charge.id, { customer: stripe_customer.id})
-      payment.update_columns(charge_id: stripe_charge.id)
-
+      stripe_charge = StripeServices.makePayment(stripe_user_token, options)
+      payment.update_columns(charge_id: stripe_charge.id)     
+      
       if stripe_charge.paid
         payment.success!
-        # payment.update_columns(success_at: payment.updated_at)
-        # current_user.credit_transactions.purchase.create(creditable: payment, value: @pack.value, reason: 'Credit Pack Bought')
+        payment.update_columns(success_at: payment.updated_at)
       else
         payment.failed!
         redirect_to pack_payment_path, notice: "Transaction failed."
