@@ -25,11 +25,11 @@ class ReportAbuse
         if (data.success)
         {
           resultDiv[0].innerHTML = `<div class="alert alert-primary" role="alert"> ${data.success} </div>`
+          this.$inputs[index].value = '';
         }
         else
         {
           resultDiv[0].innerHTML = `<div class="alert alert-warning" role="alert"> ${data.failure} </div>`
-          this.$inputs[index].value = '';
         }
       },
     })

@@ -6,7 +6,7 @@ class AbuseReport < ApplicationRecord
   belongs_to :abusable, polymorphic: true
 
   before_create :ensure_questions_belongs_to_other_user
-  after_commit :check_for_abuse_count
+  after_commit :check_for_abuse_count, on: [:create, :update]
 
   def words_in_reason
     reason.scan(/\w+/)

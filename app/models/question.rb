@@ -38,8 +38,8 @@ class Question < ApplicationRecord
 
   after_validation :set_slug, on: [:create, :update]
   before_create  :ensure_credit_balance
-  before_update  :ensure_not_published, :ensure_not_abused
-  before_destroy :ensure_not_published, :ensure_not_abused
+  before_update  :ensure_editable, :ensure_not_abused
+  before_destroy :ensure_editable, :ensure_not_abused
   after_publish  :notify_other_users_and_charge_user, :set_published_at
 
   @delegation_methods = [:markdown_content, :published_ago]
@@ -62,6 +62,21 @@ class Question < ApplicationRecord
 
   def to_param
     "#{id}-#{slug}"
+  end
+
+  def editable?
+    if (answers.exists? || comments.exists?)
+      false
+    else
+      true
+    end
+  end
+
+  private def ensure_editable
+    if not editable?
+      errors.add(:base, 'Question cannot be changed now.')
+      throw :abort
+    end
   end
 
   private def set_slug
