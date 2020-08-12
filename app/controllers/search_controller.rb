@@ -11,7 +11,7 @@ class SearchController < ApplicationController
 
   def topics
     if (topic = Topic.find_by(name: params[:name]) )
-      @questions = topic.questions.published.paginate(page: params[:page], per_page: ENV['pagination_size'].to_i)
+      @questions = topic.questions.published.paginate(page: params[:page], per_page: ENV['pagination_size'].to_i).order(published_at: :desc)
     else
       redirect_to root_path, notice: t('.invalid')
     end
@@ -19,7 +19,7 @@ class SearchController < ApplicationController
 
   def user
     if (@user = User.enabled.find_by(id: params[:id]) )
-      @questions = @user.questions.published.includes(:doc_attachment, :topics, {comments: [:user]}, { answers: [:user, :comments ] }).paginate(page: params[:page], per_page: ENV['pagination_size'].to_i)
+      @questions = @user.questions.published.includes(:doc_attachment, :topics, {comments: [:user]}, { answers: [:user, :comments ] }).paginate(page: params[:page], per_page: ENV['pagination_size'].to_i).order(published_at: :desc)
     else
       redirect_to root_path, notice: t('.invalid')
     end

@@ -3,6 +3,7 @@
 json.questions questions do |question|
   json.title question.title
   json.by question.user.name
+  json.topic_names question.topics.pluck(:name).join(', ')
   json.answers question.answers do |answer|
     json.user answer.user.name
     json.content answer.content
