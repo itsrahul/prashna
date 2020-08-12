@@ -15,12 +15,12 @@
           <% if question.abused? %>
             <span class="badge badge-danger"><%= question.abuse_status.capitalize %></span>
           <% else %>
-            <% if question.published? %>
-              <span class="badge badge-success"><%= question.status.capitalize %></span>
-            <% else %>
+            <% if question.editable? %>
               <span class="badge badge-secondary"><%= question.status.capitalize %></span>
-            <%= link_to 'Edit', edit_question_path(question) %>
-            <%= link_to 'Delete', question, method: :delete, data: { confirm: 'Are you sure?' } %>
+              <%= link_to 'Edit', edit_question_path(question) %>
+              <%= link_to 'Delete', question, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% else %>
+              <span class="badge badge-success"><%= question.status.capitalize %></span>
             <% end %>
           <% end %>
         </div>  
