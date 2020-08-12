@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    errors:
+      models:
+        comment:
+          attributes:
+            words_in_content:
+              too_short: "should be atleast %{count}"
