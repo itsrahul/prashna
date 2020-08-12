@@ -3,7 +3,7 @@ class Admin::CommentsController < AdminController
   before_action :set_commentable, only: [:index]
 
   def index
-    @comments = @commentable.comments
+    @comments = @commentable.comments.paginate(page: params[:page], per_page: ENV['admin_pagination_size'].to_i)
   end
 
   def unpublish
