@@ -4,7 +4,7 @@ task :update_signup_pack_credits => :environment do
   update_pack_signup = Pack.signup.update(credit: ENV['signup_credits'])
   if update_pack_signup
     puts "Pack updated successfully."
-    CreditTransactions.signup.find_each do |signup_ct|
+    CreditTransaction.signup.find_each do |signup_ct|
       signup_ct.update(value: Pack.signup.credit)
     end
   else
