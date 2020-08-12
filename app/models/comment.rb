@@ -4,7 +4,7 @@ class Comment < ApplicationRecord
   include MarkAbused
 
   validates :content, presence: true
-  validates :words_in_content, length: { minimum: 3 , message: "should be atleast 3"}, allow_blank: true
+  validates :words_in_content, length: { minimum: 3}, allow_blank: true
 
   belongs_to :user
   belongs_to :commentable, polymorphic: true, counter_cache: true

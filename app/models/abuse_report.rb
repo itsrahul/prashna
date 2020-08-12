@@ -1,6 +1,6 @@
 class AbuseReport < ApplicationRecord
   validates :reason, presence: true
-  validates :words_in_reason, length: { minimum: 5 , message: "should be atleast 5"}, allow_blank: true
+  validates :words_in_reason, length: { minimum: 5}, allow_blank: true
 
   belongs_to :user
   belongs_to :abusable, polymorphic: true

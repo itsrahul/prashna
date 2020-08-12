@@ -4,7 +4,7 @@ class Answer < ApplicationRecord
   include MarkAbused
 
   validates :content, presence: true
-  validates :words_in_content, length: { minimum: 5 , message: "should be atleast 5"}, allow_blank: true
+  validates :words_in_content, length: { minimum: 5 }, allow_blank: true
 
   belongs_to :user
   belongs_to :question, counter_cache: true
