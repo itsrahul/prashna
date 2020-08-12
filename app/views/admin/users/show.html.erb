@@ -34,7 +34,7 @@
     </tr>
   </thead>
   <tbody>
-  <% CreditTransaction.unscoped.where(user: @user).each do |tr| %>
+  <% @credit_transactions.each do |tr| %>
     <tr>
       <th scope="row"><%= tr.id %></th>
       <td> <%= tr.value %></td>
@@ -43,6 +43,7 @@
     </tr>
   <% end %>
   </tbody>
-</table> 
+</table>
+<center><%= will_paginate @credit_transactions  , class: "flickr_pagination" %></center>
 <%= link_to 'Back', admin_path %>
 <br>
