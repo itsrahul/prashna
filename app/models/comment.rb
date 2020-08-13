@@ -36,7 +36,7 @@ class Comment < ApplicationRecord
 
   private def ensure_question_published
     if not question.published?
-      errors.add(:base, 'Cannot comment on unpublished question.')
+      errors.add(:base, I18n.t('.comment_unpublished_question'))
       throw :abort
     end
   end

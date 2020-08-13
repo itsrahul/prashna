@@ -84,14 +84,14 @@ class User < ApplicationRecord
 
   private def ensure_no_purchase_history
     if credit_transactions.purchase.exists?
-      errors.add(:base, 'User has purchased credits')
+      errors.add(:base, I18n.t('.has_purchase_history'))
       throw :abort
     end
   end
 
   private def ensure_no_published_question
     if questions.published.exists?
-      errors.add(:base, 'User has publised questions')
+      errors.add(:base, I18n.t('.has_published_questions'))
       throw :abort
     end
   end

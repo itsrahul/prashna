@@ -13,8 +13,8 @@ class Question < ApplicationRecord
 
   validates :title, uniqueness: { case_sensitive: false }, presence: true
   validates :content, presence: true
-  validates :words_in_content, length: { minimum: 5 , message: "should be atleast 5"}, allow_blank: true
-  validates :questions_topic, numericality: { greater_than_or_equal_to: 1,  message: "should have atleast 1 entry." }
+  validates :words_in_content, length: { minimum: 5}, allow_blank: true
+  validates :questions_topic, numericality: { greater_than_or_equal_to: 1 }
   validates :doc, file_type_pdf: true, if: Proc.new {|q| q.doc.attached? }
 
 
@@ -74,7 +74,7 @@ class Question < ApplicationRecord
 
   private def ensure_editable
     if not editable?
-      errors.add(:base, 'Question cannot be changed now.')
+      errors.add(:base, I18n.t('.uneditable_question'))
       throw :abort
     end
   end
@@ -85,21 +85,21 @@ class Question < ApplicationRecord
 
   private def ensure_not_published
     if status_was == "published"
-      errors.add(:base, 'Question published, cannot be changed now.')
+      errors.add(:base, I18n.t('.published_uneditable_question'))
       throw :abort
     end
   end
 
   private def ensure_credit_balance
     if not user.has_sufficient_credits_to_post_question?
-      errors.add(:base, 'Question cannot be published due to low balance.')
+      errors.add(:base, I18n.t('.insufficient_balance'))
       throw :abort
     end
   end
 
   private def ensure_not_abused
     if abused?
-      errors.add(:base, 'Question cannot be published as it has reported too many times.')
+      errors.add(:base,  I18n.t('.abused_unpublishable_question'))
       throw :abort
     end
   end

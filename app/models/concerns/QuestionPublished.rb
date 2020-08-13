@@ -9,7 +9,7 @@ module QuestionPublished
   end
 
   def charge_credits(current_user)
-    credit_transactions.question.create(user: user, value: -1 * ENV['credit_for_question_post'].to_i, reason: "Question published")
+    credit_transactions.question.create(user: user, value: -1 * ENV['credit_for_question_post'].to_i, reason: I18n.t('.question_published'))
   end
 
 end

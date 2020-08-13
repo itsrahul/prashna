@@ -7,7 +7,7 @@ module MarkAbused
         update_columns(status: 'draft')
       elsif self.is_a? Answer
         if not (credit_sum = credit_transactions.sum(:value)).zero?
-          credit_transactions.others.create(user: user, value: -1 * credit_sum.abs, reason: "abuse reported, bonus reverted")
+          credit_transactions.others.new(user: user, value: -1 * credit_sum.abs, reason: I18n.t('.abused_bonus_removal') )
         end
       end
   end
