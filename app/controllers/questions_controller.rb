@@ -94,7 +94,7 @@ class QuestionsController < ApplicationController
 
   private  def set_question
     #done FIXME_AB: add a callback before_update to check whether question is in published state.
-    if not (@question = current_user.questions.draft.find_by(id: params[:id]))
+    if not (@question = current_user.questions.find_by(id: params[:id]))
       redirect_to questions_path, notice: t('.too_late')
     end
   end
@@ -111,7 +111,7 @@ class QuestionsController < ApplicationController
   end
 
   private def ensure_editable
-    if @question.editable?
+    if not @question.editable?
       redirect_to questions_path, notice: t('.too_late')
     end
   end
