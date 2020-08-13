@@ -4,21 +4,21 @@ en:
 
     create:
       success: "Question was created successfully."
-      low_balance: "You are low on credts balance. Please topup."
+      low_balance: "You are low on credit balance. Please topup."
     
     new:
-      low_balance: "You are low on credts balance. Please topup."
+      low_balance: "You are low on credit balance. Please topup."
 
     edit:
-      too_late: "Question can't be edited now"
+      too_late: "Question cannot be edited now"
 
     update:
       success: "Question was updated successfully."
-      abused: "Question can't published now, too many abuse reported."
-      too_late: "Question can't be edited now"
+      abused: "Question cannot published now, too many abuse reported."
+      too_late: "Question cannot be edited now"
 
     destroy:
-      success: 'Question was destroyed successfully.'
-      failure: "Question could not be destroyed."
-      too_late: "Question can't be deleted now"
-      abused: "Question can't be deleted."
+      success: 'Question was deleted successfully.'
+      failure: "Question could not be deleted."
+      too_late: "Question cannot be deleted now"
+      abused: "Question cannot be deleted."
