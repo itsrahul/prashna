@@ -15,6 +15,7 @@ en:
     update:
       success: "Question was updated successfully."
       abused: "Question can't published now, too many abuse reported."
+      too_late: "Question can't be edited now"
 
     destroy:
       success: 'Question was destroyed successfully.'
