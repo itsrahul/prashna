@@ -8,7 +8,7 @@ class UserFollower < ApplicationRecord
 
   private def ensure_followed_not_self
     if follower == followed
-      errors.add(:base, 'Cant follow self')
+      errors.add(:base, I18n.t('.follow_self'))
       throw :abort
     end
   end

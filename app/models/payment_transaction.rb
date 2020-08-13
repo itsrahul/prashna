@@ -9,7 +9,7 @@ class PaymentTransaction < ApplicationRecord
 
   private def actions_on_success
     if success?
-      user.credit_transactions.create(transaction_type: 'purchase',creditable: self, value: pack.credit, reason: "#{pack.name} Credit Pack Bought")
+      user.credit_transactions.create(transaction_type: 'purchase',creditable: self, value: pack.credit, reason: I18n.t('.credit_pack_bought', pack_name: pack.name) )
     end
   end
 

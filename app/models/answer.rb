@@ -25,7 +25,7 @@ class Answer < ApplicationRecord
   private def ensure_questions_belongs_to_other_user
     #done FIXME_AB: question.posted_by?(user)
     if question_posted_by?(self.user)
-      errors.add(:base, 'Cannot answer your own question.')
+      errors.add(:base, I18n.t('.answer_own_q'))
       throw :abort
     end
   end
@@ -33,7 +33,7 @@ class Answer < ApplicationRecord
   private def ensure_question_published
     #done FIXME_AB: if not question.published?
     if not question.published?
-      errors.add(:base, 'Cannot answer unpublished question.')
+      errors.add(:base, I18n.t('.answer_unpublished_question'))
       throw :abort
     end
   end
@@ -46,11 +46,11 @@ class Answer < ApplicationRecord
     #done FIXME_AB: take 1 from env
     if net_upvotes >= ENV['upvote_for_bonus_credit'].to_i
       if credit_transactions.sum(:value).zero?
-        credit_transactions.others.create(user: user, value: ENV['bonus_credit_on_upvotes'].to_i, reason: "upvotes bonus added.")
+        credit_transactions.others.create(user: user, value: ENV['bonus_credit_on_upvotes'].to_i, reason: I18n.t('.upvote_bonus_add'))
       end
     else
       if not credit_transactions.sum(:value).zero?
-        credit_transactions.others.create(user: user, value: -1 * ENV['bonus_credit_on_upvotes'].to_i, reason: "upvotes bonus removed.")
+        credit_transactions.others.create(user: user, value: -1 * ENV['bonus_credit_on_upvotes'].to_i, reason: I18n.t('.upvote_bonus_remove'))
       end
     end
   end

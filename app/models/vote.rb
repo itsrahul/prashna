@@ -17,7 +17,7 @@ class Vote < ApplicationRecord
   private def ensure_votable_belongs_to_published_question
     question = vote_belongs_to_question
     if not question.published?
-      errors.add(:base, 'Question not yet published')
+      errors.add(:base, I18n.t('.vote_unpublished_question'))
       throw :abort
     end
   end
@@ -29,7 +29,7 @@ class Vote < ApplicationRecord
   def ensure_votable_belongs_to_other_user
     #done FIXME_AB: votable.voted_by?(user)
     if votable_created_by?(self.user)
-      errors.add(:base, 'Cannot vote your own answer/comment.')
+      errors.add(:base, I18n.t('.vote_own_item'))
       throw :abort
     end
   end

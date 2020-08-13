@@ -24,7 +24,7 @@ class AbuseReport < ApplicationRecord
 
   private def ensure_questions_belongs_to_other_user
     if question_posted_by?(self.user)
-      errors.add(:base, 'Cannot report your own question.')
+      errors.add(:base, I18n.t('.report_own_question'))
       throw :abort
     end
   end
