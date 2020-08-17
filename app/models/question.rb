@@ -65,17 +65,15 @@ class Question < ApplicationRecord
   end
 
   def editable?
-    if (answers.exists? || comments.exists?)
-      false
-    else
-      true
-    end
+    !(answers.exists? || comments.exists?)
   end
 
   private def ensure_editable
     if not editable?
-      errors.add(:base, I18n.t('.uneditable_question'))
-      throw :abort
+      if not (changes.include?(:abuse_status) && changes.size == 2)
+        errors.add(:base, I18n.t('.uneditable_question'))
+        throw :abort
+      end
     end
   end
 
@@ -98,7 +96,7 @@ class Question < ApplicationRecord
   end
 
   private def ensure_not_abused
-    if abused?
+    if abuse_status_was == "abused"
       errors.add(:base,  I18n.t('.abused_unpublishable_question'))
       throw :abort
     end

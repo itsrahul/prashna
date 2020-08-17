@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   before_action :authorize, :fetch_notification
   helper_method :current_user, :logged_in?
 
+  # WillPaginate.per_page = ENV['pagination_size'].to_i
+
   def current_user
     @current_user ||= User.enabled.find_by(id: session[:user_id])
   end

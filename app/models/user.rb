@@ -75,7 +75,6 @@ class User < ApplicationRecord
 
   def get_or_create_stripe_token
     if stripe_token.blank?
-      # customer = StripeServices.create_customer(name, email)
       customer = Stripe::Customer.create(name: name, email: email)
       update_columns(stripe_token: customer.id)
     end

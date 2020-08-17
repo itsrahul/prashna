@@ -4,7 +4,7 @@ class Admin::AnswersController < AdminController
   before_action :set_question, only: [:index]
 
   def index
-    @answers = Answer.unscoped.where(question: @question).includes(:user, :question).paginate(page: params[:page], per_page: ENV['admin_pagination_size'].to_i)
+    @answers = Answer.unscoped.where(question: @question).includes(:user, :question).paginate(page: params[:page])
   end
 
   def show

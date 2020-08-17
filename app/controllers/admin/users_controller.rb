@@ -2,12 +2,12 @@ module Admin
   class UsersController < AdminController
     before_action :set_user, only: [:show, :disable, :enable]
     def index
-      @users = User.all.paginate(page: params[:page], per_page: ENV['admin_pagination_size'].to_i)
+      @users = User.all.paginate(page: params[:page])
     end
 
     #done FIXME_AB: lets show complete info of learner that we have including credit transactions.
     def show
-      @credit_transactions = @user.credit_transactions.paginate(page: params[:page], per_page: ENV['admin_pagination_size'].to_i)
+      @credit_transactions = @user.credit_transactions.paginate(page: params[:page])
     end
 
     def disable
