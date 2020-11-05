@@ -1,0 +1,32 @@
+<%= form_with(model: abusable, url: report_abuse_path, local: true) do |form| %>
+
+  <%= form.fields_for :object, abusable.abusable do |ab_form| %>
+    <div class="form-group">
+      <% if abusable.abusable.is_a?(Question) %>
+        <%= ab_form.label :title %>
+        <%= ab_form.text_field :title, class: "form-control", readonly: true%>
+      <% else %>
+        <%= ab_form.label :content %>
+        <%= ab_form.text_field :content, class: "form-control", readonly: true%>
+      <% end %>
+    </div>
+
+    <%= ab_form.fields_for :user, abusable.abusable.user do |user_form| %>
+      <div class="form-group">
+        <%= user_form.label :by %>
+        <%= user_form.text_field :name, class: "form-control", readonly: true %>
+      </div>
+    <% end %>
+  
+  <% end %>
+
+
+  <div class="form-group">
+    <%= form.label :reason %>
+    <%= form.text_area :reason, class: "form-control" %>
+  </div>
+
+  <div>
+    <%= form.submit "Report", class: "btn btn-primary" %>
+  </div>
+<% end %>

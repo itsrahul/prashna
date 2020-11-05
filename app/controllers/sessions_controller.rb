@@ -6,27 +6,41 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.verified.find_by(email: params[:email])
-
-    unless user
-      redirect_to login_url, notice: t('.unverified') and return
+    #doneFIXME_AB: User.enabled.verified.find_by
+    if not (user = User.verified.find_by(email: params[:email]))
+      redirect_to login_url, alert: t('.no_user_found')
+      return
     end
 
+    # if not user.verified?
+    #   redirect_to login_url, alert: t('.unverified')
+    #   return
+    # end
+
+    # if user.disabled?
+    #   redirect_to login_url, alert: t('.user_disabled')
+    #   return
+    # end
+
     if user.try(:authenticate, params[:password])
+      if user.disabled?
+        redirect_to login_url, alert: t('.user_disabled')
+        return
+      end
       session[:user_id] = user.id
       if params[:remember_me]
-        set_remember_me(user.id) 
+        set_remember_me(user.id)
       end
-      redirect_to users_url
+      redirect_to root_path
     else
-      redirect_to login_url, notice: t(".invalid_credentials")
+      redirect_to login_url, alert: t(".invalid_credentials")
     end
   end
 
   def destroy
     reset_session
     reset_remember_me
-    redirect_to users_url, notice: t('.logout')
+    redirect_to root_path, notice: t('.logout')
   end
 
   private def set_remember_me(id)
@@ -40,11 +54,8 @@ class SessionsController < ApplicationController
   private def get_user_from_cookie
     session[:user_id] = cookies.signed[:user_id]
     if session[:user_id]
-      redirect_to users_url
+      redirect_to root_path
     end
   end
 
-  private def check_verified(user)
-    user.verification_at
-  end
 end

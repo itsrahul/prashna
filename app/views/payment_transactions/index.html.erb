@@ -1,0 +1,25 @@
+<strong>Hello, <%= current_user.name %>.</strong>
+
+<h2>Your payment transactions are as follows</h2>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Pack(size)</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @payments.each do |payment| %>
+    <tr>
+      <th scope="row"><%= payment.id %></th>
+      <td> <%= payment.pack.name %> (<%= payment.pack.credit %>)</td>
+      <td> <%= number_to_currency payment.pack.price, unit: 'Rs. ' %></td>
+      <td> <%= payment.status %> </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table> 
+<br>
+<center><%= will_paginate @payments, class: "flickr_pagination" %></center>

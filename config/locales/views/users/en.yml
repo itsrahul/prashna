@@ -1,18 +1,21 @@
 en:
   users:
-    invalid: "Invalid link"
-    login_required: "Please log in"
+    invalid: 'Invalid link'
+    login_required: 'Please log in'
+
+    new:
+      invalid_signup: 'Not allowed, please signout first'
 
     create:
-      success: 'User was successfully created.'
+      success: 'Signup successful. Please verify your account, to login'
 
     update:
-      success: 'User was successfully updated.'
+      success: 'Account details were successfully updated.'
 
     destroy:
-      success: 'User was successfully destroyed.'
-      failure: "User could not be destroyed."
+      success: 'Account was successfully deleted.'
+      failure: 'Account could not be deleted.'
     
     verify:
-      success: "Account verified."
-      failure: "Account could not be verified."
+      success: 'Account verified.'
+      failure: 'Account could not be verified.'

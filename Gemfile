@@ -1,11 +1,10 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-#FIXME_AB: Read Gemfile vs Gemfile.lock
 #FIXME_AB: Read explain what is the difference between three rails env: development, production, test
 #FIXME_AB: Read about config/initializers directory, when these files are executed, how many times, in which order etc..
 
-ruby '2.7.1'
+ruby '2.7.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3'
@@ -32,12 +31,22 @@ gem 'bcrypt', '~> 3.1.7'
 # gem "letter_opener", group: :development
 gem 'letter_opener_web', '~> 1.0'
 
-#FIXME_AB: whenever you add any gem, specify its version
+# Using redcarpet for markdown format
+gem 'redcarpet', '~> 3.3'
+
+# Used for pagination
+gem 'will_paginate', '~> 3.3'
+
+# Used bullet
+#done FIXME_AB: add version
+gem 'bullet', '~> 6.1.0'
+
+gem 'basic_presenter', '~> 0.0.4'
 
 gem 'exception_notification', '~> 4.4.1'
 gem 'bootstrap', '~> 4.5.0'
 gem "figaro", '~> 1.2.0'
-
+gem 'stripe', '~> 5.22.0'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
@@ -57,6 +66,11 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'capistrano',                 '3.11.2'
+  gem 'capistrano-rails',           '1.4.0'
+  gem 'capistrano-passenger',       '0.2.0'
+  gem "capistrano-rails-logs-tail", "~> 1.0"
+  gem 'capistrano-rails-console', require: false
 end
 
 group :test do

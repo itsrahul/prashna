@@ -1,0 +1,7 @@
+<% if @questions.blank? %>
+  <br>
+  <h4> You haven't followed anyone yet. Please follow other users, to see questions posted by them</h4>
+<% else %>
+  <h5> Question posted by people I follow </h5>
+  <%= render partial: "shared/questions" %>
+<% end %>

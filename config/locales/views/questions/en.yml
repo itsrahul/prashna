@@ -1,0 +1,24 @@
+en:
+  questions:
+    login_required: "Please log in"
+
+    create:
+      success: "Question was created successfully."
+      low_balance: "You are low on credit balance. Please topup."
+    
+    new:
+      low_balance: "You are low on credit balance. Please topup."
+
+    edit:
+      too_late: "Question cannot be edited now"
+
+    update:
+      success: "Question was updated successfully."
+      abused: "Question cannot published now, too many abuse reported."
+      too_late: "Question cannot be edited now"
+
+    destroy:
+      success: 'Question was deleted successfully.'
+      failure: "Question could not be deleted."
+      too_late: "Question cannot be deleted now"
+      abused: "Question cannot be deleted."

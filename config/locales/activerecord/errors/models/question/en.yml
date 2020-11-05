@@ -1,0 +1,10 @@
+en:
+  activerecord:
+    errors:
+      models:
+        question:
+          attributes:
+            words_in_content:
+              too_short: "should be atleast %{count}"
+            questions_topic:
+              greater_than_or_equal_to: "should have atleast %{count} entry."

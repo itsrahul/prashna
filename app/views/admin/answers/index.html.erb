@@ -1,0 +1,39 @@
+<% if @answers.present? %>
+<h5>Answers for question: <%= link_to @question.title, admin_question_path(@question.id) %></h5>
+<table  class="table table-hover">
+  <thead>
+    <tr>
+      <th>User Name</th>
+      <th>Content</th>
+      <th>Comments Count</th>
+      <th>Net Upvotes</th>
+      <th>Abused Status</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @answers.each do |answer| %>
+      <tr class="table-light">
+        <td><%= answer.user.name %></td>
+        <td><%= link_to answer.content, admin_answer_path(answer.id) %></td>
+        <td>
+          <% if answer.comments_count > 0 %>
+            <%= link_to answer.comments_count, admin_answer_comments_path(answer.id) %>
+          <% else %>
+            <%= answer.comments_count %>
+          <% end %>
+        </td>
+        <td><%= answer.net_upvotes %></td>
+        <td><%= answer.abuse_status %></td>
+        <td><%= link_to 'Mark Unfit', admin_unpublish_answer_path(answer.id), method: :post, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<center><%= will_paginate @answers, class: "flickr_pagination" %></center>
+<% else %>
+  <h5> No answers so far.</h5>
+<% end %>
+<br>
+<%= link_to 'Back', admin_question_path(@question.id) %>

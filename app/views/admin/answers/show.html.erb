@@ -1,0 +1,31 @@
+<h5>Answer id: <%= @answer.id %></h5>
+<% if @answer.abused? %>
+  <h3> ABUSED</h3>
+<% end %>
+<p>
+  <strong>Author:</strong>
+  <%= @answer.user.name %>
+</p><hr>
+
+<p>
+  <strong>Question title:</strong>
+  <%= @answer.question.title %>
+</p><hr>
+
+<p>
+  <strong>Content:</strong>
+  <%= @answer.content %>
+</p><hr>
+
+<p>
+  <strong>Status:</strong>
+  <%= @answer.abuse_status %>
+</p><hr>
+
+<p>
+  <strong> Comments Count:</strong>
+  <%= @answer.comments_count > 0 ? link_to(@answer.comments_count, admin_answer_comments_path(@answer.id)) : @answer.comments_count %>
+</p><hr>
+
+<%= link_to 'Back', admin_question_path(@answer.question) %>
+<br>

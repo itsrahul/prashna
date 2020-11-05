@@ -15,7 +15,7 @@
   <div class="form-group">
     <%= form.label :password %>
     <%= form.password_field :password, class: "form-control" %>
-    <small id="passwordHelp" class="form-text text-muted">Length 4-8, must have minimum 1 digit, 1 alphabet</small>
+    <small id="passwordHelp" class="form-text text-muted">Minimum length 4, must have minimum 1 digit, 1 alphabet</small>
   </div>
 
   <div class="form-group">
@@ -23,7 +23,7 @@
     <%= form.password_field :password_confirmation, class: "form-control" %>
   </div>
 
-  <% if user.verification_at %>
+  <% if user.verified? %>
     <div class="form-group">
       <%= form.label :profile_image %>
       <%= form.file_field :profile_image, accept: 'image/png,image/gif,image/jpeg' %>
@@ -33,9 +33,9 @@
       <%= javascript_include_tag 'autocomplete_topics', 'data-turbolinks-track': 'reload' %>
     <% end -%>
 
-    <div class="ui-widget">
+    <div class="form-group">
       <%= form.label :topic %>
-      <%= form.text_field :topic %>
+      <%= form.text_field :topic, value: user.topics.pluck(:name).join(', '), data: { url: topics_path }, class: "form-control" %>
     </div>
   <% end %>
 

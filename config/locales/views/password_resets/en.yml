@@ -2,6 +2,7 @@ en:
   password_resets:
     create:
       link_sent: "Reset link will be sent to your email!"
+      empty: "Email can't be blank"
 
     edit:
       invalid: "Invalid Link"

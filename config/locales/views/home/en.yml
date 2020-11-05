@@ -1,0 +1,4 @@
+ en:
+  home:
+    index:
+      login_required: "Please log in"

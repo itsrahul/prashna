@@ -1,5 +1,4 @@
-<% #FIXME_AB: @user.verified? -%>
-<% if @user.verification_at && !@user.profile_image.attachment.nil? %>
+<% if @user.verified? && @user.profile_image.attached? %>
 <%= image_tag @user.profile_image, width: 150%>
 <% end %>
 <p>
@@ -15,12 +14,19 @@
 <p>
   <strong>Credits:</strong>
   <%= @user.credits %>
+  <%= link_to "Buy credits", purchase_packs_path %>
 </p>
 
 <p>
   <strong>Topics:</strong>
-  <%= @user.topics.pluck(:name) %>
+  <%= @user.topics.pluck(:name).join(', ') %>
 </p>
 
+<p>
+  <strong>Authentication Token:</strong>
+  <%= @user.auth_token %>
+  <br>
+  <small>Do not share authentication token with anyone</small>
+</p>
 <%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'Back', root_path %>
