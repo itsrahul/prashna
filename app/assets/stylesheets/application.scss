@@ -110,7 +110,7 @@ header.main {
   -webkit-box-direction: normal;
 
   @media (min-width: 30em) {
-    flex-direction: row;  // desktop is vertically laid out
+    //flex-direction: row;  // desktop is vertically laid out
     -webkit-box-orient: horizontal;
   }
 
@@ -224,4 +224,44 @@ nav.logged_in_nav {
       background: pink;
     }
   }
+}
+
+// log-in page's remember me cross box//
+
+input[type="checkbox"]:before {
+  width: 23px;
+  height: 27px;
+}
+
+// buy button on purchase_packs page//
+.card-body {
+  .br-10 {
+    border-radius: 10px;
+  }
+}
+
+// shaking effect on bell icon //
+.btn-group:hover .shake-effect {
+    animation: shake 0.5s;
+    animation-iteration-count: infinite;
+  }
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.form-group {
+.textarea-rounded {
+  border-radius: 25px!important;
+}
 }

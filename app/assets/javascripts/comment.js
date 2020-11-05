@@ -58,13 +58,13 @@ class CommentUpdater
 
     if (data.errors)
     {
-      $resultDiv[0].innerHTML = `<div class="alert alert-warning" role="alert"> ${data.errors} </div>`
+      $resultDiv[0].innerHTML = `<div class="alert alert-warning rounded" role="alert"> ${data.errors} </div>`
     }
     else
     {
       $main[index].innerHTML = data
       $text[index].value = '';
-      $resultDiv[0].innerHTML = `<div class="alert alert-success" role="alert"> Comment posted successfully. </div>`
+      $resultDiv[0].innerHTML = `<div class="alert alert-success rounded" role="alert"> Comment posted successfully. </div>`
     }
 
   }
